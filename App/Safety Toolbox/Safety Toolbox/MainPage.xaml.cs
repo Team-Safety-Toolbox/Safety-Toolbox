@@ -8,14 +8,17 @@
             InitializeComponent();
         }
 
-        private void OnTBTBtnClicked(object sender, EventArgs e)
+        private async void OnTBTBtnClicked(object sender, EventArgs e)
         {
+            await Navigation.PushAsync(new Toolbox_Talk());
         }
-        private void OnCertBtnClicked(object sender, EventArgs e)
+        private async void OnCertBtnClicked(object sender, EventArgs e)
         {
+            await Navigation.PushAsync(new Certifications());
         }
-        private void OnLibBtnClicked(object sender, EventArgs e)
+        private async void OnLibBtnClicked(object sender, EventArgs e)
         {
+            await Navigation.PushAsync(new Library());
         }
     }
 }
