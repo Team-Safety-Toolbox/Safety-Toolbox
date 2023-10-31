@@ -6,4 +6,8 @@ public partial class Toolbox_Talk : ContentPage
 	{
 		InitializeComponent();
 	}
+    private async void OnHomeBtnClicked(object sender, EventArgs e)
+    {
+        await Navigation.PopAsync();
+    }
 }
