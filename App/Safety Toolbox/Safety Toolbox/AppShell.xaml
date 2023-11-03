@@ -7,13 +7,33 @@
     Shell.FlyoutBehavior="Disabled">
 
     <ShellContent
-        Title="Home"
         ContentTemplate="{DataTemplate local:MainPage}"
         Route="MainPage" />
 
+    
     <ShellContent
-        Title="ToolBox Talk"
         ContentTemplate="{DataTemplate local:Toolbox_Talk}"
         Route="ToolBox_Talk" />
-
+    <ShellContent
+        ContentTemplate="{DataTemplate local:Attendance}"
+        Route="Attendance" />
+    <ShellContent
+        Title="Topic Ideas"
+        ContentTemplate="{DataTemplate local:TopicIdeas}"
+        Route="TopicIdeas" />
+    <ShellContent
+        Title="Notes"
+        ContentTemplate="{DataTemplate local:Notes}"
+        Route="Notes" />
+    
+    <ShellContent
+        Title="Certifications"
+        ContentTemplate="{DataTemplate local:Certifications}"
+        Route="Certifications" />   
+        
+    <ShellContent
+        Title="Library"
+        ContentTemplate="{DataTemplate local:Library}"
+        Route="Library" />
+       
 </Shell>

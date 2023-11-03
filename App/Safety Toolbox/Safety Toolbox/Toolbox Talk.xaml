@@ -1,20 +1,10 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Safety_Toolbox.Toolbox_Talk"
-             Title="Toolbox Talk">
-    <VerticalStackLayout>
-        <Button
-            x:Name="HomeBtn"
-            Text="Home"
-            SemanticProperties.Hint="Counts the number of times you click"
-            Clicked="OnHomeBtnClicked"
-            HorizontalOptions="Start" />
-
-        <Label
-            Text="ToolBox Talk"
-            SemanticProperties.HeadingLevel="Level1"
-            FontSize="32"
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
-</ContentPage>
+<TabbedPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            xmlns:local="clr-namespace:Safety_Toolbox"
+            x:Class="Safety_Toolbox.Toolbox_Talk">
+    <local:Attendance />
+    <local:TopicIdeas />
+    <local:Notes />
+</TabbedPage>
+    

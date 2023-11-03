@@ -1,6 +1,6 @@
 namespace Safety_Toolbox;
 
-public partial class Library : ContentPage
+public partial class Library : TabbedPage
 {
 	public Library()
 	{
