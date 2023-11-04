@@ -14,5 +14,119 @@
             SemanticProperties.HeadingLevel="Level1"
             FontSize="24"
             HorizontalOptions="Center" />
+
+        <!--<Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <ScrollView
+                VerticalOptions="FillAndExpand"
+                Grid.Row="0">
+                <StackLayout>
+                    <RadioButton></RadioButton>
+                    <RadioButton></RadioButton>
+                    <Label
+                        Text="Attendance"
+                        SemanticProperties.HeadingLevel="Level1"
+                        FontSize="24"
+                        HorizontalOptions="Center" />
+                    <Label
+                        Text="Attendance"
+                        SemanticProperties.HeadingLevel="Level1"
+                        FontSize="24"
+                        HorizontalOptions="Center" />
+                    <Label
+                        Text="Attendance"
+                        SemanticProperties.HeadingLevel="Level1"
+                        FontSize="24"
+                        HorizontalOptions="Center" />
+                    <Label
+                        Text="Attendance"
+                        SemanticProperties.HeadingLevel="Level1"
+                        FontSize="24"
+                        HorizontalOptions="Center" />
+                    <Label
+                        Text="Attendance"
+                        SemanticProperties.HeadingLevel="Level1"
+                        FontSize="24"
+                        HorizontalOptions="Center" />
+                    <Label
+                        Text="Attendance"
+                        SemanticProperties.HeadingLevel="Level1"
+                        FontSize="24"
+                        HorizontalOptions="Center" />
+                    <Label
+                        Text="Attendance"
+                        SemanticProperties.HeadingLevel="Level1"
+                        FontSize="24"
+                        HorizontalOptions="Center" />
+                    <Label
+                        Text="Attendance"
+                        SemanticProperties.HeadingLevel="Level1"
+                        FontSize="24"
+                        HorizontalOptions="Center" />
+                    <Label
+                        Text="Attendance"
+                        SemanticProperties.HeadingLevel="Level1"
+                        FontSize="24"
+                        HorizontalOptions="Center" />
+                    <Label
+                        Text="Attendance"
+                        SemanticProperties.HeadingLevel="Level1"
+                        FontSize="24"
+                        HorizontalOptions="Center" />
+                    <Label
+                        Text="Attendance"
+                        SemanticProperties.HeadingLevel="Level1"
+                        FontSize="24"
+                        HorizontalOptions="Center" />
+                    <Label
+                        Text="Attendance"
+                        SemanticProperties.HeadingLevel="Level1"
+                        FontSize="24"
+                        HorizontalOptions="Center" />
+                    <Label
+                        Text="Attendance"
+                        SemanticProperties.HeadingLevel="Level1"
+                        FontSize="24"
+                        HorizontalOptions="Center" />
+                    <Label
+                        Text="Attendance"
+                        SemanticProperties.HeadingLevel="Level1"
+                        FontSize="24"
+                        HorizontalOptions="Center" />
+                    <Label
+                        Text="Attendance"
+                        SemanticProperties.HeadingLevel="Level1"
+                        FontSize="24"
+                        HorizontalOptions="Center" />
+                    <Label
+                        Text="Attendance"
+                        SemanticProperties.HeadingLevel="Level1"
+                        FontSize="24"
+                        HorizontalOptions="Center" />
+                    <Label
+                        Text="Attendance"
+                        SemanticProperties.HeadingLevel="Level1"
+                        FontSize="24"
+                        HorizontalOptions="Center" />
+                    <Label
+                        Text="Attendance"
+                        SemanticProperties.HeadingLevel="Level1"
+                        FontSize="24"
+                        HorizontalOptions="Center" />
+                    <Label
+                        Text="Attendance"
+                        SemanticProperties.HeadingLevel="Level1"
+                        FontSize="24"
+                        HorizontalOptions="Center" />
+                    <Label
+                        Text="You win"
+                        SemanticProperties.HeadingLevel="Level1"
+                        FontSize="24"
+                        HorizontalOptions="Center" />
+                </StackLayout>
+            </ScrollView>
+        </Grid>-->
     </VerticalStackLayout>
 </ContentPage>
