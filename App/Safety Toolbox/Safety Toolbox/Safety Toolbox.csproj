@@ -49,15 +49,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <AndroidResource Remove="NewFolder\**" />
-	  <Compile Remove="NewFolder\**" />
-	  <EmbeddedResource Remove="NewFolder\**" />
-	  <MauiCss Remove="NewFolder\**" />
-	  <MauiXaml Remove="NewFolder\**" />
-	  <None Remove="NewFolder\**" />
-	</ItemGroup>
-
-	<ItemGroup>
+		<PackageReference Include="Microsoft.Data.SqlClient" Version="5.1.2" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
 	</ItemGroup>
 
@@ -98,6 +90,10 @@
 	  <MauiXaml Update="WorkProcedures.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Pages\" />
 	</ItemGroup>
 
 </Project>
