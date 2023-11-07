@@ -11,7 +11,8 @@ public partial class Certifications : ContentPage
 	{
         InitializeComponent();
         List<CertificationData> certs = getCertificationData();
-        collectionView.ItemsSource = certs;
+        List<CertificationData> sortedByExpDate = certs.OrderBy(o=>o.ExpiryDate).ToList();
+        collectionView.ItemsSource = sortedByExpDate;
     }
 
     private List<CertificationData> getCertificationData()
