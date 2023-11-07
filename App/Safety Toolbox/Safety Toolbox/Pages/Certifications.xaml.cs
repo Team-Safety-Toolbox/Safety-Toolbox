@@ -2,6 +2,7 @@ using Microsoft.Data.Sql;
 using Microsoft.Data.SqlClient;
 using Safety_Toolbox.Types;
 using System.ComponentModel;
+using System.Runtime.ConstrainedExecution;
 
 namespace Safety_Toolbox;
 
@@ -13,6 +14,45 @@ public partial class Certifications : ContentPage
         List<CertificationData> certs = getCertificationData();
         List<CertificationData> sortedByExpDate = certs.OrderBy(o=>o.ExpiryDate).ToList();
         collectionView.ItemsSource = sortedByExpDate;
+
+        var sortByList = new List<string>();
+        sortByList.Add("Expiry Date");
+        sortByList.Add("Employee First Name");
+        sortByList.Add("Employee Last Name");
+        sortByList.Add("Certification");
+
+        BindingContext = this;
+        sortPicker.ItemsSource = sortByList;
+        sortPicker.SelectedIndex = 0;
+
+    }
+
+    void OnPickerSelectedIndexChanged(object sender, EventArgs e)
+    {
+        var picker = (Picker)sender;
+        int selectedIndex = picker.SelectedIndex;
+        List<CertificationData> certs = getCertificationData();
+
+        if (selectedIndex == 0)
+        {
+            List<CertificationData> sortedByExpDate = certs.OrderBy(o => o.ExpiryDate).ToList();
+            collectionView.ItemsSource = sortedByExpDate;
+        }
+        else if (selectedIndex == 1)
+        {
+            List<CertificationData> sortedByEmpFirstName = certs.OrderBy(o => o.EmployeeName).ToList();
+            collectionView.ItemsSource = sortedByEmpFirstName;
+        }
+        else if (selectedIndex == 2)
+        {
+            //List<CertificationData> sortedByEmpLastName = certs.OrderBy(o=>o.EmployeeLastName).ToList();
+            //collectionView.ItemsSource = sortedByEmpLastName;
+        }
+        else if (selectedIndex == 3)
+        {
+            List<CertificationData> sortedByCertType = certs.OrderBy(o => o.CertType).ToList();
+            collectionView.ItemsSource = sortedByCertType;
+        }
     }
 
     private List<CertificationData> getCertificationData()

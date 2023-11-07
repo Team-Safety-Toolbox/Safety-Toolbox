@@ -17,6 +17,10 @@ namespace Safety_Toolbox.Templates
             if((((CertificationData)item).ExpiryDate.Year == DateTime.Today.Year) && (((CertificationData)item).ExpiryDate.Month == DateTime.Today.Month)){
                 return ExpiringSoon;
             }
+            else if (((CertificationData)item).ExpiryDate < DateTime.Today)
+            {
+                return ExpiringSoon;//expired
+            }
             else{
                 return NotExpiring;
             }

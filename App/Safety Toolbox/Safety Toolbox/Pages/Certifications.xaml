@@ -15,9 +15,9 @@
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                <Label Grid.Column="1" Text="{Binding EmployeeName}" FontAttributes="Bold" />
-                <Label Grid.Column="2" Text="{Binding CertType}" />
-                <Label Grid.Column="3" Text="{Binding ExpiryDate, StringFormat='{0:d}'}" HorizontalTextAlignment="End" />
+                <Label Grid.Column="1" Text="{Binding EmployeeName}" HorizontalOptions="Center" />
+                <Label Grid.Column="2" Text="{Binding CertType}" HorizontalOptions="Center" />
+                <Label Grid.Column="3" Text="{Binding ExpiryDate, StringFormat='{0:d}'}" HorizontalOptions="Center" />
             </Grid>
         </DataTemplate>
         <DataTemplate x:Key="expiringSoonTemplate">
@@ -29,9 +29,9 @@
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                <Label Grid.Column="1" Text="{Binding EmployeeName}" TextColor="Red" FontAttributes="Bold" />
-                <Label Grid.Column="2" Text="{Binding CertType}" TextColor="Red" />
-                <Label Grid.Column="3" Text="{Binding ExpiryDate, StringFormat='{0:d}'}" TextColor="Red" HorizontalTextAlignment="End" />
+                <Label Grid.Column="1" Text="{Binding EmployeeName}" TextColor="Red" HorizontalOptions="Center" />
+                <Label Grid.Column="2" Text="{Binding CertType}" TextColor="Red" HorizontalOptions="Center" />
+                <Label Grid.Column="3" Text="{Binding ExpiryDate, StringFormat='{0:d}'}" TextColor="Red" HorizontalOptions="Center" />
             </Grid>
         </DataTemplate>
         <local:CertTemplateSelector x:Key="CertTemplateSelector"
@@ -45,6 +45,23 @@
             SemanticProperties.HeadingLevel="Level1"
             FontSize="32"
             HorizontalOptions="Center" />
+        <HorizontalStackLayout HorizontalOptions="Center">
+            <Label Text="Sort By:" HorizontalOptions="Center" VerticalOptions="Center"/>
+            <Picker x:Name="sortPicker" SelectedIndexChanged="OnPickerSelectedIndexChanged" ItemsSource="{Binding sortedByExpDate}" />
+        </HorizontalStackLayout>
+        
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="1" Text="Name" HorizontalOptions="Center"/>
+            <Label Grid.Column="2" Text="Certification" HorizontalOptions="Center" />
+            <Label Grid.Column="3" Text="Expiry Date" HorizontalOptions="Center" />
+        </Grid>
         <CollectionView x:Name="collectionView"
                 Margin="0,20,0,0"
                 ItemTemplate="{StaticResource CertTemplateSelector}" />
