@@ -22,5 +22,10 @@ namespace Safety_Toolbox.Types
             CertType = CertType_;
             ExpiryDate = ExpiryDate_;
         }
+
+        public override string ToString()
+        {
+            return EmployeeName;
+        }
     }
 }

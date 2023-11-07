@@ -9,9 +9,9 @@ public partial class Certifications : ContentPage
 {
 	public Certifications()
 	{
-        List<CertificationData> attendance = getCertificationData();
-
         InitializeComponent();
+        List<CertificationData> certs = getCertificationData();
+        collectionView.ItemsSource = certs;
     }
 
     private List<CertificationData> getCertificationData()

@@ -1,14 +1,52 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:types="clr-namespace:Safety_Toolbox.Types"
+             xmlns:local="clr-namespace:Safety_Toolbox.Templates"
              x:Class="Safety_Toolbox.Certifications"
-             Title=" "
-             Shell.BackgroundColor="White"><!--Keeping the bar here by setting the title makes this page match the tabbedpages-->
+             Title=" "><!--Keeping the bar here by setting the title makes this page match the tabbedpages-->
+    <ContentPage.Resources>
+        <DataTemplate x:Key="notExpiringTemplate">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="1" Text="{Binding EmployeeName}" FontAttributes="Bold" />
+                <Label Grid.Column="2" Text="{Binding CertType}" />
+                <Label Grid.Column="3" Text="{Binding ExpiryDate, StringFormat='{0:d}'}" HorizontalTextAlignment="End" />
+            </Grid>
+        </DataTemplate>
+        <DataTemplate x:Key="expiringSoonTemplate">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="1" Text="{Binding EmployeeName}" TextColor="Red" FontAttributes="Bold" />
+                <Label Grid.Column="2" Text="{Binding CertType}" TextColor="Red" />
+                <Label Grid.Column="3" Text="{Binding ExpiryDate, StringFormat='{0:d}'}" TextColor="Red" HorizontalTextAlignment="End" />
+            </Grid>
+        </DataTemplate>
+        <local:CertTemplateSelector x:Key="CertTemplateSelector"
+                                 NotExpiring="{StaticResource notExpiringTemplate}"
+                                 ExpiringSoon="{StaticResource expiringSoonTemplate}" />
+    </ContentPage.Resources>
+
     <VerticalStackLayout>
         <Label
             Text="Certifications"
             SemanticProperties.HeadingLevel="Level1"
             FontSize="32"
             HorizontalOptions="Center" />
+        <CollectionView x:Name="collectionView"
+                Margin="0,20,0,0"
+                ItemTemplate="{StaticResource CertTemplateSelector}" />
     </VerticalStackLayout>
 </ContentPage>
