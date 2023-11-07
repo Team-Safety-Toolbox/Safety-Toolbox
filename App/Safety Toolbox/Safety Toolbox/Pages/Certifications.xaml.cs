@@ -40,13 +40,13 @@ public partial class Certifications : ContentPage
         }
         else if (selectedIndex == 1)
         {
-            List<CertificationData> sortedByEmpFirstName = certs.OrderBy(o => o.EmployeeName).ToList();
+            List<CertificationData> sortedByEmpFirstName = certs.OrderBy(o => o.EmployeeFirstName).ToList();
             collectionView.ItemsSource = sortedByEmpFirstName;
         }
         else if (selectedIndex == 2)
         {
-            //List<CertificationData> sortedByEmpLastName = certs.OrderBy(o=>o.EmployeeLastName).ToList();
-            //collectionView.ItemsSource = sortedByEmpLastName;
+            List<CertificationData> sortedByEmpLastName = certs.OrderBy(o => o.EmployeeLastName).ToList();
+            collectionView.ItemsSource = sortedByEmpLastName;
         }
         else if (selectedIndex == 3)
         {
@@ -58,7 +58,17 @@ public partial class Certifications : ContentPage
     void OnTextChanged(object sender, EventArgs e)
     {
         SearchBar searchBar = (SearchBar)sender;
-        //do a new query searching for searchBar.Text
+        if (searchBar != null){
+            List<CertificationData> certs = getCertificationData();
+            var matchingFirstNames = certs.Where(certs => certs.EmployeeFirstName.ToLower().Contains(searchBar.Text.ToLower()));
+            var matchingLastNames = certs.Where(certs => certs.EmployeeLastName.ToLower().Contains(searchBar.Text.ToLower()));
+            var matchingCertifications = certs.Where(certs => certs.CertType.ToLower().Contains(searchBar.Text.ToLower()));
+
+            var allMatches = matchingFirstNames.Union(matchingLastNames);
+            allMatches = allMatches.Union(matchingCertifications);
+
+            collectionView.ItemsSource = allMatches;
+        }
     }
 
     void OnExportBtnClicked(object sender, EventArgs e)
@@ -68,11 +78,10 @@ public partial class Certifications : ContentPage
 
     private List<CertificationData> getCertificationData()
     {
-        string connectionString = "Server=DESKTOP-0LUMUS9;Database=SafetyToolBox;Persist Security Info=False;Integrated Security=true;Encrypt=False;";
-        string query = "SELECT Certifications.EmployeeID, Employees.EmployeeName, Certifications.CertType, Certifications.ExpiryDate FROM Certifications JOIN Employees on Certifications.EmployeeID = Employees.EmployeeID";
+        string query = "SELECT Certifications.EmployeeID, Employees.EmployeeFirstName, Employees.EmployeeLastName, Certifications.CertType, Certifications.ExpiryDate FROM Certifications JOIN Employees on Certifications.EmployeeID = Employees.EmployeeID";
         List<CertificationData> certificationList = new List<CertificationData>();
 
-        using (SqlConnection connection = new SqlConnection(connectionString))
+        using (SqlConnection connection = new SqlConnection(Constants.connectionString))
         {
             using (SqlCommand command = new SqlCommand(query, connection))
             {
@@ -82,10 +91,11 @@ public partial class Certifications : ContentPage
                     while (reader.Read())
                     {
                         int empID = reader.GetInt32(0);
-                        string empName = reader.GetString(1);
-                        string certType = reader.GetString(2);
-                        DateTime expDate = reader.GetDateTime(3);
-                        certificationList.Add(new CertificationData(empID, empName, certType, expDate));
+                        string empFirstName = reader.GetString(1);
+                        string empLastName = reader.GetString(2);
+                        string certType = reader.GetString(3);
+                        DateTime expDate = reader.GetDateTime(4);
+                        certificationList.Add(new CertificationData(empID, empFirstName, empLastName, certType, expDate));
                     }
                 }
             }

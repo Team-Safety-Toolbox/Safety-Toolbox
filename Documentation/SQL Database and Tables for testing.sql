@@ -10,7 +10,8 @@ Create table Attendance (
 
 Create table Employees (
 	EmployeeID int not null primary key,
-	EmployeeName varchar(100))
+	EmployeeFirstName varchar(100),
+	EmployeeLastName varchar(100))
 
 Create table Certifications(
 	EmployeeID int not null primary key, 
@@ -18,9 +19,9 @@ Create table Certifications(
 	ExpiryDate Date
 )
 
-INSERT INTO Employees Values(1, 'Bob');
-INSERT INTO Employees Values(2, 'Joe');
-INSERT INTO Employees Values(3, 'Sue');
+INSERT INTO Employees Values(1, 'Bob', 'Bobington');
+INSERT INTO Employees Values(2, 'Joe', 'Jones');
+INSERT INTO Employees Values(3, 'Sue', 'Snow');
 
 INSERT INTO Attendance Values(1, '2023-11-04', 1, 0, 0);
 INSERT INTO Attendance Values(2, '2023-11-04', 0, 1, 0);
