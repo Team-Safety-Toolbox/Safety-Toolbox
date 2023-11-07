@@ -24,21 +24,21 @@
             <Button
                 x:Name="TBTBtn"
                 Text="ToolBox Talk"
-                SemanticProperties.Hint="Counts the number of times you click"
+                SemanticProperties.Hint="Takes you to the ToolBox Talk Page"
                 Clicked="OnTBTBtnClicked"
                 HorizontalOptions="Center" />
 
             <Button
                 x:Name="CertsBtn"
                 Text="Employee Certifications"
-                SemanticProperties.Hint="Counts the number of times you click"
+                SemanticProperties.Hint="Takes you to the Employee Certifications Page"
                 Clicked="OnCertBtnClicked"
                 HorizontalOptions="Center" />
 
             <Button
                 x:Name="LibBtn"
                 Text="Library"
-                SemanticProperties.Hint="Counts the number of times you click"
+                SemanticProperties.Hint="Takes you to the Library Page"
                 Clicked="OnLibBtnClicked"
                 HorizontalOptions="Center" />   
 

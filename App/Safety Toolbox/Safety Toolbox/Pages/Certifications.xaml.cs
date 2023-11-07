@@ -55,6 +55,17 @@ public partial class Certifications : ContentPage
         }
     }
 
+    void OnTextChanged(object sender, EventArgs e)
+    {
+        SearchBar searchBar = (SearchBar)sender;
+        //do a new query searching for searchBar.Text
+    }
+
+    void OnExportBtnClicked(object sender, EventArgs e)
+    {
+        //Generate report here!
+    }
+
     private List<CertificationData> getCertificationData()
     {
         string connectionString = "Server=DESKTOP-0LUMUS9;Database=SafetyToolBox;Persist Security Info=False;Integrated Security=true;Encrypt=False;";
