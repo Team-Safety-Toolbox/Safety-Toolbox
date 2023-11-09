@@ -49,12 +49,12 @@
             SemanticProperties.HeadingLevel="Level1"
             FontSize="32"
             HorizontalOptions="Center" />
+
         <HorizontalStackLayout HorizontalOptions="Center" Spacing="10">
             <Label Text="Sort By:" HorizontalOptions="Center" VerticalOptions="Center"/>
             <Picker x:Name="sortPicker" SelectedIndexChanged="OnPickerSelectedIndexChanged" ItemsSource="{Binding sortedByExpDate}" />
             <SearchBar Placeholder="Search items..." TextChanged="OnTextChanged" />
-            <Button x:Name="ExportBtn" Text="Export" SemanticProperties.Hint="Export Report" Clicked="OnExportBtnClicked"
-    HorizontalOptions="Center" />
+            <Button x:Name="ExportBtn" Text="Export" SemanticProperties.Hint="Export Report" Clicked="OnExportBtnClicked" />
         </HorizontalStackLayout>
         
         <Grid>
@@ -74,5 +74,6 @@
         <CollectionView x:Name="collectionView"
                 Margin="0,20,0,0"
                 ItemTemplate="{StaticResource CertTemplateSelector}" />
+        <Button x:Name="ReportSettingsBtn" Text="Report Settings" SemanticProperties.Hint="Export Report" Clicked="OnReportSettingsBtnClicked" HorizontalOptions="Center"/>
     </VerticalStackLayout>
 </ContentPage>

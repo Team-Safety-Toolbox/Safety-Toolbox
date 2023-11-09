@@ -76,6 +76,10 @@ public partial class Certifications : ContentPage
         //Generate report here!
     }
 
+    void OnReportSettingsBtnClicked(object sender, EventArgs e)
+    {
+        //Report settings
+    }
     private List<CertificationData> getCertificationData()
     {
         string query = "SELECT Certifications.EmployeeID, Employees.EmployeeFirstName, Employees.EmployeeLastName, Certifications.CertType, Certifications.ExpiryDate FROM Certifications JOIN Employees on Certifications.EmployeeID = Employees.EmployeeID";
