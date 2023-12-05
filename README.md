@@ -12,6 +12,7 @@ Our customer is Ralph McKay Industries. They are in need of a tool that can keep
 
 ## Vlog Links
 Vlog 1 - [Link here!](https://youtu.be/MCdWYfqRIfA)
+
 Vlog 2 - [Link here!](https://youtu.be/ryfXBUEsTb4)
 
 ## Mentor
