@@ -2,7 +2,7 @@
 
 # Members
 * Mackenzie Kot - Full Stack Developer
-* Mikayla Peterson - Full Stack Developer
+* Mikayla Peterson - Full Stack Developer/Project Manager
 
 ## Project Idea
 Our project is a safety system tracking app. It will keep track of employee training and certifications, items for Toolbox Talks such as prompts, attendance sheets, and notes, and it will act as a central library of requirements and documents that can be revised and updated as needed.
