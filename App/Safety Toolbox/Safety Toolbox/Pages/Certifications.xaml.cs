@@ -82,7 +82,7 @@ public partial class Certifications : ContentPage
     }
     private List<CertificationData> getCertificationData()
     {
-        string query = "SELECT Certifications.EmployeeID, Employees.EmployeeFirstName, Employees.EmployeeLastName, Certifications.CertType, Certifications.ExpiryDate FROM Certifications JOIN Employees on Certifications.EmployeeID = Employees.EmployeeID";
+        string query = "SELECT Certifications.EmployeeID, Employees.EmployeeFirstName, Employees.EmployeeLastName, Certifications.CertType, Certifications.TrainedOnDate, Certifications.ExpiryDate FROM Certifications JOIN Employees on Certifications.EmployeeID = Employees.EmployeeID";
         List<CertificationData> certificationList = new List<CertificationData>();
 
         using (SqlConnection connection = new SqlConnection(Constants.connectionString))
@@ -98,8 +98,9 @@ public partial class Certifications : ContentPage
                         string empFirstName = reader.GetString(1);
                         string empLastName = reader.GetString(2);
                         string certType = reader.GetString(3);
-                        DateTime expDate = reader.GetDateTime(4);
-                        certificationList.Add(new CertificationData(empID, empFirstName, empLastName, certType, expDate));
+                        DateTime trainedOnDate = reader.GetDateTime(4);
+                        DateTime expDate = reader.GetDateTime(5);
+                        certificationList.Add(new CertificationData(empID, empFirstName, empLastName, certType, trainedOnDate, expDate));
                     }
                 }
             }

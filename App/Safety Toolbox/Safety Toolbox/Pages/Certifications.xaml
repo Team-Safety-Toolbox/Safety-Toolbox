@@ -15,11 +15,13 @@
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <Label Grid.Column="1" Text="{Binding EmployeeFirstName}" HorizontalOptions="Center" />
                 <Label Grid.Column="2" Text="{Binding EmployeeLastName}" HorizontalOptions="Center" />
                 <Label Grid.Column="3" Text="{Binding CertType}" HorizontalOptions="Center" />
-                <Label Grid.Column="4" Text="{Binding ExpiryDate, StringFormat='{0:d}'}" HorizontalOptions="Center" />
+                <Label Grid.Column="4" Text="{Binding TrainedOnDate, StringFormat='{0:d}'}" HorizontalOptions="Center" />
+                <Label Grid.Column="5" Text="{Binding ExpiryDate, StringFormat='{0:d}'}" HorizontalOptions="Center" />
             </Grid>
         </DataTemplate>
         <DataTemplate x:Key="expiringSoonTemplate">
@@ -31,11 +33,13 @@
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <Label Grid.Column="1" Text="{Binding EmployeeFirstName}" TextColor="Red" HorizontalOptions="Center" />
                 <Label Grid.Column="2" Text="{Binding EmployeeLastName}" TextColor="Red" HorizontalOptions="Center" />
                 <Label Grid.Column="3" Text="{Binding CertType}" TextColor="Red" HorizontalOptions="Center" />
-                <Label Grid.Column="4" Text="{Binding ExpiryDate, StringFormat='{0:d}'}" TextColor="Red" HorizontalOptions="Center" />
+                <Label Grid.Column="4" Text="{Binding TrainedOnDate, StringFormat='{0:d}'}" TextColor="Red" HorizontalOptions="Center" />
+                <Label Grid.Column="5" Text="{Binding ExpiryDate, StringFormat='{0:d}'}" TextColor="Red" HorizontalOptions="Center" />
             </Grid>
         </DataTemplate>
         <local:CertTemplateSelector x:Key="CertTemplateSelector"
@@ -65,11 +69,13 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <Label Grid.Column="1" Text="First Name" HorizontalOptions="Center"/>
             <Label Grid.Column="2" Text="Last Name" HorizontalOptions="Center"/>
             <Label Grid.Column="3" Text="Certification" HorizontalOptions="Center" />
-            <Label Grid.Column="4" Text="Expiry Date" HorizontalOptions="Center" />
+            <Label Grid.Column="4" Text="Trained On Date" HorizontalOptions="Center" />
+            <Label Grid.Column="5" Text="Expiry Date" HorizontalOptions="Center" />
         </Grid>
         <CollectionView x:Name="collectionView"
                 Margin="0,20,0,0"

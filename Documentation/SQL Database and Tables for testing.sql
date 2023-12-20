@@ -1,5 +1,9 @@
 Create database SafetyToolBox
 
+drop table Attendance
+drop table Employees
+drop table Certifications
+
 Create table Attendance (
 	EmployeeID int not null,
 	AttendanceDate Date not null,
@@ -16,6 +20,7 @@ Create table Employees (
 Create table Certifications(
 	EmployeeID int not null primary key, 
 	CertType varchar(50),
+	TrainedOnDate Date,
 	ExpiryDate Date
 )
 
@@ -27,9 +32,9 @@ INSERT INTO Attendance Values(1, '2023-11-04', 1, 0, 0);
 INSERT INTO Attendance Values(2, '2023-11-04', 0, 1, 0);
 INSERT INTO Attendance Values(3, '2023-11-04', 0, 0, 1);
 
-INSERT INTO Certifications Values(1, 'Forklift', '2023-12-10');
-INSERT INTO Certifications Values(2, 'Forklift', '2023-11-15');
-INSERT INTO Certifications Values(3, 'Forklift', '2024-07-20');
+INSERT INTO Certifications Values(1, 'Crane Operation', '2019-12-20', '2024-04-30');
+INSERT INTO Certifications Values(2, 'Kleen Press', '2021-04-30', '2024-02-15');
+INSERT INTO Certifications Values(3, 'First Aid', '2020-07-15', '2024-07-20');
 
 SELECT * FROM Employees
 SELECT * FROM Attendance
