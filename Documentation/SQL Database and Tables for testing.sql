@@ -18,10 +18,11 @@ Create table Employees (
 	EmployeeLastName varchar(100))
 
 Create table Certifications(
-	EmployeeID int not null primary key, 
+	EmployeeID int not null, 
 	CertType varchar(50),
 	TrainedOnDate Date,
-	ExpiryDate Date
+	ExpiryDate Date 
+	Constraint PersonCert Primary KEY (EmployeeID, CertType)
 )
 
 INSERT INTO Employees Values(1, 'Bob', 'Bobington');
@@ -35,6 +36,38 @@ INSERT INTO Attendance Values(3, '2023-11-04', 0, 0, 1);
 INSERT INTO Certifications Values(1, 'Crane Operation', '2019-12-20', '2024-04-30');
 INSERT INTO Certifications Values(2, 'Kleen Press', '2021-04-30', '2024-02-15');
 INSERT INTO Certifications Values(3, 'First Aid', '2020-07-15', '2024-07-20');
+INSERT INTO Certifications Values(2, 'Disc Lathe Operation', '2021-08-17', '2024-01-20');
+INSERT INTO Certifications Values(3, 'WHMIS', '2020-06-01', null);
+INSERT INTO Certifications Values(1, 'Supervision Training', '2018-12-20', '2024-08-30');
+
+--some garbage data to test cert page length handling
+--INSERT INTO Certifications Values(1, 'asdf', '2019-12-20', '2024-04-30');
+--INSERT INTO Certifications Values(2, 'asdf', '2021-04-30', '2024-02-15');
+--INSERT INTO Certifications Values(3, 'asdf', '2020-07-15', '2024-07-20');
+--INSERT INTO Certifications Values(2, 'qwer', '2021-08-17', '2024-02-20');
+--INSERT INTO Certifications Values(3, 'qwer', '2020-06-01', '2024-01-30');
+--INSERT INTO Certifications Values(1, 'qwer', '2018-12-20', '2024-08-30');
+--INSERT INTO Certifications Values(1, 'zxcv', '2019-12-20', '2024-04-30');
+--INSERT INTO Certifications Values(2, 'zxcv', '2021-04-30', '2024-02-15');
+--INSERT INTO Certifications Values(3, 'zxcv', '2020-07-15', '2024-07-20');
+--INSERT INTO Certifications Values(2, 'uiop', '2021-08-17', '2024-02-20');
+--INSERT INTO Certifications Values(3, 'uiop', '2020-06-01', '2024-02-28');
+--INSERT INTO Certifications Values(1, 'uiop', '2018-12-20', '2024-08-30');
+--INSERT INTO Certifications Values(1, 'hjkl', '2019-12-20', '2024-04-30');
+--INSERT INTO Certifications Values(2, 'hjkl', '2021-04-30', '2024-02-15');
+--INSERT INTO Certifications Values(3, 'hjkl', '2020-07-15', '2024-07-20');
+--INSERT INTO Certifications Values(2, 'vbnm', '2021-08-17', '2024-02-20');
+--INSERT INTO Certifications Values(3, 'vbnm', '2020-06-01', '2024-02-28');
+--INSERT INTO Certifications Values(1, 'vbnm', '2018-12-20', '2024-08-30');
+--INSERT INTO Certifications Values(1, 'sdfg', '2019-12-20', '2024-04-30');
+--INSERT INTO Certifications Values(2, 'sdfg', '2021-04-30', '2024-02-15');
+--INSERT INTO Certifications Values(3, 'sdfg', '2020-07-15', '2024-07-20');
+--INSERT INTO Certifications Values(2, 'ghjk', '2021-08-17', '2024-02-20');
+--INSERT INTO Certifications Values(3, 'ghjk', '2020-06-01', '2024-02-28');
+--INSERT INTO Certifications Values(1, 'ghjk', '2018-12-20', '2024-08-30');
+--INSERT INTO Certifications Values(2, 'cvbn', '2021-08-17', '2024-02-20');
+--INSERT INTO Certifications Values(3, 'cvbn', '2020-06-01', '2024-02-28');
+--INSERT INTO Certifications Values(1, 'cvbn', '2018-12-20', '2024-08-30');
 
 SELECT * FROM Employees
 SELECT * FROM Attendance

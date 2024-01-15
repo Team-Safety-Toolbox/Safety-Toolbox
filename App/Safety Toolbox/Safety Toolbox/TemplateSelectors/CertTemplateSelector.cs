@@ -14,17 +14,23 @@ namespace Safety_Toolbox.Templates
 
         protected override DataTemplate OnSelectTemplate(object item, BindableObject container)
         {
-            if((((CertificationData)item).ExpiryDate.Year == DateTime.Today.Year) && (((CertificationData)item).ExpiryDate.Month == DateTime.Today.Month)){
-                return ExpiringSoon;
-            }
-            else if (((CertificationData)item).ExpiryDate < DateTime.Today)
+            if (((CertificationData)item).ExpiryDate.HasValue)
             {
-                return ExpiringSoon;//expired
-            }
-            else{
-                return NotExpiring;
+                if ((((CertificationData)item).ExpiryDate.Value.Year == DateTime.Today.Year) && (((CertificationData)item).ExpiryDate.Value.Month == DateTime.Today.Month))
+                {
+                    return ExpiringSoon;
+                }
+                else if (((CertificationData)item).ExpiryDate < DateTime.Today)
+                {
+                    return ExpiringSoon;//expired
+                }
+                else
+                {
+                    return NotExpiring;
+                }
             }
             
+            return NotExpiring;
         }
         
     }

@@ -1,5 +1,6 @@
 using Microsoft.Data.Sql;
 using Microsoft.Data.SqlClient;
+using Safety_Toolbox.Pages;
 using Safety_Toolbox.Types;
 using System.ComponentModel;
 using System.Runtime.ConstrainedExecution;
@@ -35,7 +36,7 @@ public partial class Certifications : ContentPage
 
         if (selectedIndex == 0)
         {
-            List<CertificationData> sortedByExpDate = certs.OrderBy(o => o.ExpiryDate).ToList();
+            List<CertificationData> sortedByExpDate = certs.OrderBy(o => o.ExpiryDate.HasValue? o.ExpiryDate : DateTime.MaxValue).ToList();
             collectionView.ItemsSource = sortedByExpDate;
         }
         else if (selectedIndex == 1)
@@ -76,9 +77,10 @@ public partial class Certifications : ContentPage
         //Generate report here!
     }
 
-    void OnReportSettingsBtnClicked(object sender, EventArgs e)
+    private async void OnReportSettingsBtnClicked(object sender, EventArgs e)
     {
         //Report settings
+        await Navigation.PushAsync(new ReportSettings());
     }
     private List<CertificationData> getCertificationData()
     {
@@ -98,8 +100,17 @@ public partial class Certifications : ContentPage
                         string empFirstName = reader.GetString(1);
                         string empLastName = reader.GetString(2);
                         string certType = reader.GetString(3);
-                        DateTime trainedOnDate = reader.GetDateTime(4);
-                        DateTime expDate = reader.GetDateTime(5);
+                        DateTime? trainedOnDate = null;
+                        if (!reader.IsDBNull(4))
+                        {
+                            trainedOnDate = reader.GetDateTime(4);
+                        }
+                        DateTime? expDate = null;
+                        if (!reader.IsDBNull(5))
+                        { 
+                            expDate = reader.GetDateTime(5);
+                        }
+                        
                         certificationList.Add(new CertificationData(empID, empFirstName, empLastName, certType, trainedOnDate, expDate));
                     }
                 }
