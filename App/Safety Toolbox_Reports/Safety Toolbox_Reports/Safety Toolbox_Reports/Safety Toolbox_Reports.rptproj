@@ -52,6 +52,7 @@
     <DataSource Include="DataSource.rds" />
   </ItemGroup>
   <ItemGroup>
+    <Report Include="Certifcate.rdl" />
     <Report Include="ExpiredCertifications.rdl" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Reporting Services\Microsoft.ReportingServices.MSBuilder.targets" />

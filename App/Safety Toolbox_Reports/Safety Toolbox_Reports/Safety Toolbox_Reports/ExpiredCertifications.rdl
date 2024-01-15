@@ -34,7 +34,7 @@
   FROM [SafetyToolBox].[dbo].[Certifications]
   LEFT JOIN Employees ON Certifications.EmployeeID = Employees.EmployeeID
 
-  WHERE ExpiryDate &gt;= @CutoffDate</CommandText>
+  WHERE ExpiryDate &lt;= @CutoffDate</CommandText>
       </Query>
       <Fields>
         <Field Name="CertType">
@@ -170,7 +170,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>Cert Type</Value>
+                                  <Value>Certification</Value>
                                   <Style>
                                     <FontFamily>segoe ui</FontFamily>
                                     <FontWeight>Bold</FontWeight>
@@ -528,7 +528,7 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>Training Type:</Value>
+                      <Value>Certification:</Value>
                       <Style>
                         <FontFamily>Segoe ui</FontFamily>
                       </Style>
@@ -635,7 +635,7 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox17</rd:DefaultName>
-              <Top>0.26389in</Top>
+              <Top>0.25in</Top>
               <Left>2in</Left>
               <Height>0.25in</Height>
               <Width>6in</Width>
