@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33403.182
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{F14B399A-7131-4C87-9E4B-1186C45EF12D}") = "Safety Toolbox_Reports", "Safety Toolbox_Reports\Safety Toolbox_Reports.rptproj", "{78AF91C2-B689-42F8-840B-389C0DC7C8BF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Default = Debug|Default
+		DebugLocal|Default = DebugLocal|Default
+		Release|Default = Release|Default
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{78AF91C2-B689-42F8-840B-389C0DC7C8BF}.Debug|Default.ActiveCfg = Debug
+		{78AF91C2-B689-42F8-840B-389C0DC7C8BF}.Debug|Default.Build.0 = Debug
+		{78AF91C2-B689-42F8-840B-389C0DC7C8BF}.Debug|Default.Deploy.0 = Debug
+		{78AF91C2-B689-42F8-840B-389C0DC7C8BF}.DebugLocal|Default.ActiveCfg = DebugLocal
+		{78AF91C2-B689-42F8-840B-389C0DC7C8BF}.DebugLocal|Default.Build.0 = DebugLocal
+		{78AF91C2-B689-42F8-840B-389C0DC7C8BF}.Release|Default.ActiveCfg = Release
+		{78AF91C2-B689-42F8-840B-389C0DC7C8BF}.Release|Default.Build.0 = Release
+		{78AF91C2-B689-42F8-840B-389C0DC7C8BF}.Release|Default.Deploy.0 = Release
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {48175842-62CB-40F8-B4EE-A5D703B7322C}
+	EndGlobalSection
+EndGlobal
