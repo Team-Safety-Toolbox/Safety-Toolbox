@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Safety_Toolbox.Pages.AddEditCert"
+             Title=" ">
+    <VerticalStackLayout Spacing="10">
+        <Label
+            Text="Add/Edit Certification"
+            SemanticProperties.HeadingLevel="Level1"
+            FontSize="32"
+            HorizontalOptions="Center" />
+        <Label Text="Fill out the fields below. If the chosen certification already exists for the chosen employee, the other information will be updated accordingly." HorizontalOptions="Center" VerticalOptions="Center" LineBreakMode="WordWrap"/>
+        <HorizontalStackLayout HorizontalOptions="Center">
+            <Label Text="Employee: " HorizontalOptions="Center" VerticalOptions="Center"/>
+            <Picker x:Name="employeePicker" HorizontalOptions="Center"/>
+        </HorizontalStackLayout>
+        
+        <HorizontalStackLayout HorizontalOptions="Center">
+            <Label Text="Certification Type: " HorizontalOptions="Center" VerticalOptions="Center"/>
+            <Picker x:Name="certificationPicker" HorizontalOptions="Center"/>
+        </HorizontalStackLayout>
+        
+        <HorizontalStackLayout HorizontalOptions="Center">
+            <Label Text="Date Trained: " HorizontalOptions="Center" VerticalOptions="Center"/>
+            <DatePicker x:Name="trainedDatePicker" HorizontalOptions="Center"/>
+            <CheckBox x:Name="NoTrainDateCheckBox" CheckedChanged="OnTrainedCheckBoxCheckedChanged"/>
+            <Label Text="There is no trained on date" VerticalOptions="Center"/>
+        </HorizontalStackLayout>
+        
+        <HorizontalStackLayout HorizontalOptions="Center">
+            <Label Text="Expires On: " HorizontalOptions="Center" VerticalOptions="Center"/>
+            <DatePicker x:Name="expiryDatePicker" HorizontalOptions="Center"/>
+            <CheckBox x:Name="NoExpiryDateCheckBox" CheckedChanged="OnExpiryCheckBoxCheckedChanged"/>
+            <Label Text="There is no expiry date" VerticalOptions="Center"/>
+        </HorizontalStackLayout>
+        
+        <Button x:Name="FilePickerBtn" Text="Pick a File" SemanticProperties.Hint="Pick a File" Clicked="OnFilePickerBtnClicked" HorizontalOptions="Center"></Button>
+
+        <Button x:Name="SaveBtn" Text="Save Certification" SemanticProperties.Hint="Save Certification" Clicked="OnSubmitBtnClicked" HorizontalOptions="Center"></Button>
+    </VerticalStackLayout>
+</ContentPage> 

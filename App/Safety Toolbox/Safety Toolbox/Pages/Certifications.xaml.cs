@@ -86,7 +86,7 @@ public partial class Certifications : ContentPage
     private async void OnAddEditCertBtnClicked(object sender, EventArgs e)
     {
         //Add or edit a certification
-        //await Navigation.PushAsync(new AddEditCert());
+        await Navigation.PushAsync(new AddEditCert());
     }
     private List<CertificationData> getCertificationData()
     {
