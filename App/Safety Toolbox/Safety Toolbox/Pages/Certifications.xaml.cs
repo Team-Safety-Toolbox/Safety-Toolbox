@@ -82,6 +82,12 @@ public partial class Certifications : ContentPage
         //Report settings
         await Navigation.PushAsync(new ReportSettings());
     }
+
+    private async void OnAddEditCertBtnClicked(object sender, EventArgs e)
+    {
+        //Add or edit a certification
+        //await Navigation.PushAsync(new AddEditCert());
+    }
     private List<CertificationData> getCertificationData()
     {
         string query = "SELECT Certifications.EmployeeID, Employees.EmployeeFirstName, Employees.EmployeeLastName, Certifications.CertType, Certifications.TrainedOnDate, Certifications.ExpiryDate FROM Certifications JOIN Employees on Certifications.EmployeeID = Employees.EmployeeID";
