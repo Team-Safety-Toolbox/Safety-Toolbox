@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Safety_Toolbox.Pages.GetCertFile"
+             Title=" ">
+    <VerticalStackLayout Spacing="10">
+        <Label
+            Text="Choose Certification File"
+            SemanticProperties.HeadingLevel="Level1"
+            FontSize="32"
+            HorizontalOptions="Center" />
+
+        <Label 
+            Text="File will be saved as:"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center" />
+        <Label 
+            Text="{Binding filename}"
+            x:Name="filenameLabel"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center" />
+        <Button x:Name="FilePickerBtn" Text="Pick Certification PDF" SemanticProperties.Hint="Pick Certification PDF" Clicked="OnFilePickerBtnClicked" HorizontalOptions="Center"></Button>
+        
+    </VerticalStackLayout>
+</ContentPage>

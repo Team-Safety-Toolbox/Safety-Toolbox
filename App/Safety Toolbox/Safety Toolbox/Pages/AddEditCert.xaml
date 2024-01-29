@@ -33,9 +33,7 @@
             <CheckBox x:Name="NoExpiryDateCheckBox" CheckedChanged="OnExpiryCheckBoxCheckedChanged"/>
             <Label Text="There is no expiry date" VerticalOptions="Center"/>
         </HorizontalStackLayout>
-        
-        <Button x:Name="FilePickerBtn" Text="Pick a File" SemanticProperties.Hint="Pick a File" Clicked="OnFilePickerBtnClicked" HorizontalOptions="Center"></Button>
 
-        <Button x:Name="SaveBtn" Text="Save Certification" SemanticProperties.Hint="Save Certification" Clicked="OnSubmitBtnClicked" HorizontalOptions="Center"></Button>
+        <Button x:Name="NextBtn" Text="Next Step" SemanticProperties.Hint="Next Step" Clicked="OnNextStepBtnClicked" HorizontalOptions="Center"></Button>
     </VerticalStackLayout>
 </ContentPage> 

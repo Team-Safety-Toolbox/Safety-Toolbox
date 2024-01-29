@@ -87,6 +87,9 @@
 	  <MauiXaml Update="Pages\AddEditCert.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Pages\GetCertFile.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Pages\ReportSettings.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
