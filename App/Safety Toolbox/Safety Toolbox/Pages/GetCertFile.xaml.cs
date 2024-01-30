@@ -1,3 +1,4 @@
+using Microsoft.Data.SqlClient;
 using Microsoft.Maui;
 using System.Threading;
 using static System.Net.Mime.MediaTypeNames;
@@ -6,16 +7,27 @@ namespace Safety_Toolbox.Pages;
 
 public partial class GetCertFile : ContentPage
 {
-    
-    String FileName { get; set; }
-	public GetCertFile(String employee, String certType, DateTime? trained, DateTime? expires)
+    string FileName { get; set; }
+
+    string EmpName { get; set; }
+    string CertType { get; set; }
+    int EmpId { get; set; }
+    DateTime? TrainDate { get; set; }
+    DateTime? ExpireDate { get; set; }
+    public GetCertFile(int empId, string employee, string certType, DateTime? trained, DateTime? expires)
 	{
         InitializeComponent();
+
+        EmpId = empId;
+        EmpName = employee;
+        CertType = certType;
+        TrainDate = trained;
+        ExpireDate = expires;
         
-        String separator = "-";
-        String fileType = ".pdf";
-        String trainedDisplay = "";
-        String expireDisplay = "";
+        string separator = "-";
+        string fileType = ".pdf";
+        string trainedDisplay = "";
+        string expireDisplay = "";
         if (!trained.HasValue) {
             trainedDisplay = "noTrainDate";
         }
@@ -48,21 +60,75 @@ public partial class GetCertFile : ContentPage
 
         if (file != null)
         {
-            var fileName = file.FileName;
             var fullPath = file.FullPath;
-            var fileStream = await file.OpenReadAsync();
 
-            //delete existing file
-            File.Copy(fullPath, Path.Combine(Constants.certificationFilePath, FileName));
+            File.Copy(fullPath, Path.Combine(Constants.certificationFilePath, FileName), true); //overwrites file if it exists
 
-            //push a file saved screen? and then a back to cert page (but actually remove the pages)
-            //await Navigation.PopAsync();
+            //update sql table
+            string queryInsert = "INSERT INTO Certifications Values(@EmpId, @CertType, @TrainDate, @ExpireDate);";
+            string queryUpdate = "UPDATE Certifications SET TrainedOnDate = @TrainDate, ExpiryDate = @ExpireDate WHERE EmployeeID = @EmpId AND CertType = @CertType;";
+
+
+            using (SqlConnection connection = new SqlConnection(Constants.connectionString))
+            {
+                connection.Open();
+
+                try
+                {
+                    using (SqlCommand command = new SqlCommand(queryInsert, connection))
+                    {
+                        //local vars because once they've been added here in the try, they can't be readded in catch
+                        var empIdParam = new SqlParameter("EmpId", EmpId);
+                        var certTypeParam = new SqlParameter("CertType", CertType);
+                        var trainDateParam = new SqlParameter("TrainDate", TrainDate);
+                        var expireDateParam = new SqlParameter("ExpireDate", ExpireDate);
+
+                        if (TrainDate == null)
+                        {
+                            trainDateParam.Value = DBNull.Value;
+                        }
+                        if (ExpireDate == null)
+                        {
+                            expireDateParam.Value = DBNull.Value;
+                        }
+
+                        command.Parameters.Add(empIdParam);
+                        command.Parameters.Add(certTypeParam);
+                        command.Parameters.Add(trainDateParam);
+                        command.Parameters.Add(expireDateParam);
+
+                        var results = command.ExecuteReader();
+                    }
+                }
+                catch {
+                    using (SqlCommand command = new SqlCommand(queryUpdate, connection))
+                    {
+                        //local vars because once they were added in the try, they can't be readded in catch
+                        var empIdParam = new SqlParameter("EmpId", EmpId);
+                        var certTypeParam = new SqlParameter("CertType", CertType);
+                        var trainDateParam = new SqlParameter("TrainDate", TrainDate);
+                        var expireDateParam = new SqlParameter("ExpireDate", ExpireDate);
+
+                        if (TrainDate == null)
+                        {
+                            trainDateParam.Value = DBNull.Value;
+                        }
+                        if (ExpireDate == null)
+                        {
+                            expireDateParam.Value = DBNull.Value;
+                        }
+
+                        command.Parameters.Add(empIdParam);
+                        command.Parameters.Add(certTypeParam);
+                        command.Parameters.Add(trainDateParam);
+                        command.Parameters.Add(expireDateParam);
+
+                        var results = command.ExecuteReader();
+                    }
+                }
+                
+            }
+                await Navigation.PushAsync(new FileSaved());
         }
-    }
-
-    void OnSubmitBtnClicked(object sender, EventArgs e)
-    {
-        //save the file
-        //update sql table
     }
 }

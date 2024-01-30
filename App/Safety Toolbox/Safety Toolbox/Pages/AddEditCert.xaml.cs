@@ -4,17 +4,17 @@ using Microsoft.Data.SqlClient;
 
 public partial class AddEditCert : ContentPage
 {
-    List<String> EmployeeNames { get; set; }
-    List<Int32> EmployeeIds { get; set; }
-    List<String> CertificationTypes { get; set; }
+    List<string> EmployeeNames { get; set; }
+    List<int> EmployeeIds { get; set; }
+    List<string> CertificationTypes { get; set; }
 
     public AddEditCert()
     {
         InitializeComponent();
 
-        EmployeeNames = new List<String>();
-        EmployeeIds = new List<Int32>();
-        CertificationTypes = new List<String>();
+        EmployeeNames = new List<string>();
+        EmployeeIds = new List<int>();
+        CertificationTypes = new List<string>();
         getEmployees();
 
         //getCertifications();
@@ -37,12 +37,13 @@ public partial class AddEditCert : ContentPage
     }
     private async void OnNextStepBtnClicked(object sender, EventArgs e)
     {
-        String employee = EmployeeNames[employeePicker.SelectedIndex];
-        String certType = CertificationTypes[certificationPicker.SelectedIndex];
+        string employee = EmployeeNames[employeePicker.SelectedIndex];
+        int empId = EmployeeIds[employeePicker.SelectedIndex];
+        string certType = CertificationTypes[certificationPicker.SelectedIndex];
         DateTime? trained = NoTrainDateCheckBox.IsChecked ? null : trainedDatePicker.Date;
         DateTime? expires = NoExpiryDateCheckBox.IsChecked ? null : expiryDatePicker.Date;
 
-        await Navigation.PushAsync(new GetCertFile(employee, certType, trained, expires));
+        await Navigation.PushAsync(new GetCertFile(empId, employee, certType, trained, expires));
     }
 
     private void getEmployees()
