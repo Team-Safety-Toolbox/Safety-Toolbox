@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Safety_Toolbox.Pages.FileViewer"
+             Title="">
+    <VerticalStackLayout>
+        <Label
+            Text="File Viewer"
+            SemanticProperties.HeadingLevel="Level1"
+            FontSize="32"
+            HorizontalOptions="Center" />
+        <Label 
+            Text=""
+            x:Name="FileName"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center" />
+        <WebView x:Name="PdfWebView" HeightRequest="800" WidthRequest="800"/>
+    </VerticalStackLayout>
+</ContentPage>

@@ -9,13 +9,11 @@ namespace Safety_Toolbox;
 
 public partial class Certifications : ContentPage
 {
+    bool Refresh {  get; set; }
 	public Certifications()
 	{
         InitializeComponent();
-        List<CertificationData> certs = getCertificationData();
-        List<CertificationData> sortedByExpDate = certs.OrderBy(o=>o.ExpiryDate).ToList();
-        collectionView.ItemsSource = sortedByExpDate;
-
+        
         var sortByList = new List<string>();
         sortByList.Add("Expiry Date");
         sortByList.Add("Employee First Name");
@@ -26,6 +24,18 @@ public partial class Certifications : ContentPage
         sortPicker.ItemsSource = sortByList;
         sortPicker.SelectedIndex = 0;
 
+        updateData();
+    }
+
+    private void updateData()
+    {
+        List<CertificationData> certs = getCertificationData();
+        updateSort(sortPicker.SelectedIndex, certs);
+    }
+
+    protected override void OnSizeAllocated(double width, double height)
+    {
+        MainDataRow.Height = 0.7 * height;
     }
 
     void OnPickerSelectedIndexChanged(object sender, EventArgs e)
@@ -34,9 +44,14 @@ public partial class Certifications : ContentPage
         int selectedIndex = picker.SelectedIndex;
         List<CertificationData> certs = getCertificationData();
 
+        updateSort(selectedIndex, certs);
+    }
+
+    void updateSort(int selectedIndex, List<CertificationData> certs)
+    {
         if (selectedIndex == 0)
         {
-            List<CertificationData> sortedByExpDate = certs.OrderBy(o => o.ExpiryDate.HasValue? o.ExpiryDate : DateTime.MaxValue).ToList();
+            List<CertificationData> sortedByExpDate = certs.OrderBy(o => o.ExpiryDate.HasValue ? o.ExpiryDate : DateTime.MaxValue).ToList();
             collectionView.ItemsSource = sortedByExpDate;
         }
         else if (selectedIndex == 1)
@@ -72,15 +87,25 @@ public partial class Certifications : ContentPage
         }
     }
 
+    void OnRefreshBtnClicked(object sender, EventArgs e)
+    {
+        updateData();
+    }
+
     void OnExportBtnClicked(object sender, EventArgs e)
     {
         //Generate report here!
     }
 
-    void OnViewBtnClicked(object sender, EventArgs e)
+    async void OnViewBtnClicked(object sender, EventArgs e)
     {
         var button = (Button)sender;
-        var filename = button.BindingContext;
+        string filename = button.CommandParameter.ToString();
+        var fullFilePath = Path.Combine(Constants.certificationFilePath, filename);
+
+        if (File.Exists(fullFilePath)){
+            await Navigation.PushAsync(new FileViewer(fullFilePath, filename));
+        }
     }
 
     private async void OnReportSettingsBtnClicked(object sender, EventArgs e)

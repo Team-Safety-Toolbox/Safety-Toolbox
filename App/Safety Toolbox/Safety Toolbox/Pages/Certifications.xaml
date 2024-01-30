@@ -23,7 +23,7 @@
                 <Label Grid.Column="3" Text="{Binding CertType}" HorizontalOptions="Center" VerticalOptions="Center" />
                 <Label Grid.Column="4" Text="{Binding TrainedOnDate, StringFormat='{0:d}'}" HorizontalOptions="Center" VerticalOptions="Center" />
                 <Label Grid.Column="5" Text="{Binding ExpiryDate, StringFormat='{0:d}'}" HorizontalOptions="Center" VerticalOptions="Center" />
-                <Button Grid.Column="6" Text="View" BindingContext="{Binding FileName}" VerticalOptions="Center" Clicked="OnViewBtnClicked"/>
+                <Button Grid.Column="6" Text="View" CommandParameter="{Binding FileName}" VerticalOptions="Center" Clicked="OnViewBtnClicked" IsEnabled="{Binding FileFound}"/>
             </Grid>
         </DataTemplate>
         <DataTemplate x:Key="expiringSoonTemplate">
@@ -43,7 +43,7 @@
                 <Label Grid.Column="3" Text="{Binding CertType}" TextColor="Red" HorizontalOptions="Center" VerticalOptions="Center" />
                 <Label Grid.Column="4" Text="{Binding TrainedOnDate, StringFormat='{0:d}'}" TextColor="Red" HorizontalOptions="Center" VerticalOptions="Center" />
                 <Label Grid.Column="5" Text="{Binding ExpiryDate, StringFormat='{0:d}'}" TextColor="Red" HorizontalOptions="Center" VerticalOptions="Center" />
-                <Button Grid.Column="6" Text="View" BindingContext="{Binding FileName}" CommandParameter="{Binding CertType}" VerticalOptions="Center" Clicked="OnViewBtnClicked"/>
+                <Button Grid.Column="6" Text="View" CommandParameter="{Binding FileName}" VerticalOptions="Center" Clicked="OnViewBtnClicked" IsEnabled="{Binding FileFound}"/>
             </Grid>
         </DataTemplate>
         <local:CertTemplateSelector x:Key="CertTemplateSelector"
@@ -62,14 +62,14 @@
             <Label Text="Sort By:" HorizontalOptions="Center" VerticalOptions="Center"/>
             <Picker x:Name="sortPicker" SelectedIndexChanged="OnPickerSelectedIndexChanged" ItemsSource="{Binding sortedByExpDate}" />
             <SearchBar Placeholder="Search items..." TextChanged="OnTextChanged" />
-            <Button x:Name="ExportBtn" Text="Export" SemanticProperties.Hint="Export Report" Clicked="OnExportBtnClicked" />
+            <Button x:Name="RefreshBtn" Text="Refresh" SemanticProperties.Hint="Export Report" Clicked="OnRefreshBtnClicked"/>
+            <Button x:Name="ExportBtn" Text="Export" SemanticProperties.Hint="Export Report" Clicked="OnExportBtnClicked"/>
         </HorizontalStackLayout>
 
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
-                <!--TODO! Fix this so it auto generates based on a screen's height-->
-                <RowDefinition Height="300" />
+                <RowDefinition x:Name="MainDataRow" Height="300" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <StackLayout Grid.Row="0">

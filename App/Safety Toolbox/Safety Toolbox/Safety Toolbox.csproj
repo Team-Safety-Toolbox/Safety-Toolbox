@@ -90,6 +90,9 @@
 	  <MauiXaml Update="Pages\FileSaved.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Pages\FileViewer.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Pages\GetCertFile.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

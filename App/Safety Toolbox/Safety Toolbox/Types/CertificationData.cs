@@ -17,6 +17,8 @@ namespace Safety_Toolbox.Types
         public DateTime? ExpiryDate { get; set; }
         public string FileName { get; set; }
 
+        public bool FileFound { get; set; }
+
         public CertificationData(){}
 
         public CertificationData(int EmployeeId_, string EmployeeFirstName_, string EmployeeLastName_, string CertType_, DateTime? TrainedOnDate_, DateTime? ExpiryDate_)
@@ -29,6 +31,7 @@ namespace Safety_Toolbox.Types
             ExpiryDate = ExpiryDate_;
 
             FileName = buildFileName();
+            FileFound = findFile();
         }
 
         private string buildFileName()
@@ -38,6 +41,11 @@ namespace Safety_Toolbox.Types
 
             string filename = EmployeeId + separator + FullNameToString() + separator + CertType + fileType;
             return filename;
+        }
+
+        private bool findFile()
+        {
+            return File.Exists(getFullFilePath());
         }
 
         public string FullNameToString()
