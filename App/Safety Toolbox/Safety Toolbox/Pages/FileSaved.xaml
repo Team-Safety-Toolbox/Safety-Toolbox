@@ -3,7 +3,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Safety_Toolbox.Pages.FileSaved"
              Title="">
-    <VerticalStackLayout>
+    <VerticalStackLayout Spacing="10">
+        <Label
+            Text="Confirmation"
+            SemanticProperties.HeadingLevel="Level1"
+            FontSize="32"
+            HorizontalOptions="Center" />
         <Label 
             Text="File has been saved!"
             VerticalOptions="Center" 

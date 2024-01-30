@@ -77,6 +77,12 @@ public partial class Certifications : ContentPage
         //Generate report here!
     }
 
+    void OnViewBtnClicked(object sender, EventArgs e)
+    {
+        var button = (Button)sender;
+        var filename = button.BindingContext;
+    }
+
     private async void OnReportSettingsBtnClicked(object sender, EventArgs e)
     {
         //Report settings

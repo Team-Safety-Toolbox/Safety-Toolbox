@@ -1,5 +1,6 @@
 using Microsoft.Data.SqlClient;
 using Microsoft.Maui;
+using Safety_Toolbox.Types;
 using System.Threading;
 using static System.Net.Mime.MediaTypeNames;
 
@@ -7,46 +8,33 @@ namespace Safety_Toolbox.Pages;
 
 public partial class GetCertFile : ContentPage
 {
-    string FileName { get; set; }
+    CertificationData CertificationData { get; set; }
 
-    string EmpName { get; set; }
-    string CertType { get; set; }
-    int EmpId { get; set; }
-    DateTime? TrainDate { get; set; }
-    DateTime? ExpireDate { get; set; }
-    public GetCertFile(int empId, string employee, string certType, DateTime? trained, DateTime? expires)
+    public GetCertFile(CertificationData certificationData)
 	{
         InitializeComponent();
+        CertificationData = certificationData;
 
-        EmpId = empId;
-        EmpName = employee;
-        CertType = certType;
-        TrainDate = trained;
-        ExpireDate = expires;
-        
-        string separator = "-";
-        string fileType = ".pdf";
+        string filename = certificationData.FileName;
+
         string trainedDisplay = "";
         string expireDisplay = "";
-        if (!trained.HasValue) {
-            trainedDisplay = "noTrainDate";
+        if (!certificationData.TrainedOnDate.HasValue) {
+            trainedDisplay = "no train date";
         }
         else
         {
-            trainedDisplay = trained.Value.ToShortDateString();
+            trainedDisplay = certificationData.TrainedOnDate.Value.ToShortDateString();
         }
-        if (!expires.HasValue)
+        if (!certificationData.ExpiryDate.HasValue)
         {
-            expireDisplay = "noExpireDate";
+            expireDisplay = "no expire date";
         }
         else
         {
-            expireDisplay = expires.Value.ToShortDateString();
+            expireDisplay = certificationData.ExpiryDate.Value.ToShortDateString();
         }
 
-        string filename = empId + separator + employee + separator + certType + fileType;
-
-        FileName = filename;
         filenameLabel.Text = filename;
         trainLabel.Text = trainedDisplay;
         expiryLabel.Text = expireDisplay;
@@ -64,7 +52,7 @@ public partial class GetCertFile : ContentPage
         {
             var fullPath = file.FullPath;
 
-            File.Copy(fullPath, Path.Combine(Constants.certificationFilePath, FileName), true); //overwrites file if it exists
+            File.Copy(fullPath, Path.Combine(Constants.certificationFilePath, CertificationData.FileName), true); //overwrites file if it exists
 
             //update sql table
             string queryInsert = "INSERT INTO Certifications Values(@EmpId, @CertType, @TrainDate, @ExpireDate);";
@@ -80,16 +68,16 @@ public partial class GetCertFile : ContentPage
                     using (SqlCommand command = new SqlCommand(queryInsert, connection))
                     {
                         //local vars because once they've been added here in the try, they can't be readded in catch
-                        var empIdParam = new SqlParameter("EmpId", EmpId);
-                        var certTypeParam = new SqlParameter("CertType", CertType);
-                        var trainDateParam = new SqlParameter("TrainDate", TrainDate);
-                        var expireDateParam = new SqlParameter("ExpireDate", ExpireDate);
+                        var empIdParam = new SqlParameter("EmpId", CertificationData.EmployeeId);
+                        var certTypeParam = new SqlParameter("CertType", CertificationData.CertType);
+                        var trainDateParam = new SqlParameter("TrainDate", CertificationData.TrainedOnDate);
+                        var expireDateParam = new SqlParameter("ExpireDate", CertificationData.ExpiryDate);
 
-                        if (TrainDate == null)
+                        if (CertificationData.TrainedOnDate == null)
                         {
                             trainDateParam.Value = DBNull.Value;
                         }
-                        if (ExpireDate == null)
+                        if (CertificationData.ExpiryDate == null)
                         {
                             expireDateParam.Value = DBNull.Value;
                         }
@@ -106,16 +94,16 @@ public partial class GetCertFile : ContentPage
                     using (SqlCommand command = new SqlCommand(queryUpdate, connection))
                     {
                         //local vars because once they were added in the try, they can't be readded in catch
-                        var empIdParam = new SqlParameter("EmpId", EmpId);
-                        var certTypeParam = new SqlParameter("CertType", CertType);
-                        var trainDateParam = new SqlParameter("TrainDate", TrainDate);
-                        var expireDateParam = new SqlParameter("ExpireDate", ExpireDate);
+                        var empIdParam = new SqlParameter("EmpId", CertificationData.EmployeeId);
+                        var certTypeParam = new SqlParameter("CertType", CertificationData.CertType);
+                        var trainDateParam = new SqlParameter("TrainDate", CertificationData.TrainedOnDate);
+                        var expireDateParam = new SqlParameter("ExpireDate", CertificationData.ExpiryDate);
 
-                        if (TrainDate == null)
+                        if (CertificationData.TrainedOnDate == null)
                         {
                             trainDateParam.Value = DBNull.Value;
                         }
-                        if (ExpireDate == null)
+                        if (CertificationData.ExpiryDate == null)
                         {
                             expireDateParam.Value = DBNull.Value;
                         }
