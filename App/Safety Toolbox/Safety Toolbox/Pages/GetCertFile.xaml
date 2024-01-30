@@ -19,6 +19,26 @@
             x:Name="filenameLabel"
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
+        <HorizontalStackLayout HorizontalOptions="Center" Spacing="10">
+            <Label 
+                Text="Date trained:"
+                VerticalOptions="Center" 
+                HorizontalOptions="Center" />
+            <Label 
+                Text="{Binding trainedDisplay}"
+                x:Name="trainLabel"
+                VerticalOptions="Center" 
+                HorizontalOptions="Center" />
+            <Label 
+                Text="Expiry Date:"
+                VerticalOptions="Center" 
+                HorizontalOptions="Center" />
+            <Label 
+                Text="{Binding expireDisplay}"
+                x:Name="expiryLabel"
+                VerticalOptions="Center" 
+                HorizontalOptions="Center" />   
+        </HorizontalStackLayout>
         <Button x:Name="FilePickerBtn" Text="Pick Certification PDF" SemanticProperties.Hint="Pick Certification PDF" Clicked="OnFilePickerBtnClicked" HorizontalOptions="Center"></Button>
         
     </VerticalStackLayout>

@@ -44,10 +44,12 @@ public partial class GetCertFile : ContentPage
             expireDisplay = expires.Value.ToShortDateString();
         }
 
-        String filename = employee + separator + certType + separator + trainedDisplay + separator + expireDisplay + fileType;
+        string filename = empId + separator + employee + separator + certType + fileType;
 
         FileName = filename;
         filenameLabel.Text = filename;
+        trainLabel.Text = trainedDisplay;
+        expiryLabel.Text = expireDisplay;
     }
 
     private async void OnFilePickerBtnClicked(object sender, EventArgs e)
