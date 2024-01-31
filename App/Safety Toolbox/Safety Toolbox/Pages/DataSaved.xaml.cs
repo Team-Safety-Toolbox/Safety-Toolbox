@@ -1,8 +1,8 @@
 namespace Safety_Toolbox.Pages;
 
-public partial class FileSaved : ContentPage
+public partial class DataSaved : ContentPage
 {
-	public FileSaved()
+	public DataSaved()
 	{
 		InitializeComponent();
 	}

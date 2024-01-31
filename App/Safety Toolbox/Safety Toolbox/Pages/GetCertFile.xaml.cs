@@ -53,95 +53,109 @@ public partial class GetCertFile : ContentPage
             var fullPath = file.FullPath;
 
             File.Copy(fullPath, Path.Combine(Constants.certificationFilePath, CertificationData.FileName), true); //overwrites file if it exists
+            
+            saveCertificationDetails();
+            
+            await Navigation.PushAsync(new DataSaved());
+        }
+    }
 
-            string query = "SELECT CertificationID FROM CertificationTypes WHERE CertificationName = @CertName";
-            int certId = -1;
+    private async void OnNoFileBtnClicked(object sender, EventArgs e)
+    {
+        saveCertificationDetails();
+        await Navigation.PushAsync(new DataSaved());
+    }
 
-            using (SqlConnection connection = new SqlConnection(Constants.connectionString))
-            {
-                using (SqlCommand command = new SqlCommand(query, connection))
-                {
-                    connection.Open();
+    private void saveCertificationDetails()
+    {
+        string query = "SELECT CertificationID FROM CertificationTypes WHERE CertificationName = @CertName";
+        int certId = -1;
 
-                    var certNameParam = new SqlParameter("CertName", CertificationData.CertType);
-                    command.Parameters.Add(certNameParam);
-
-                    using (SqlDataReader reader = command.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            certId = reader.GetInt32(0);
-                        }
-                    }
-                }
-            }
-
-
-            //update sql table
-            string queryInsert = "INSERT INTO Certifications Values(@EmpId, @CertId, @TrainDate, @ExpireDate);";
-            string queryUpdate = "UPDATE Certifications SET TrainedOnDate = @TrainDate, ExpiryDate = @ExpireDate WHERE EmployeeID = @EmpId AND CertificationID = @CertId;";
-
-
-            using (SqlConnection connection = new SqlConnection(Constants.connectionString))
+        using (SqlConnection connection = new SqlConnection(Constants.connectionString))
+        {
+            using (SqlCommand command = new SqlCommand(query, connection))
             {
                 connection.Open();
 
-                try
+                var certNameParam = new SqlParameter("CertName", CertificationData.CertType);
+                command.Parameters.Add(certNameParam);
+
+                using (SqlDataReader reader = command.ExecuteReader())
                 {
-                    using (SqlCommand command = new SqlCommand(queryInsert, connection))
+                    while (reader.Read())
                     {
-                        //local vars because once they've been added here in the try, they can't be readded in catch
-                        var empIdParam = new SqlParameter("EmpId", CertificationData.EmployeeId);
-                        var certTypeParam = new SqlParameter("CertId", certId);
-                        var trainDateParam = new SqlParameter("TrainDate", CertificationData.TrainedOnDate);
-                        var expireDateParam = new SqlParameter("ExpireDate", CertificationData.ExpiryDate);
-
-                        if (CertificationData.TrainedOnDate == null)
-                        {
-                            trainDateParam.Value = DBNull.Value;
-                        }
-                        if (CertificationData.ExpiryDate == null)
-                        {
-                            expireDateParam.Value = DBNull.Value;
-                        }
-
-                        command.Parameters.Add(empIdParam);
-                        command.Parameters.Add(certTypeParam);
-                        command.Parameters.Add(trainDateParam);
-                        command.Parameters.Add(expireDateParam);
-
-                        var results = command.ExecuteReader();
+                        certId = reader.GetInt32(0);
                     }
                 }
-                catch {
-                    using (SqlCommand command = new SqlCommand(queryUpdate, connection))
-                    {
-                        //local vars because once they were added in the try, they can't be readded in catch
-                        var empIdParam = new SqlParameter("EmpId", CertificationData.EmployeeId);
-                        var certTypeParam = new SqlParameter("CertId", certId);
-                        var trainDateParam = new SqlParameter("TrainDate", CertificationData.TrainedOnDate);
-                        var expireDateParam = new SqlParameter("ExpireDate", CertificationData.ExpiryDate);
-
-                        if (CertificationData.TrainedOnDate == null)
-                        {
-                            trainDateParam.Value = DBNull.Value;
-                        }
-                        if (CertificationData.ExpiryDate == null)
-                        {
-                            expireDateParam.Value = DBNull.Value;
-                        }
-
-                        command.Parameters.Add(empIdParam);
-                        command.Parameters.Add(certTypeParam);
-                        command.Parameters.Add(trainDateParam);
-                        command.Parameters.Add(expireDateParam);
-
-                        var results = command.ExecuteReader();
-                    }
-                }
-                
             }
-                await Navigation.PushAsync(new FileSaved());
         }
+
+
+        //update sql table
+        string queryInsert = "INSERT INTO Certifications Values(@EmpId, @CertId, @TrainDate, @ExpireDate);";
+        string queryUpdate = "UPDATE Certifications SET TrainedOnDate = @TrainDate, ExpiryDate = @ExpireDate WHERE EmployeeID = @EmpId AND CertificationID = @CertId;";
+
+        using (SqlConnection connection = new SqlConnection(Constants.connectionString))
+        {
+            connection.Open();
+
+            try
+            {
+                using (SqlCommand command = new SqlCommand(queryInsert, connection))
+                {
+                    //local vars because once they've been added here in the try, they can't be readded in catch
+                    var empIdParam = new SqlParameter("EmpId", CertificationData.EmployeeId);
+                    var certTypeParam = new SqlParameter("CertId", certId);
+                    var trainDateParam = new SqlParameter("TrainDate", CertificationData.TrainedOnDate);
+                    var expireDateParam = new SqlParameter("ExpireDate", CertificationData.ExpiryDate);
+
+                    if (CertificationData.TrainedOnDate == null)
+                    {
+                        trainDateParam.Value = DBNull.Value;
+                    }
+                    if (CertificationData.ExpiryDate == null)
+                    {
+                        expireDateParam.Value = DBNull.Value;
+                    }
+
+                    command.Parameters.Add(empIdParam);
+                    command.Parameters.Add(certTypeParam);
+                    command.Parameters.Add(trainDateParam);
+                    command.Parameters.Add(expireDateParam);
+
+                    var results = command.ExecuteReader();
+                }
+            }
+            catch
+            {
+                using (SqlCommand command = new SqlCommand(queryUpdate, connection))
+                {
+                    //local vars because once they were added in the try, they can't be readded in catch
+                    var empIdParam = new SqlParameter("EmpId", CertificationData.EmployeeId);
+                    var certTypeParam = new SqlParameter("CertId", certId);
+                    var trainDateParam = new SqlParameter("TrainDate", CertificationData.TrainedOnDate);
+                    var expireDateParam = new SqlParameter("ExpireDate", CertificationData.ExpiryDate);
+
+                    if (CertificationData.TrainedOnDate == null)
+                    {
+                        trainDateParam.Value = DBNull.Value;
+                    }
+                    if (CertificationData.ExpiryDate == null)
+                    {
+                        expireDateParam.Value = DBNull.Value;
+                    }
+
+                    command.Parameters.Add(empIdParam);
+                    command.Parameters.Add(certTypeParam);
+                    command.Parameters.Add(trainDateParam);
+                    command.Parameters.Add(expireDateParam);
+
+                    var results = command.ExecuteReader();
+                }
+            }
+
+        }
+
     }
-}
+
+ }

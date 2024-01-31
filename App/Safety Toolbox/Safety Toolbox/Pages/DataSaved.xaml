@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Safety_Toolbox.Pages.FileSaved"
+             x:Class="Safety_Toolbox.Pages.DataSaved"
              Title="">
     <VerticalStackLayout Spacing="10">
         <Label
@@ -10,7 +10,7 @@
             FontSize="32"
             HorizontalOptions="Center" />
         <Label 
-            Text="File has been saved!"
+            Text="Data has been saved!"
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
         <Button Text="Back" Clicked="OnBackBtnClicked" VerticalOptions="Center" HorizontalOptions="Center"/>

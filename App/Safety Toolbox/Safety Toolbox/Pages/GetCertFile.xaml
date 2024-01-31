@@ -39,7 +39,7 @@
                 VerticalOptions="Center" 
                 HorizontalOptions="Center" />   
         </HorizontalStackLayout>
-        <Button x:Name="FilePickerBtn" Text="Pick Certification PDF" SemanticProperties.Hint="Pick Certification PDF" Clicked="OnFilePickerBtnClicked" HorizontalOptions="Center"></Button>
-        
+        <Button x:Name="FilePickerBtn" Text="Pick Certification PDF" SemanticProperties.Hint="Pick Certification PDF" Clicked="OnFilePickerBtnClicked" HorizontalOptions="Center"/>
+        <Button x:Name="NoFileBtn" Text="No file to attach" SemanticProperties.Hint="No Certification File" Clicked="OnNoFileBtnClicked" HorizontalOptions="Center"/>
     </VerticalStackLayout>
 </ContentPage>
