@@ -11,6 +11,10 @@
         Route="MainPage" />
 
     <ShellContent
+        ContentTemplate="{DataTemplate local:Signup}"
+        Route="Signup"/>
+
+    <ShellContent
         ContentTemplate="{DataTemplate local:Dashboard}"
         Route="Dashboard"/>
 

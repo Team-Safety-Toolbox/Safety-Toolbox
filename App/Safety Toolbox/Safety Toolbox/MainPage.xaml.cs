@@ -40,10 +40,12 @@ namespace Safety_Toolbox
                 }
             }
 
-            setReadOnlyStatus(Role.Equals("readonly"));
 
             if (usernameDB.Equals(Username) && passwordDB.Equals(Password))
+            {
+                setReadOnlyStatus(Role.Equals("readonly"));
                 return true;
+            }
             else
                 return false;
         }
@@ -55,7 +57,6 @@ namespace Safety_Toolbox
 
         private async void OnLoginBtnClicked(object sender, EventArgs e)
         {
-            // global readonly should also be set here
             Username = UsernameEntry.Text;
             Password = PasswordEntry.Text;
 
@@ -67,6 +68,11 @@ namespace Safety_Toolbox
             {
                 await DisplayAlert("Invalid Login", "Please enter valid credentials.", "OK");
             }
+        }
+
+        private async void OnSignupBtnClicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new Signup());
         }
     }
 }

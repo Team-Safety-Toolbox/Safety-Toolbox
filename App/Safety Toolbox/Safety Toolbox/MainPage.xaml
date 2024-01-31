@@ -24,6 +24,7 @@
             <Entry x:Name="UsernameEntry" Placeholder="Username"/>
             <Entry x:Name="PasswordEntry" Placeholder="Password" IsPassword="True"/>
             <Button Text="Login" Clicked="OnLoginBtnClicked" />
+            <!--<Button Text="Signup" Clicked="OnSignupBtnClicked"/>-->
 
         </VerticalStackLayout>
     </ScrollView>

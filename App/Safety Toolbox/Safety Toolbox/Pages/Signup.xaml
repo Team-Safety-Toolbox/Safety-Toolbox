@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Safety_Toolbox.Signup"
+             Title=" ">
+    <ScrollView>
+        <VerticalStackLayout
+            Spacing="25"
+            Padding="30,0"
+            VerticalOptions="Center">
+
+            <Label
+                Text="Safety ToolBox Signup"
+                SemanticProperties.HeadingLevel="Level1"
+                FontSize="32"
+                HorizontalOptions="Center" />
+
+            <Label
+                Text="Note: By default, your account will only have readonly access! To get this changed, contact your system administrator!"
+                SemanticProperties.HeadingLevel="Level2"
+                HorizontalOptions="Center"/>
+
+            <Entry x:Name="EmailEntry" Placeholder="Email"/>
+            <Entry x:Name="UsernameEntry" Placeholder="Username"/>
+            <Entry x:Name="PasswordEntry" Placeholder="Password"/>
+            <Entry x:Name="ConfirmPasswordEntry" Placeholder="Confirm Password"/>
+            <Button Text="Signup" Clicked="OnSignUpBtnClicked"/>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
