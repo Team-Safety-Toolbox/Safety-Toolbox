@@ -54,9 +54,32 @@ public partial class GetCertFile : ContentPage
 
             File.Copy(fullPath, Path.Combine(Constants.certificationFilePath, CertificationData.FileName), true); //overwrites file if it exists
 
+            string query = "SELECT CertificationID FROM CertificationTypes WHERE CertificationName = @CertName";
+            int certId = -1;
+
+            using (SqlConnection connection = new SqlConnection(Constants.connectionString))
+            {
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    connection.Open();
+
+                    var certNameParam = new SqlParameter("CertName", CertificationData.CertType);
+                    command.Parameters.Add(certNameParam);
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            certId = reader.GetInt32(0);
+                        }
+                    }
+                }
+            }
+
+
             //update sql table
-            string queryInsert = "INSERT INTO Certifications Values(@EmpId, @CertType, @TrainDate, @ExpireDate);";
-            string queryUpdate = "UPDATE Certifications SET TrainedOnDate = @TrainDate, ExpiryDate = @ExpireDate WHERE EmployeeID = @EmpId AND CertType = @CertType;";
+            string queryInsert = "INSERT INTO Certifications Values(@EmpId, @CertId, @TrainDate, @ExpireDate);";
+            string queryUpdate = "UPDATE Certifications SET TrainedOnDate = @TrainDate, ExpiryDate = @ExpireDate WHERE EmployeeID = @EmpId AND CertificationID = @CertId;";
 
 
             using (SqlConnection connection = new SqlConnection(Constants.connectionString))
@@ -69,7 +92,7 @@ public partial class GetCertFile : ContentPage
                     {
                         //local vars because once they've been added here in the try, they can't be readded in catch
                         var empIdParam = new SqlParameter("EmpId", CertificationData.EmployeeId);
-                        var certTypeParam = new SqlParameter("CertType", CertificationData.CertType);
+                        var certTypeParam = new SqlParameter("CertId", certId);
                         var trainDateParam = new SqlParameter("TrainDate", CertificationData.TrainedOnDate);
                         var expireDateParam = new SqlParameter("ExpireDate", CertificationData.ExpiryDate);
 
@@ -95,7 +118,7 @@ public partial class GetCertFile : ContentPage
                     {
                         //local vars because once they were added in the try, they can't be readded in catch
                         var empIdParam = new SqlParameter("EmpId", CertificationData.EmployeeId);
-                        var certTypeParam = new SqlParameter("CertType", CertificationData.CertType);
+                        var certTypeParam = new SqlParameter("CertId", certId);
                         var trainDateParam = new SqlParameter("TrainDate", CertificationData.TrainedOnDate);
                         var expireDateParam = new SqlParameter("ExpireDate", CertificationData.ExpiryDate);
 

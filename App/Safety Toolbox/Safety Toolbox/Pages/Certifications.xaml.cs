@@ -121,7 +121,7 @@ public partial class Certifications : ContentPage
     }
     private List<CertificationData> getCertificationData()
     {
-        string query = "SELECT Certifications.EmployeeID, Employees.EmployeeFirstName, Employees.EmployeeLastName, Certifications.CertType, Certifications.TrainedOnDate, Certifications.ExpiryDate FROM Certifications JOIN Employees on Certifications.EmployeeID = Employees.EmployeeID";
+        string query = "SELECT Certifications.EmployeeID, Employees.EmployeeFirstName, Employees.EmployeeLastName, CertificationTypes.CertificationName, Certifications.TrainedOnDate, Certifications.ExpiryDate FROM Certifications JOIN Employees on Certifications.EmployeeID = Employees.EmployeeID JOIN CertificationTypes on Certifications.CertificationID = CertificationTypes.CertificationID";
         List<CertificationData> certificationList = new List<CertificationData>();
 
         using (SqlConnection connection = new SqlConnection(Constants.connectionString))

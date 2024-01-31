@@ -21,9 +21,7 @@ public partial class AddEditCert : ContentPage
         EmployeeIds = new List<int>();
         CertificationTypes = new List<string>();
         getEmployees();
-
-        //getCertifications();
-        CertificationTypes.Add("test"); //TODO get rid of this once getCertifications works
+        getCertificationTypes();
 
         BindingContext = this;
         employeePicker.ItemsSource = EmployeeFullNames;
@@ -88,25 +86,23 @@ public partial class AddEditCert : ContentPage
 
     private void getCertificationTypes()
     {
-        string query = "SELECT x FROM x";
+        string query = "SELECT CertificationName FROM CertificationTypes";
         List<String> certs = new List<String>();
 
-        //we need a cert type table
-
-        //using (SqlConnection connection = new SqlConnection(Constants.connectionString))
-        //{
-        //    using (SqlCommand command = new SqlCommand(query, connection))
-        //    {
-        //        connection.Open();
-        //        using (SqlDataReader reader = command.ExecuteReader())
-        //        {
-        //            while (reader.Read())
-        //            {
-        //                certs.Add(reader.GetString(0));
-        //            }
-        //        }
-        //    }
-        //}
+        using (SqlConnection connection = new SqlConnection(Constants.connectionString))
+        {
+            using (SqlCommand command = new SqlCommand(query, connection))
+            {
+                connection.Open();
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        certs.Add(reader.GetString(0));
+                    }
+                }
+            }
+        }
 
         CertificationTypes = certs;
     }
