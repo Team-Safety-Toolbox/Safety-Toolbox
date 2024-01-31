@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Safety_Toolbox.Dashboard"
+             Title=" ">
+    <VerticalStackLayout
+        Spacing="25"
+        Padding="30,0"
+        VerticalOptions="Center">
+
+        <Label
+                Text="Safety ToolBox"
+                SemanticProperties.HeadingLevel="Level1"
+                FontSize="32"
+                HorizontalOptions="Center" />
+
+        <Button
+                x:Name="TBTBtn"
+                Text="ToolBox Talk"
+                SemanticProperties.Hint="Takes you to the ToolBox Talk Page"
+                Clicked="OnTBTBtnClicked"
+                HorizontalOptions="Center" />
+
+        <Button
+                x:Name="CertsBtn"
+                Text="Employee Certifications"
+                SemanticProperties.Hint="Takes you to the Employee Certifications Page"
+                Clicked="OnCertBtnClicked"
+                HorizontalOptions="Center" />
+
+        <Button
+                x:Name="LibBtn"
+                Text="Library"
+                SemanticProperties.Hint="Takes you to the Library Page"
+                Clicked="OnLibBtnClicked"
+                HorizontalOptions="Center" />
+    </VerticalStackLayout>
+</ContentPage>

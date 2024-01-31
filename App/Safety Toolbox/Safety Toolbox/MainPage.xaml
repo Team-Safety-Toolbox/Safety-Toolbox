@@ -9,7 +9,7 @@
             VerticalOptions="Center">
 
             <Label
-                Text="Safety ToolBox"
+                Text="Safety ToolBox Login"
                 SemanticProperties.HeadingLevel="Level1"
                 FontSize="32"
                 HorizontalOptions="Center" />
@@ -21,26 +21,9 @@
                 HeightRequest="200"
                 HorizontalOptions="Center" />-->
 
-            <Button
-                x:Name="TBTBtn"
-                Text="ToolBox Talk"
-                SemanticProperties.Hint="Takes you to the ToolBox Talk Page"
-                Clicked="OnTBTBtnClicked"
-                HorizontalOptions="Center" />
-
-            <Button
-                x:Name="CertsBtn"
-                Text="Employee Certifications"
-                SemanticProperties.Hint="Takes you to the Employee Certifications Page"
-                Clicked="OnCertBtnClicked"
-                HorizontalOptions="Center" />
-
-            <Button
-                x:Name="LibBtn"
-                Text="Library"
-                SemanticProperties.Hint="Takes you to the Library Page"
-                Clicked="OnLibBtnClicked"
-                HorizontalOptions="Center" />   
+            <Entry x:Name="UsernameEntry" Placeholder="Username"/>
+            <Entry x:Name="PasswordEntry" Placeholder="Password" IsPassword="True"/>
+            <Button Text="Login" Clicked="OnLoginBtnClicked" />
 
         </VerticalStackLayout>
     </ScrollView>

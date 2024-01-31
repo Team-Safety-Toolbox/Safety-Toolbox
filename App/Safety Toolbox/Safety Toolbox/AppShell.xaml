@@ -10,7 +10,10 @@
         ContentTemplate="{DataTemplate local:MainPage}"
         Route="MainPage" />
 
-    
+    <ShellContent
+        ContentTemplate="{DataTemplate local:Dashboard}"
+        Route="Dashboard"/>
+
     <ShellContent
         ContentTemplate="{DataTemplate local:Toolbox_Talk}"
         Route="ToolBox_Talk" />

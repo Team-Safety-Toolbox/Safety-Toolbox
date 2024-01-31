@@ -25,6 +25,12 @@ public partial class Certifications : ContentPage
         sortPicker.SelectedIndex = 0;
 
         updateData();
+
+        // configure the readonly controls
+        if (MainPage.isReadOnly)
+        {
+            AddEditCertBtn.IsEnabled = false;
+        }
     }
 
     private void updateData()
