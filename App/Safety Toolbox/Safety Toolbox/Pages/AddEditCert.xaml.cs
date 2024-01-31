@@ -52,7 +52,7 @@ public partial class AddEditCert : ContentPage
 
     private void getEmployees()
     {
-        string query = "SELECT EmployeeID, EmployeeFirstName, EmployeeLastName FROM Employees";
+        string query = "SELECT EmployeeID, EmployeeFirstName, EmployeeLastName FROM Employees ORDER BY EmployeeFirstName ASC";
         List<String> employees = new List<String>();
         List<String> firstNames = new List<String>();
         List<String> lastNames = new List<String>();
@@ -86,7 +86,7 @@ public partial class AddEditCert : ContentPage
 
     private void getCertificationTypes()
     {
-        string query = "SELECT CertificationName FROM CertificationTypes";
+        string query = "SELECT CertificationName FROM CertificationTypes ORDER BY CertificationName ASC";
         List<String> certs = new List<String>();
 
         using (SqlConnection connection = new SqlConnection(Constants.connectionString))

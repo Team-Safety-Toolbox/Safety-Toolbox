@@ -1,9 +1,11 @@
 --Create database SafetyToolBox
 
---drop table Attendance
---drop table Employees
---drop table Certifications
---drop table CertificationTypes
+drop table Attendance
+drop table Employees
+drop table Certifications
+drop table Users
+drop table Roles
+drop table CertificationTypes
 
 Create table Attendance (
 	EmployeeID int not null,
@@ -31,22 +33,45 @@ Create Table CertificationTypes(
 	CertificationName varchar(70)
 )
 
---INSERT INTO Employees Values(1, 'Bob', 'Bobington');
---INSERT INTO Employees Values(2, 'Joe', 'Jones');
---INSERT INTO Employees Values(3, 'Sue', 'Snow');
+Create table Users(
+	UserID int IDENTITY,
+	Email varchar(250),
+	Username varchar(100),
+	Password varchar(100),
+	RoleID int
+)
 
---INSERT INTO Attendance Values(1, '2023-11-04', 1, 0, 0);
---INSERT INTO Attendance Values(2, '2023-11-04', 0, 1, 0);
---INSERT INTO Attendance Values(3, '2023-11-04', 0, 0, 1);
+Create table Roles(
+	RoleID int not null primary key,
+	RoleName varchar(250)
+)
 
---INSERT INTO Certifications Values(1, 'Crane Operation', '2019-12-20', '2024-04-30');
---INSERT INTO Certifications Values(2, 'Kleen Press', '2021-04-30', '2024-02-15');
---INSERT INTO Certifications Values(3, 'First Aid', '2020-07-15', '2024-07-20');
---INSERT INTO Certifications Values(2, 'Disc Lathe Operation', '2021-08-17', '2024-01-20');
---INSERT INTO Certifications Values(3, 'WHMIS', '2020-06-01', null);
---INSERT INTO Certifications Values(1, 'Supervision Training', '2018-12-20', '2024-08-30');
+INSERT INTO Employees Values(1, 'Bob', 'Bobington');
+INSERT INTO Employees Values(2, 'Joe', 'Jones');
+INSERT INTO Employees Values(3, 'Sue', 'Snow');
+INSERT INTO Employees values(4, 'Bill', 'Nye');
+
+INSERT INTO Attendance Values(1, '2023-11-04', 1, 0, 0);
+INSERT INTO Attendance Values(2, '2023-11-04', 0, 1, 0);
+INSERT INTO Attendance Values(3, '2023-11-04', 0, 0, 1);
+
+INSERT INTO Certifications Values(1, 1, '2019-12-20', '2024-04-30');
+INSERT INTO Certifications Values(2, 2, '2021-04-30', '2024-02-15');
+INSERT INTO Certifications Values(3, 3, '2020-07-15', '2024-07-20');
+INSERT INTO Certifications Values(2, 4, '2021-08-17', '2024-01-20');
+INSERT INTO Certifications Values(3, 5, '2020-06-01', null);
+INSERT INTO Certifications Values(1, 6, '2018-12-20', '2024-08-30');
+
+INSERT INTO Roles Values(1, 'IT');
+INSERT INTO Roles Values(2, 'Management');
+INSERT INTO Roles Values(3, 'readonly');
+
+INSERT INTO Users Values('mikayla@email.com', 'mik', 'Abc', 1); 
+INSERT INTO Users Values('test', 'test', '1', 3); 
 
 SELECT * FROM Employees
 SELECT * FROM Attendance
 SELECT * FROM Certifications
 SELECT * FROM CertificationTypes
+SELECT * FROM Roles
+SELECT * FROM Users

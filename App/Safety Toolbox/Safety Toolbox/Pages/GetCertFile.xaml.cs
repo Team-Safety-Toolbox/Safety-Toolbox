@@ -20,7 +20,7 @@ public partial class GetCertFile : ContentPage
         string trainedDisplay = "";
         string expireDisplay = "";
         if (!certificationData.TrainedOnDate.HasValue) {
-            trainedDisplay = "no train date";
+            trainedDisplay = "no training date";
         }
         else
         {
@@ -28,7 +28,7 @@ public partial class GetCertFile : ContentPage
         }
         if (!certificationData.ExpiryDate.HasValue)
         {
-            expireDisplay = "no expire date";
+            expireDisplay = "no expiry date";
         }
         else
         {
