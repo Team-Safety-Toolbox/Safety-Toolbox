@@ -98,9 +98,18 @@ public partial class Certifications : ContentPage
         updateData();
     }
 
-    void OnExportBtnClicked(object sender, EventArgs e)
+    async void OnExportBtnClicked(object sender, EventArgs e)
     {
-        //Generate report here!
+        try
+        {
+            // might need to adjust what this report is called and/or be able to run a bunch of different reports
+            Uri uri = new Uri(Constants.reportServerURL + "/ExpiredCertifications&CutoffDate=val&CertificationName=val");
+            await Browser.Default.OpenAsync(uri, BrowserLaunchMode.SystemPreferred);
+        }
+        catch
+        {
+            await DisplayAlert("Unexpected Error Occured", "An unexpected error occured.", "OK");
+        }
     }
 
     async void OnViewBtnClicked(object sender, EventArgs e)

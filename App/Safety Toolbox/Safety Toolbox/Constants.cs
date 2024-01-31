@@ -13,6 +13,7 @@ namespace Safety_Toolbox
         //public const string certificationFilePath = "C:\\Users\\Yoga3\\Desktop";
 
         public const string connectionString = "Server=MIKAYLAS-LAPTOP;Database=SafetyToolBox;Persist Security Info=False;Integrated Security=true;Encrypt=False;";
+        public const string reportServerURL = "/reports/report";
         public const string certificationFilePath = "D:\\safetytbfiles";
     }
 }
