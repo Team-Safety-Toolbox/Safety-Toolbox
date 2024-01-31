@@ -103,7 +103,8 @@ public partial class Certifications : ContentPage
         try
         {
             // might need to adjust what this report is called and/or be able to run a bunch of different reports
-            Uri uri = new Uri(Constants.reportServerURL + "/ExpiredCertifications&CutoffDate=val&CertificationName=val");
+            //Uri uri = new Uri(Constants.reportServerURL + "/ExpiredCertifications&CutoffDate=val&CertificationName=val");
+            Uri uri = new Uri(Constants.reportServerURL + "/ExpiredCertifications");
             await Browser.Default.OpenAsync(uri, BrowserLaunchMode.SystemPreferred);
         }
         catch

@@ -19,35 +19,42 @@ namespace Safety_Toolbox
 
         private Boolean validateUser()
         {
-            String usernameDB = "";
-            String passwordDB = "";
-            String query = "SELECT TOP 1 Username, Password, RoleName FROM Users LEFT JOIN Roles ON Users.RoleID = Roles.RoleID WHERE Username = '" + Username + "' AND Password = '" + Password + "'";
-
-            using (SqlConnection connection = new SqlConnection(Constants.connectionString))
+            try
             {
-                using (SqlCommand command = new SqlCommand(query, connection))
+                String usernameDB = "";
+                String passwordDB = "";
+                String query = "SELECT TOP 1 Username, Password, RoleName FROM Users LEFT JOIN Roles ON Users.RoleID = Roles.RoleID WHERE Username = '" + Username + "' AND Password = '" + Password + "'";
+
+                using (SqlConnection connection = new SqlConnection(Constants.connectionString))
                 {
-                    connection.Open();
-                    using (SqlDataReader reader = command.ExecuteReader())
+                    using (SqlCommand command = new SqlCommand(query, connection))
                     {
-                        while (reader.Read())
+                        connection.Open();
+                        using (SqlDataReader reader = command.ExecuteReader())
                         {
-                            usernameDB = (String)reader["Username"];
-                            passwordDB = (String)reader["Password"];
-                            Role = (String)reader["RoleName"];
+                            while (reader.Read())
+                            {
+                                usernameDB = (String)reader["Username"];
+                                passwordDB = (String)reader["Password"];
+                                Role = (String)reader["RoleName"];
+                            }
                         }
                     }
                 }
+
+
+                if (usernameDB.Equals(Username) && passwordDB.Equals(Password))
+                {
+                    setReadOnlyStatus(Role.Equals("readonly"));
+                    return true;
+                }
+                else
+                    return false;
             }
-
-
-            if (usernameDB.Equals(Username) && passwordDB.Equals(Password))
+            catch
             {
-                setReadOnlyStatus(Role.Equals("readonly"));
-                return true;
-            }
-            else
                 return false;
+            }
         }
 
         public static void setReadOnlyStatus(Boolean status)
