@@ -1,9 +1,10 @@
 --Create database SafetyToolBox
 
---drop table Attendance
---drop table Employees
---drop table Certifications
---drop table CertificationTypes
+drop table Attendance
+drop table Employees
+drop table Certifications
+drop table Users
+drop table CertificationTypes
 
 Create table Attendance (
 	EmployeeID int not null,
@@ -31,6 +32,14 @@ Create Table CertificationTypes(
 	CertificationName varchar(70)
 )
 
+Create table Users(
+	UserID int not null primary key,
+	Email varchar(250),
+	Username varchar(100),
+	Password varchar(100) -- this should actually be done with some form of encryption, but that's a later problem
+	-- need to think about how we want to set up report sending settings
+)
+
 --INSERT INTO Employees Values(1, 'Bob', 'Bobington');
 --INSERT INTO Employees Values(2, 'Joe', 'Jones');
 --INSERT INTO Employees Values(3, 'Sue', 'Snow');
@@ -46,7 +55,10 @@ Create Table CertificationTypes(
 --INSERT INTO Certifications Values(3, 'WHMIS', '2020-06-01', null);
 --INSERT INTO Certifications Values(1, 'Supervision Training', '2018-12-20', '2024-08-30');
 
+INSERT INTO Users Values(1, 'mikayla@email.com', 'mik', '123'); 
+
 SELECT * FROM Employees
 SELECT * FROM Attendance
 SELECT * FROM Certifications
 SELECT * FROM CertificationTypes
+SELECT * FROM Users
