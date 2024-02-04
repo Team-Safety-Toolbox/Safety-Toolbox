@@ -67,6 +67,7 @@ INSERT INTO Roles Values(2, 'Management');
 INSERT INTO Roles Values(3, 'readonly');
 
 INSERT INTO Users Values('mikayla@email.com', 'mik', 'Abc', 1); 
+INSERT INTO Users Values('mackenzie@email.com', 'mac', 'test', 1); 
 INSERT INTO Users Values('test', 'test', '1', 3); 
 
 SELECT * FROM Employees

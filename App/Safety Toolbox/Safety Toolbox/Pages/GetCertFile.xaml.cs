@@ -56,14 +56,14 @@ public partial class GetCertFile : ContentPage
             
             saveCertificationDetails();
             
-            await Navigation.PushAsync(new DataSaved());
+            await Navigation.PushAsync(new DataSaved(3));
         }
     }
 
     private async void OnNoFileBtnClicked(object sender, EventArgs e)
     {
         saveCertificationDetails();
-        await Navigation.PushAsync(new DataSaved());
+        await Navigation.PushAsync(new DataSaved(3));
     }
 
     private void saveCertificationDetails()
