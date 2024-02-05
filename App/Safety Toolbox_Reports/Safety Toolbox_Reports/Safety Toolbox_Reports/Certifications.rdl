@@ -69,13 +69,13 @@
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
+                  <Width>1.5in</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>1.5in</Width>
+                </TablixColumn>
+                <TablixColumn>
                   <Width>2in</Width>
-                </TablixColumn>
-                <TablixColumn>
-                  <Width>1.90625in</Width>
-                </TablixColumn>
-                <TablixColumn>
-                  <Width>2.09375in</Width>
                 </TablixColumn>
                 <TablixColumn>
                   <Width>1in</Width>
@@ -392,6 +392,7 @@
                                   <Value>=Fields!TrainedOnDate.Value</Value>
                                   <Style>
                                     <FontFamily>segoe ui</FontFamily>
+                                    <Format>M/d/yyyy</Format>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -426,6 +427,7 @@
                                   <Value>=Fields!ExpiryDate.Value</Value>
                                   <Style>
                                     <FontFamily>segoe ui</FontFamily>
+                                    <Format>M/d/yyyy</Format>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -473,7 +475,7 @@
             </TablixRowHierarchy>
             <DataSetName>DataSet1</DataSetName>
             <Height>0.5in</Height>
-            <Width>8in</Width>
+            <Width>7in</Width>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -484,10 +486,10 @@
         <Height>0.5in</Height>
         <Style />
       </Body>
-      <Width>8in</Width>
+      <Width>7in</Width>
       <Page>
         <PageHeader>
-          <Height>0.625in</Height>
+          <Height>0.5in</Height>
           <PrintOnFirstPage>true</PrintOnFirstPage>
           <PrintOnLastPage>true</PrintOnLastPage>
           <ReportItems>
@@ -512,9 +514,8 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox1</rd:DefaultName>
-              <Top>0.125in</Top>
               <Height>0.25in</Height>
-              <Width>8in</Width>
+              <Width>7in</Width>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -545,10 +546,10 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox13</rd:DefaultName>
-              <Top>0.375in</Top>
-              <Left>2in</Left>
+              <Top>0.25in</Top>
+              <Left>1.5in</Left>
               <Height>0.25in</Height>
-              <Width>6in</Width>
+              <Width>5.5in</Width>
               <ZIndex>1</ZIndex>
               <Style>
                 <Border>
@@ -577,9 +578,9 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox14</rd:DefaultName>
-              <Top>0.375in</Top>
+              <Top>0.25in</Top>
               <Height>0.25in</Height>
-              <Width>2in</Width>
+              <Width>1.5in</Width>
               <ZIndex>2</ZIndex>
               <Style>
                 <Border>
@@ -623,7 +624,7 @@
               </Paragraphs>
               <rd:DefaultName>Textbox16</rd:DefaultName>
               <Height>0.25in</Height>
-              <Width>1in</Width>
+              <Width>1.5in</Width>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -641,10 +642,10 @@
             </Border>
           </Style>
         </PageFooter>
-        <LeftMargin>1in</LeftMargin>
-        <RightMargin>1in</RightMargin>
-        <TopMargin>1in</TopMargin>
-        <BottomMargin>1in</BottomMargin>
+        <LeftMargin>0.5in</LeftMargin>
+        <RightMargin>0.5in</RightMargin>
+        <TopMargin>0.5in</TopMargin>
+        <BottomMargin>0.5in</BottomMargin>
         <Style />
       </Page>
     </ReportSection>
