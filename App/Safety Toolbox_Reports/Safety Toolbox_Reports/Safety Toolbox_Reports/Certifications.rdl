@@ -9,39 +9,45 @@
       <am:Name>SSDTRS</am:Name>
       <am:Version>17.4.33403.182</am:Version>
     </am:UpdatedBy>
-    <am:LastModifiedTimestamp>2024-02-05T17:31:39.8723759Z</am:LastModifiedTimestamp>
+    <am:LastModifiedTimestamp>2024-02-05T17:37:50.6361472Z</am:LastModifiedTimestamp>
   </am:AuthoringMetadata>
   <df:DefaultFontFamily>Segoe UI</df:DefaultFontFamily>
   <AutoRefresh>0</AutoRefresh>
   <DataSources>
-    <DataSource Name="DataSource1">
+    <DataSource Name="DataSource">
       <DataSourceReference>DataSource</DataSourceReference>
       <rd:SecurityType>None</rd:SecurityType>
-      <rd:DataSourceID>b2cfdd9a-12fe-4c8f-bb47-e66b4ffb3d54</rd:DataSourceID>
+      <rd:DataSourceID>538aa1d6-523a-487a-8eb6-9b573d763529</rd:DataSourceID>
     </DataSource>
   </DataSources>
   <DataSets>
     <DataSet Name="DataSet1">
       <Query>
-        <DataSourceName>DataSource1</DataSourceName>
+        <DataSourceName>DataSource</DataSourceName>
         <QueryParameters>
           <QueryParameter Name="@CutoffDate">
             <Value>=Parameters!CutoffDate.Value</Value>
           </QueryParameter>
-          <QueryParameter Name="@CertificationName">
-            <Value>=Parameters!CertificationName.Value</Value>
-          </QueryParameter>
         </QueryParameters>
-        <CommandText>SELECT TOP (1000) 
-  CertType, TrainedOnDate, ExpiryDate, EmployeeFirstName, EmployeeLastName
+        <CommandText>SELECT TOP (1000)
+  EmployeeLastName, EmployeeFirstName, CertificationName, TrainedOnDate, ExpiryDate
   FROM [SafetyToolBox].[dbo].[Certifications]
   LEFT JOIN Employees ON Certifications.EmployeeID = Employees.EmployeeID
+  LEFT JOIN CertificationTypes ON CertificationTypes.CertificationId = Certifications.CertificationID
 
-  WHERE ExpiryDate &lt;= @CutoffDate AND CertType = @CertificationName</CommandText>
+  WHERE ExpiryDate &lt;= @CutoffDate</CommandText>
       </Query>
       <Fields>
-        <Field Name="CertType">
-          <DataField>CertType</DataField>
+        <Field Name="EmployeeLastName">
+          <DataField>EmployeeLastName</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="EmployeeFirstName">
+          <DataField>EmployeeFirstName</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="CertificationName">
+          <DataField>CertificationName</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="TrainedOnDate">
@@ -51,14 +57,6 @@
         <Field Name="ExpiryDate">
           <DataField>ExpiryDate</DataField>
           <rd:TypeName>System.DateTime</rd:TypeName>
-        </Field>
-        <Field Name="EmployeeFirstName">
-          <DataField>EmployeeFirstName</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="EmployeeLastName">
-          <DataField>EmployeeLastName</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
         </Field>
       </Fields>
     </DataSet>
@@ -74,10 +72,10 @@
                   <Width>2in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>2in</Width>
+                  <Width>1.90625in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>2in</Width>
+                  <Width>2.09375in</Width>
                 </TablixColumn>
                 <TablixColumn>
                   <Width>1in</Width>
@@ -92,27 +90,27 @@
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="Textbox2">
+                        <Textbox Name="Textbox7">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>Employee First Name</Value>
+                                  <Value>First Name</Value>
                                   <Style>
-                                    <FontFamily>segoe ui</FontFamily>
+                                    <FontFamily>segoe uI</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                     <Color>White</Color>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style>
-                                <TextAlign>Left</TextAlign>
+                                <TextAlign>Center</TextAlign>
                               </Style>
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>Textbox2</rd:DefaultName>
+                          <rd:DefaultName>Textbox7</rd:DefaultName>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
@@ -129,51 +127,14 @@
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="Textbox4">
+                        <Textbox Name="Textbox9">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>Employee Last Name</Value>
-                                  <Style>
-                                    <FontFamily>segoe ui</FontFamily>
-                                    <FontWeight>Bold</FontWeight>
-                                    <Color>White</Color>
-                                  </Style>
-                                </TextRun>
-                              </TextRuns>
-                              <Style>
-                                <TextAlign>Left</TextAlign>
-                              </Style>
-                            </Paragraph>
-                          </Paragraphs>
-                          <rd:DefaultName>Textbox4</rd:DefaultName>
-                          <Style>
-                            <Border>
-                              <Color>LightGrey</Color>
-                              <Style>Solid</Style>
-                            </Border>
-                            <BackgroundColor>SteelBlue</BackgroundColor>
-                            <PaddingLeft>2pt</PaddingLeft>
-                            <PaddingRight>2pt</PaddingRight>
-                            <PaddingTop>2pt</PaddingTop>
-                            <PaddingBottom>2pt</PaddingBottom>
-                          </Style>
-                        </Textbox>
-                      </CellContents>
-                    </TablixCell>
-                    <TablixCell>
-                      <CellContents>
-                        <Textbox Name="Textbox6">
-                          <CanGrow>true</CanGrow>
-                          <KeepTogether>true</KeepTogether>
-                          <Paragraphs>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value>Certification</Value>
+                                  <Value>Last Name</Value>
                                   <Style>
                                     <FontFamily>segoe ui</FontFamily>
                                     <FontWeight>Bold</FontWeight>
@@ -186,7 +147,7 @@
                               </Style>
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>Textbox6</rd:DefaultName>
+                          <rd:DefaultName>Textbox9</rd:DefaultName>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
@@ -203,14 +164,14 @@
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="Textbox8">
+                        <Textbox Name="Textbox11">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>Training Date</Value>
+                                  <Value>Certification Name</Value>
                                   <Style>
                                     <FontFamily>segoe ui</FontFamily>
                                     <FontWeight>Bold</FontWeight>
@@ -223,7 +184,7 @@
                               </Style>
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>Textbox8</rd:DefaultName>
+                          <rd:DefaultName>Textbox11</rd:DefaultName>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
@@ -240,7 +201,44 @@
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="Textbox10">
+                        <Textbox Name="Textbox15">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Trained On Date</Value>
+                                  <Style>
+                                    <FontFamily>segoe ui</FontFamily>
+                                    <FontWeight>Bold</FontWeight>
+                                    <Color>White</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox15</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <BackgroundColor>SteelBlue</BackgroundColor>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox18">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
@@ -260,7 +258,7 @@
                               </Style>
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>Textbox10</rd:DefaultName>
+                          <rd:DefaultName>Textbox18</rd:DefaultName>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
@@ -291,11 +289,13 @@
                                 <TextRun>
                                   <Value>=Fields!EmployeeFirstName.Value</Value>
                                   <Style>
-                                    <FontFamily>Segoe Ui</FontFamily>
+                                    <FontFamily>segoe ui</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
-                              <Style />
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
                             </Paragraph>
                           </Paragraphs>
                           <rd:DefaultName>EmployeeFirstName</rd:DefaultName>
@@ -323,11 +323,13 @@
                                 <TextRun>
                                   <Value>=Fields!EmployeeLastName.Value</Value>
                                   <Style>
-                                    <FontFamily>Segoe Ui</FontFamily>
+                                    <FontFamily>segoe ui</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
-                              <Style />
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
                             </Paragraph>
                           </Paragraphs>
                           <rd:DefaultName>EmployeeLastName</rd:DefaultName>
@@ -346,16 +348,16 @@
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="CertType">
+                        <Textbox Name="CertificationName">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!CertType.Value</Value>
+                                  <Value>=Fields!CertificationName.Value</Value>
                                   <Style>
-                                    <FontFamily>Segoe Ui</FontFamily>
+                                    <FontFamily>segoe ui</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -364,7 +366,7 @@
                               </Style>
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>CertType</rd:DefaultName>
+                          <rd:DefaultName>CertificationName</rd:DefaultName>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
@@ -389,8 +391,7 @@
                                 <TextRun>
                                   <Value>=Fields!TrainedOnDate.Value</Value>
                                   <Style>
-                                    <FontFamily>Segoe Ui</FontFamily>
-                                    <Format>d</Format>
+                                    <FontFamily>segoe ui</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -424,8 +425,7 @@
                                 <TextRun>
                                   <Value>=Fields!ExpiryDate.Value</Value>
                                   <Style>
-                                    <FontFamily>Segoe Ui</FontFamily>
-                                    <Format>d</Format>
+                                    <FontFamily>segoe ui</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -472,7 +472,6 @@
               </TablixMembers>
             </TablixRowHierarchy>
             <DataSetName>DataSet1</DataSetName>
-            <Top>0in</Top>
             <Height>0.5in</Height>
             <Width>8in</Width>
             <Style>
@@ -488,7 +487,7 @@
       <Width>8in</Width>
       <Page>
         <PageHeader>
-          <Height>0.75in</Height>
+          <Height>0.625in</Height>
           <PrintOnFirstPage>true</PrintOnFirstPage>
           <PrintOnLastPage>true</PrintOnLastPage>
           <ReportItems>
@@ -499,7 +498,7 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>Expired Certifications</Value>
+                      <Value>Certifications</Value>
                       <Style>
                         <FontFamily>segoe ui</FontFamily>
                         <FontSize>12pt</FontSize>
@@ -513,39 +512,9 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox1</rd:DefaultName>
+              <Top>0.125in</Top>
               <Height>0.25in</Height>
               <Width>8in</Width>
-              <Style>
-                <Border>
-                  <Style>None</Style>
-                </Border>
-                <PaddingLeft>2pt</PaddingLeft>
-                <PaddingRight>2pt</PaddingRight>
-                <PaddingTop>2pt</PaddingTop>
-                <PaddingBottom>2pt</PaddingBottom>
-              </Style>
-            </Textbox>
-            <Textbox Name="Textbox12">
-              <CanGrow>true</CanGrow>
-              <KeepTogether>true</KeepTogether>
-              <Paragraphs>
-                <Paragraph>
-                  <TextRuns>
-                    <TextRun>
-                      <Value>Certification:</Value>
-                      <Style>
-                        <FontFamily>Segoe ui</FontFamily>
-                      </Style>
-                    </TextRun>
-                  </TextRuns>
-                  <Style />
-                </Paragraph>
-              </Paragraphs>
-              <rd:DefaultName>Textbox12</rd:DefaultName>
-              <Top>0.25in</Top>
-              <Height>0.25in</Height>
-              <Width>2in</Width>
-              <ZIndex>1</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -576,11 +545,11 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox13</rd:DefaultName>
-              <Top>0.5in</Top>
+              <Top>0.375in</Top>
               <Left>2in</Left>
               <Height>0.25in</Height>
               <Width>6in</Width>
-              <ZIndex>2</ZIndex>
+              <ZIndex>1</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -608,42 +577,10 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox14</rd:DefaultName>
-              <Top>0.5in</Top>
+              <Top>0.375in</Top>
               <Height>0.25in</Height>
               <Width>2in</Width>
-              <ZIndex>3</ZIndex>
-              <Style>
-                <Border>
-                  <Style>None</Style>
-                </Border>
-                <PaddingLeft>2pt</PaddingLeft>
-                <PaddingRight>2pt</PaddingRight>
-                <PaddingTop>2pt</PaddingTop>
-                <PaddingBottom>2pt</PaddingBottom>
-              </Style>
-            </Textbox>
-            <Textbox Name="Textbox17">
-              <CanGrow>true</CanGrow>
-              <KeepTogether>true</KeepTogether>
-              <Paragraphs>
-                <Paragraph>
-                  <TextRuns>
-                    <TextRun>
-                      <Value>=Parameters!CertificationName.Value</Value>
-                      <Style>
-                        <FontFamily>Segoe ui</FontFamily>
-                      </Style>
-                    </TextRun>
-                  </TextRuns>
-                  <Style />
-                </Paragraph>
-              </Paragraphs>
-              <rd:DefaultName>Textbox17</rd:DefaultName>
-              <Top>0.25in</Top>
-              <Left>2in</Left>
-              <Height>0.25in</Height>
-              <Width>6in</Width>
-              <ZIndex>4</ZIndex>
+              <ZIndex>2</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -704,27 +641,18 @@
             </Border>
           </Style>
         </PageFooter>
-        <LeftMargin>0.25in</LeftMargin>
-        <RightMargin>0.25in</RightMargin>
-        <TopMargin>0.25in</TopMargin>
-        <BottomMargin>0.25in</BottomMargin>
+        <LeftMargin>1in</LeftMargin>
+        <RightMargin>1in</RightMargin>
+        <TopMargin>1in</TopMargin>
+        <BottomMargin>1in</BottomMargin>
         <Style />
       </Page>
     </ReportSection>
   </ReportSections>
   <ReportParameters>
     <ReportParameter Name="CutoffDate">
-      <DataType>DateTime</DataType>
-      <DefaultValue>
-        <Values>
-          <Value>=Today()</Value>
-        </Values>
-      </DefaultValue>
-      <Prompt>Cutoff Date:</Prompt>
-    </ReportParameter>
-    <ReportParameter Name="CertificationName">
       <DataType>String</DataType>
-      <Prompt>Certification Name:</Prompt>
+      <Prompt>Cutoff Date</Prompt>
     </ReportParameter>
   </ReportParameters>
   <ReportParametersLayout>
@@ -737,14 +665,9 @@
           <RowIndex>0</RowIndex>
           <ParameterName>CutoffDate</ParameterName>
         </CellDefinition>
-        <CellDefinition>
-          <ColumnIndex>1</ColumnIndex>
-          <RowIndex>0</RowIndex>
-          <ParameterName>CertificationName</ParameterName>
-        </CellDefinition>
       </CellDefinitions>
     </GridLayoutDefinition>
   </ReportParametersLayout>
   <rd:ReportUnitType>Inch</rd:ReportUnitType>
-  <rd:ReportID>834b8046-df9e-4a49-be75-0e228d27b0a0</rd:ReportID>
+  <rd:ReportID>50db7467-6f8a-4da9-808a-55be9263324a</rd:ReportID>
 </Report>
