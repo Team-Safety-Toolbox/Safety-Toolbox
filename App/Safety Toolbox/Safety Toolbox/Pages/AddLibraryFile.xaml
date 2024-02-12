@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Safety_Toolbox.Pages.AddLibraryFile"
-             Title="AddLibraryFile">
+             Title=" ">
     <VerticalStackLayout>
         <Label
             Text="Add Library File"
@@ -10,7 +10,9 @@
             FontSize="32"
             HorizontalOptions="Center" />
         <Label Text="Choose what the file will be named (if left blank, file will keep its current name)" HorizontalOptions="Center" VerticalOptions="Center" LineBreakMode="WordWrap"/>
-        <Entry x:Name="FileNameEntry" Placeholder="FileName"/>
+        <Entry x:Name="FileNameEntry" Placeholder="FileName" TextChanged="EvaluateFileName"/>
+        <Label x:Name="FileNameErrorText" HorizontalOptions="Center" VerticalOptions="Start" TextColor="Red"/>
+        
         <Button x:Name="PickFileBtn" Text="Pick file" SemanticProperties.Hint="Pick the file" Clicked="OnPickFileBtnClicked" HorizontalOptions="Center"/>
 
     </VerticalStackLayout>

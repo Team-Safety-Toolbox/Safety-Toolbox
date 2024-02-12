@@ -18,8 +18,6 @@
             <Button x:Name="AddFileBtn" Text="Add a new file" SemanticProperties.Hint="Add a new file" Clicked="OnAddFileBtnClicked" HorizontalOptions="Center"/>
             <Button x:Name="RefreshBtn" Text="Refresh" SemanticProperties.Hint="Refresh the page" Clicked="OnRefreshBtnClicked" HorizontalOptions="Center"/>
         </HorizontalStackLayout>
-        
-        <!--<CollectionView x:Name="collectionView" ItemsLayout="VerticalGrid, 3" HorizontalOptions="Center" VerticalOptions="Center"/>-->
 
         <CollectionView x:Name="collectionView" HorizontalOptions="Center" VerticalOptions="StartAndExpand">
             <CollectionView.ItemsLayout>
@@ -28,6 +26,14 @@
                             VerticalItemSpacing="10"
                             HorizontalItemSpacing="10"/>
             </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <VerticalStackLayout>
+                        <Label Text="{Binding .}" HorizontalOptions="Center" VerticalOptions="Center"/>
+                        <Button Text="View" CommandParameter="{Binding .}" VerticalOptions="Center" Clicked="OnViewBtnClicked"/>
+                    </VerticalStackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
         </CollectionView>
     </VerticalStackLayout>
 </ContentPage>

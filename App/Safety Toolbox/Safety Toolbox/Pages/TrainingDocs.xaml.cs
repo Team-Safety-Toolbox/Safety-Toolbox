@@ -4,7 +4,7 @@ namespace Safety_Toolbox;
 
 public partial class TrainingDocs : ContentPage
 {
-	public TrainingDocs()
+    public TrainingDocs()
 	{
 		InitializeComponent();
 
@@ -26,6 +26,18 @@ public partial class TrainingDocs : ContentPage
     void OnRefreshBtnClicked(object sender, EventArgs e)
     {
         displayFiles();
+    }
+
+    async void OnViewBtnClicked(object sender, EventArgs e)
+    {
+        var button = (Button)sender;
+        string filename = button.CommandParameter.ToString();
+        var fullFilePath = Path.Combine(Constants.libraryFilePath, filename);
+
+        if (File.Exists(fullFilePath))
+        {
+            await Navigation.PushAsync(new FileViewer(fullFilePath, filename));
+        }
     }
 
     void displayFiles()
