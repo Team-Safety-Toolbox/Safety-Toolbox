@@ -15,5 +15,7 @@ Vlog 1 - [Link here!](https://youtu.be/MCdWYfqRIfA)
 
 Vlog 2 - [Link here!](https://youtu.be/ryfXBUEsTb4)
 
+Vlog 3 - [Link here!](https://youtu.be/tpB5mSMG9_Y)
+
 ## Mentor
 Craig Gelowitz Ph.D., P.Eng.
