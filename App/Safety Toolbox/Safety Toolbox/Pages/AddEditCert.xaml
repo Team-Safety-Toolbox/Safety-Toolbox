@@ -14,11 +14,13 @@
             <Label Text="Employee: " HorizontalOptions="Center" VerticalOptions="Center"/>
             <Picker x:Name="employeePicker" HorizontalOptions="Center"/>
         </HorizontalStackLayout>
+        <Label x:Name="EmployeeErrorText" HorizontalOptions="Center" VerticalOptions="Start" TextColor="Red"/>
         
         <HorizontalStackLayout HorizontalOptions="Center">
             <Label Text="Certification Type: " HorizontalOptions="Center" VerticalOptions="Center"/>
             <Picker x:Name="certificationPicker" HorizontalOptions="Center"/>
         </HorizontalStackLayout>
+        <Label x:Name="CertTypeErrorText" HorizontalOptions="Center" VerticalOptions="Start" TextColor="Red"/>
         
         <HorizontalStackLayout HorizontalOptions="Center">
             <Label Text="Date Trained: " HorizontalOptions="Center" VerticalOptions="Center"/>

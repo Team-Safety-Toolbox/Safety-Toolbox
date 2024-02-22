@@ -40,14 +40,32 @@ public partial class AddEditCert : ContentPage
     }
     private async void OnNextStepBtnClicked(object sender, EventArgs e)
     {
-        string employeeFirstName = EmployeeFirstNames[employeePicker.SelectedIndex];
-        string employeeLastName = EmployeeLastNames[employeePicker.SelectedIndex];
-        int empId = EmployeeIds[employeePicker.SelectedIndex];
-        string certType = CertificationTypes[certificationPicker.SelectedIndex];
-        DateTime? trained = NoTrainDateCheckBox.IsChecked ? null : trainedDatePicker.Date;
-        DateTime? expires = NoExpiryDateCheckBox.IsChecked ? null : expiryDatePicker.Date;
+        EmployeeErrorText.IsVisible = false;
+        CertTypeErrorText.IsVisible = false;
 
-        await Navigation.PushAsync(new GetCertFile(new CertificationData(empId, employeeFirstName, employeeLastName, certType, trained, expires)));
+        if (employeePicker.SelectedIndex == -1)
+        {
+            EmployeeErrorText.IsVisible = true;
+            EmployeeErrorText.Text = "You must pick an employee.";
+        }
+
+        if (certificationPicker.SelectedIndex == -1)
+        {
+            CertTypeErrorText.IsVisible = true;
+            CertTypeErrorText.Text = "You must pick a certification type.";
+        }
+
+        if(employeePicker.SelectedIndex != -1 && certificationPicker.SelectedIndex != -1)
+        {
+            string employeeFirstName = EmployeeFirstNames[employeePicker.SelectedIndex];
+            string employeeLastName = EmployeeLastNames[employeePicker.SelectedIndex];
+            int empId = EmployeeIds[employeePicker.SelectedIndex];
+            string certType = CertificationTypes[certificationPicker.SelectedIndex];
+            DateTime? trained = NoTrainDateCheckBox.IsChecked ? null : trainedDatePicker.Date;
+            DateTime? expires = NoExpiryDateCheckBox.IsChecked ? null : expiryDatePicker.Date;
+
+            await Navigation.PushAsync(new GetCertFile(new CertificationData(empId, employeeFirstName, employeeLastName, certType, trained, expires)));
+        }
     }
 
     private void getEmployees()
