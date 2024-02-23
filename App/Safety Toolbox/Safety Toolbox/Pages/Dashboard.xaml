@@ -6,7 +6,15 @@
     <VerticalStackLayout
         Spacing="25"
         Padding="30,0"
-        VerticalOptions="Center">
+        VerticalOptions="Start">
+
+        <Button
+        x:Name="SettingsBtn"
+        Text="Settings"
+        SemanticProperties.Hint="Settings"
+        Clicked="OnSettingsBtnClicked"
+        HorizontalOptions="End"
+        VerticalOptions="Start"/>
 
         <Label
                 Text="Safety ToolBox"

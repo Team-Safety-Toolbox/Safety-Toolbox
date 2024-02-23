@@ -119,6 +119,9 @@
 	  <MauiXaml Update="Pages\ReportSettings.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Pages\Settings.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Pages\Signup.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
