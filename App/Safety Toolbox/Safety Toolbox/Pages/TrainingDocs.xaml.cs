@@ -4,6 +4,7 @@ namespace Safety_Toolbox;
 
 public partial class TrainingDocs : ContentPage
 {
+    string folder = "Training Documents";
     public TrainingDocs()
 	{
 		InitializeComponent();
@@ -17,11 +18,15 @@ public partial class TrainingDocs : ContentPage
 
         displayFiles();
     }
+    protected override void OnSizeAllocated(double width, double height)
+    {
+        MainFileDisplay.Height = 0.7 * height;
+    }
 
-    
+
     private async void OnAddFileBtnClicked(object sender, EventArgs e)
     {
-        await Navigation.PushAsync(new AddLibraryFile());
+        await Navigation.PushAsync(new AddLibraryFile(folder));
     }
     void OnRefreshBtnClicked(object sender, EventArgs e)
     {
@@ -32,7 +37,7 @@ public partial class TrainingDocs : ContentPage
     {
         var button = (Button)sender;
         string filename = button.CommandParameter.ToString();
-        var fullFilePath = Path.Combine(Constants.libraryFilePath, filename);
+        var fullFilePath = Path.Combine(Constants.libraryFilePath, folder, filename);
 
         if (File.Exists(fullFilePath))
         {
@@ -42,7 +47,7 @@ public partial class TrainingDocs : ContentPage
 
     void displayFiles()
     {
-        string[] libFilePaths = Directory.GetFiles(Constants.libraryFilePath);
+        string[] libFilePaths = Directory.GetFiles(Path.Combine(Constants.libraryFilePath, folder));
         List<string> libFiles = new List<string>();
         foreach (string libFilePath in libFilePaths)
         {

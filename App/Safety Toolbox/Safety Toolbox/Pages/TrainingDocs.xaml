@@ -19,21 +19,26 @@
             <Button x:Name="RefreshBtn" Text="Refresh" SemanticProperties.Hint="Refresh the page" Clicked="OnRefreshBtnClicked" HorizontalOptions="Center"/>
         </HorizontalStackLayout>
 
-        <CollectionView x:Name="collectionView" HorizontalOptions="Center" VerticalOptions="StartAndExpand">
-            <CollectionView.ItemsLayout>
-                <GridItemsLayout Orientation="Vertical"
-                            Span="3"
-                            VerticalItemSpacing="10"
-                            HorizontalItemSpacing="10"/>
-            </CollectionView.ItemsLayout>
-            <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <VerticalStackLayout>
-                        <Label Text="{Binding .}" HorizontalOptions="Center" VerticalOptions="Center"/>
-                        <Button Text="View" CommandParameter="{Binding .}" VerticalOptions="Center" Clicked="OnViewBtnClicked"/>
-                    </VerticalStackLayout>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition x:Name="MainFileDisplay" Height="300" />
+            </Grid.RowDefinitions>
+
+            <ScrollView Grid.Row="1" Orientation="Vertical" VerticalOptions="StartAndExpand">
+                <Grid>
+                    <CollectionView x:Name="collectionView">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <VerticalStackLayout MaximumWidthRequest="300">
+                                    <Label Text="{Binding .}" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                    <Button Text="View" CommandParameter="{Binding .}" VerticalOptions="Center" Clicked="OnViewBtnClicked"/>
+                                </VerticalStackLayout>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </Grid>
+            </ScrollView>
+        </Grid>
+
     </VerticalStackLayout>
 </ContentPage>

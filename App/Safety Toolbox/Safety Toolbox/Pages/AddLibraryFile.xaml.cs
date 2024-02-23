@@ -6,12 +6,12 @@ public partial class AddLibraryFile : ContentPage
 {
     public bool validEntryFileName {  get; set; }
     public bool takenEntryFileName { get; set; }
+    public string folder {  get; set; }
 
-
-	public AddLibraryFile()
+	public AddLibraryFile(string saveToFolder)
 	{
 		InitializeComponent();
-
+        folder = saveToFolder;
         validEntryFileName = true;
         takenEntryFileName = false;
 
@@ -31,7 +31,7 @@ public partial class AddLibraryFile : ContentPage
 
         if (FileNameEntry.Text.IndexOfAny(Path.GetInvalidFileNameChars()) == -1) { //index of any returns -1 if none are found
             validEntryFileName = true;
-            if (File.Exists(Path.Combine(Constants.libraryFilePath, FileNameEntry.Text))) { 
+            if (File.Exists(Path.Combine(Constants.libraryFilePath, folder, FileNameEntry.Text))) { 
                 takenEntryFileName = true;
                 FileNameErrorText.Text = "This filename is taken.";
                 FileNameErrorText.IsVisible = true;
@@ -73,7 +73,7 @@ public partial class AddLibraryFile : ContentPage
                     }
                 }
 
-                File.Copy(fullPath, Path.Combine(Constants.libraryFilePath, fileName));
+                File.Copy(fullPath, Path.Combine(Constants.libraryFilePath, folder, fileName));
 
                 await Navigation.PushAsync(new DataSaved(2));
             }

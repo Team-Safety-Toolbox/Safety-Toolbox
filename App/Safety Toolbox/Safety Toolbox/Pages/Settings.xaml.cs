@@ -11,6 +11,7 @@ public partial class Settings : ContentPage
 
     private void setEntryFields()
     {
+        //TODO: error checking for cert and lib when there is not yet a path saved here
         DBConnStr.Text = Preferences.Default.Get("DBConn", "Not Found");
         ReportServerURL.Text = Preferences.Default.Get("ReportServerURL", "Not Found");
         CertFilePath.Text = Preferences.Default.Get("CertFilePath", "Not Found");
