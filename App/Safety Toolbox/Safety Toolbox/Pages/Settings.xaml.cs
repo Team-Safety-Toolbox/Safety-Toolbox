@@ -1,4 +1,9 @@
 namespace Safety_Toolbox;
+using CommunityToolkit.Maui;
+using CommunityToolkit.Maui.Alerts;
+using CommunityToolkit.Maui.Core;
+using CommunityToolkit.Maui.Storage;
+using System.Threading;
 
 public partial class Settings : ContentPage
 {
@@ -30,5 +35,36 @@ public partial class Settings : ContentPage
 
         setEntryFields();
         Saved.IsVisible = true;
+    }
+
+    private void OnCertPathBtnClicked(object sender, EventArgs e)
+    {
+        launchFolderPicker(true);
+    }
+    private void OnLibPathBtnClicked(object sender, EventArgs e)
+    {
+        launchFolderPicker(false);
+    }
+
+    private async void launchFolderPicker(bool certPath)
+    {
+        CancellationToken cancellationToken = new CancellationToken();
+        var result = await FolderPicker.Default.PickAsync(cancellationToken);
+        if (result.IsSuccessful)
+        {
+            if (certPath)
+            {
+                Preferences.Default.Set("CertFilePath", result.Folder.Path);
+                
+            }
+            else //libPath
+            {
+                Preferences.Default.Set("LibFilePath", result.Folder.Path);
+            }
+
+            CertFilePath.Text = Preferences.Default.Get("CertFilePath", "Not Found");
+            LibFilePath.Text = Preferences.Default.Get("LibFilePath", "Not Found");
+        }
+
     }
 }

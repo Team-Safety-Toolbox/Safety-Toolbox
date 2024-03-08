@@ -117,7 +117,7 @@ public partial class Certifications : ContentPage
     {
         var button = (Button)sender;
         string filename = button.CommandParameter.ToString();
-        var fullFilePath = Path.Combine(Constants.certificationFilePath, filename);
+        var fullFilePath = Path.Combine(Preferences.Default.Get("CertFilePath", "Not Found"), filename);
 
         if (File.Exists(fullFilePath)){
             await Navigation.PushAsync(new FileViewer(fullFilePath, filename));

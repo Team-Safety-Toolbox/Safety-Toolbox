@@ -38,11 +38,12 @@
                 Text="Certification File Path: "
                 VerticalOptions="Center" 
                 HorizontalOptions="Center" />
-            <Entry 
+            <Label 
                 Text="Not Found"
                 x:Name="CertFilePath"
                 VerticalOptions="Center" 
                 HorizontalOptions="Center" />
+            <Button x:Name="CertPathBtn" Text="Pick Folder" Clicked="OnCertPathBtnClicked"/>
         </HorizontalStackLayout>
 
         <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
@@ -50,11 +51,12 @@
                 Text="Library File Path: "
                 VerticalOptions="Center" 
                 HorizontalOptions="Center" />
-            <Entry 
+            <Label 
                 Text="Not Found"
                 x:Name="LibFilePath"
                 VerticalOptions="Center" 
                 HorizontalOptions="Center" />
+            <Button x:Name="LibPathBtn" Text="Pick Folder" Clicked="OnLibPathBtnClicked"/>
         </HorizontalStackLayout>
 
         <Button Text="Save" Clicked="OnSaveBtnClicked"/>

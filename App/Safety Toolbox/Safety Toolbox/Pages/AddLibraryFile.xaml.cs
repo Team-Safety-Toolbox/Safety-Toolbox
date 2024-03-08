@@ -16,6 +16,12 @@ public partial class AddLibraryFile : ContentPage
         takenEntryFileName = false;
 
         FileNameErrorText.IsVisible = false;
+
+        if (Preferences.Default.Get("LibFilePath", "Not Found") == "Not Found")
+        {
+            FilePathWarning.IsVisible = true;
+            FilePickerBtn.IsEnabled = false;
+        }
     }
 
     protected override void OnSizeAllocated(double width, double height)
@@ -29,9 +35,13 @@ public partial class AddLibraryFile : ContentPage
         takenEntryFileName = false;
         FileNameErrorText.IsVisible = false;
 
+        if(Preferences.Default.Get("LibFilePath", "Not Found") == "Not Found"){
+            FilePathWarning.IsVisible = true;
+        }
+
         if (FileNameEntry.Text.IndexOfAny(Path.GetInvalidFileNameChars()) == -1) { //index of any returns -1 if none are found
             validEntryFileName = true;
-            if (File.Exists(Path.Combine(Constants.libraryFilePath, folder, FileNameEntry.Text))) { 
+            if (File.Exists(Path.Combine(Preferences.Default.Get("LibFilePath", "Not Found"), folder, FileNameEntry.Text))) { 
                 takenEntryFileName = true;
                 FileNameErrorText.Text = "This filename is taken.";
                 FileNameErrorText.IsVisible = true;
@@ -73,7 +83,7 @@ public partial class AddLibraryFile : ContentPage
                     }
                 }
 
-                File.Copy(fullPath, Path.Combine(Constants.libraryFilePath, folder, fileName));
+                File.Copy(fullPath, Path.Combine(Preferences.Default.Get("LibFilePath", "Not Found"), folder, fileName));
 
                 await Navigation.PushAsync(new DataSaved(2));
             }

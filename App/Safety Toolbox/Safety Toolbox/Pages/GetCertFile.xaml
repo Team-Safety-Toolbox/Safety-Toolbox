@@ -37,9 +37,10 @@
                 Text="{Binding expireDisplay}"
                 x:Name="expiryLabel"
                 VerticalOptions="Center" 
-                HorizontalOptions="Center" />   
+                HorizontalOptions="Center" />
         </HorizontalStackLayout>
         <Button x:Name="FilePickerBtn" Text="Pick Certification PDF" SemanticProperties.Hint="Pick Certification PDF" Clicked="OnFilePickerBtnClicked" HorizontalOptions="Center"/>
+        <Label x:Name="FilePathWarning" Text="File path must be set under the settings page first!" TextColor="Red" IsVisible="False" HorizontalOptions="Center"/>
         <Button x:Name="NoFileBtn" Text="No file to attach" SemanticProperties.Hint="No Certification File" Clicked="OnNoFileBtnClicked" HorizontalOptions="Center"/>
     </VerticalStackLayout>
 </ContentPage>

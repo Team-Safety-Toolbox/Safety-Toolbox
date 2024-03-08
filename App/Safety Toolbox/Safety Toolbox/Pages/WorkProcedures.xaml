@@ -18,6 +18,7 @@
             <Button x:Name="AddFileBtn" Text="Add a new file" SemanticProperties.Hint="Add a new file" Clicked="OnAddFileBtnClicked" HorizontalOptions="Center"/>
             <Button x:Name="RefreshBtn" Text="Refresh" SemanticProperties.Hint="Refresh the page" Clicked="OnRefreshBtnClicked" HorizontalOptions="Center"/>
         </HorizontalStackLayout>
+        <Label x:Name="FilePathWarning" Text="The file path for the library must be set under settings." TextColor="Red" IsVisible="False" HorizontalOptions="Center"/>
 
         <Grid>
             <Grid.RowDefinitions>

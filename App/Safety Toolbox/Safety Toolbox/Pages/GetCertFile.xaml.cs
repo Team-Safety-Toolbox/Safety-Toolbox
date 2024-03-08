@@ -38,6 +38,11 @@ public partial class GetCertFile : ContentPage
         filenameLabel.Text = filename;
         trainLabel.Text = trainedDisplay;
         expiryLabel.Text = expireDisplay;
+
+        if (Preferences.Default.Get("CertFilePath", "Not Found") == "Not Found") {
+            FilePathWarning.IsVisible = true;
+            FilePickerBtn.IsEnabled = false;
+        }
     }
 
     private async void OnFilePickerBtnClicked(object sender, EventArgs e)
@@ -52,7 +57,7 @@ public partial class GetCertFile : ContentPage
         {
             var fullPath = file.FullPath;
 
-            File.Copy(fullPath, Path.Combine(Constants.certificationFilePath, CertificationData.FileName), true); //overwrites file if it exists
+            File.Copy(fullPath, Path.Combine(Preferences.Default.Get("CertFilePath", "Not Found"), CertificationData.FileName), true); //overwrites file if it exists
             
             saveCertificationDetails();
             

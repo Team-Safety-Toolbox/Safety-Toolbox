@@ -12,8 +12,8 @@
         <Label Text="Choose what the file will be named (if left blank, file will keep its current name)" HorizontalOptions="Center" VerticalOptions="Center" LineBreakMode="WordWrap"/>
         <Entry x:Name="FileNameEntry" Placeholder="FileName" TextChanged="EvaluateFileName"/>
         <Label x:Name="FileNameErrorText" HorizontalOptions="Center" VerticalOptions="Start" TextColor="Red"/>
-        
-        <Button x:Name="PickFileBtn" Text="Pick file" SemanticProperties.Hint="Pick the file" Clicked="OnPickFileBtnClicked" HorizontalOptions="Center"/>
 
+        <Button x:Name="FilePickerBtn" Text="Pick file" SemanticProperties.Hint="Pick the file" Clicked="OnPickFileBtnClicked" HorizontalOptions="Center"/>
+        <Label x:Name="FilePathWarning" Text="File path must be set under the settings page first!" TextColor="Red" IsVisible="False" HorizontalOptions="Center"/>
     </VerticalStackLayout>
 </ContentPage>

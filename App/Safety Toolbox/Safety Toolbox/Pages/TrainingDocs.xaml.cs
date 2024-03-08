@@ -37,7 +37,7 @@ public partial class TrainingDocs : ContentPage
     {
         var button = (Button)sender;
         string filename = button.CommandParameter.ToString();
-        var fullFilePath = Path.Combine(Constants.libraryFilePath, folder, filename);
+        var fullFilePath = Path.Combine(Preferences.Default.Get("LibFilePath", "Not Found"), folder, filename);
 
         if (File.Exists(fullFilePath))
         {
@@ -47,13 +47,22 @@ public partial class TrainingDocs : ContentPage
 
     void displayFiles()
     {
-        string[] libFilePaths = Directory.GetFiles(Path.Combine(Constants.libraryFilePath, folder));
-        List<string> libFiles = new List<string>();
-        foreach (string libFilePath in libFilePaths)
+        if(Preferences.Default.Get("LibFilePath", "Not Found") != "Not Found")
         {
-            libFiles.Add(Path.GetFileName(libFilePath));
+            string[] libFilePaths = Directory.GetFiles(Path.Combine(Preferences.Default.Get("LibFilePath", "Not Found"), folder));
+            List<string> libFiles = new List<string>();
+            foreach (string libFilePath in libFilePaths)
+            {
+                libFiles.Add(Path.GetFileName(libFilePath));
+            }
+            collectionView.ItemsSource = libFiles;
         }
-        collectionView.ItemsSource = libFiles;
+        else
+        {
+            List<string> libFiles = new List<string>();
+            collectionView.ItemsSource = libFiles;
+            FilePathWarning.IsVisible = true;
+        }
     }
 
 }

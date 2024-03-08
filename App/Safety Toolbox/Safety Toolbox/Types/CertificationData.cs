@@ -54,7 +54,7 @@ namespace Safety_Toolbox.Types
         }
 
         public string getFullFilePath() { 
-            return Path.Combine(Constants.certificationFilePath, FileName);
+            return Path.Combine(Preferences.Default.Get("CertFilePath", "Not Found"), FileName);
         }
     }
 }
