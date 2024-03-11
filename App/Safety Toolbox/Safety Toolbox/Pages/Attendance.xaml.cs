@@ -7,9 +7,9 @@ public partial class Attendance : ContentPage
 {
 	public Attendance()
 	{
-        //List<AttendanceData> attendance = getAttendanceData();
-
         InitializeComponent();
+        List<AttendanceData> attendance = getAttendanceData();
+        collectionView.ItemsSource = attendance;
 	}
 
     void RadioChanged(object sender, CheckedChangedEventArgs e)
@@ -26,9 +26,8 @@ public partial class Attendance : ContentPage
     }
     private List<AttendanceData> getAttendanceData()
     {
-        //TODO - save connectionString somewhere else
-        string connectionString = "Server=DESKTOP-0LUMUS9;Database=SafetyToolBox;Persist Security Info=False;Integrated Security=true;Encrypt=False;";
-        string query = "SELECT * FROM Attendance";
+        string connectionString = Constants.connectionString; //TODO: preferences instead of constants
+        string query = "SELECT Employees.EmployeeID, Employees.EmployeeFirstName, Employees.EmployeeLastName, Attendance.AttendanceDate, Attendance.Present, Attendance.Excused, Attendance.Absent FROM Attendance JOIN Employees on Employees.EmployeeID = Attendance.EmployeeID";
         List<AttendanceData> attendanceItems = new List<AttendanceData>();
 
         using (SqlConnection connection = new SqlConnection(connectionString))
@@ -41,12 +40,13 @@ public partial class Attendance : ContentPage
                     while (reader.Read())
                     {
                         int empID = reader.GetInt32(0);
-                        string empName = reader.GetString(1);
-                        DateTime day = reader.GetDateTime(2);
-                        bool present = reader.GetBoolean(3);
-                        bool excused = reader.GetBoolean(4);
-                        bool absent = reader.GetBoolean(5);
-                        attendanceItems.Add(new AttendanceData() { EmployeeID = empID, EmployeeName = empName, AttendanceDate = day, Present = present, Excused = excused, Absent = absent });
+                        string empFirstName = reader.GetString(1);
+                        string empLastName = reader.GetString(2);
+                        DateTime day = reader.GetDateTime(3);
+                        bool present = reader.GetBoolean(4);
+                        bool excused = reader.GetBoolean(5);
+                        bool absent = reader.GetBoolean(6);
+                        attendanceItems.Add(new AttendanceData() { EmployeeID = empID, EmployeeFirstName = empFirstName, EmployeeLastName = empLastName, AttendanceDate = day, Present = present, Excused = excused, Absent = absent });
                     }
                 }
             }

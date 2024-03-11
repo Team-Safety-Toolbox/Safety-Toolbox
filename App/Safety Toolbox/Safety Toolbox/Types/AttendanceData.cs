@@ -9,7 +9,8 @@ namespace Safety_Toolbox.Types
     public class AttendanceData
     {
         public int EmployeeID { get; set; }
-        public string EmployeeName { get; set; }
+        public string EmployeeFirstName { get; set; }
+        public string EmployeeLastName { get; set; }
         public DateTime AttendanceDate { get; set; }
         public bool Present { get; set; }
         public bool Excused { get; set; }
@@ -19,10 +20,11 @@ namespace Safety_Toolbox.Types
         {
         }
 
-        public AttendanceData(int EmployeeID_, string EmployeeName_, DateTime AttendanceDate_, bool Present_, bool Excused_, bool Absent_)
+        public AttendanceData(int EmployeeID_, string EmployeeFirstName_, string EmployeeLastName_, DateTime AttendanceDate_, bool Present_, bool Excused_, bool Absent_)
         {
             EmployeeID = EmployeeID_;
-            EmployeeName = EmployeeName_;
+            EmployeeFirstName = EmployeeFirstName_;
+            EmployeeLastName = EmployeeLastName_;
             AttendanceDate = AttendanceDate_;
             Present = Present_;
             Excused = Excused_;

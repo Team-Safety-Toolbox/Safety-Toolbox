@@ -17,82 +17,83 @@
                 HorizontalOptions="Center" />
 
             <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="2*" />
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="2*" />
                 </Grid.ColumnDefinitions>
-                <Label Text="Name" 
+                <Label Text="First Name" 
                    FontSize="18"
                    HorizontalTextAlignment="Center"
                    VerticalTextAlignment="Center"
                    Grid.Column="1"
                    Grid.Row="0" />
-                <Label Text="Present" 
+                <Label Text="Last Name" 
                    FontSize="18"
                    HorizontalTextAlignment="Center"
                    VerticalTextAlignment="Center"
                    Grid.Column="2"
                    Grid.Row="0" />
-                <Label Text="Excused" 
+                <Label Text="Present" 
                    FontSize="18"
                    HorizontalTextAlignment="Center"
                    VerticalTextAlignment="Center"
                    Grid.Column="3"
                    Grid.Row="0" />
-                <Label Text="Absent" 
+                <Label Text="Excused" 
                    FontSize="18"
                    HorizontalTextAlignment="Center"
                    VerticalTextAlignment="Center"
                    Grid.Column="4"
                    Grid.Row="0" />
-                <!--Row Template-->
-                <Label Text="Name"  FontSize="18" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Grid.Column="1" Grid.Row="1" />
-                <!--stack layout is neccesary due to radio button group bug in maui https://github.com/dotnet/maui/issues/7595-->
-                <StackLayout Grid.Column="2" Grid.Row="1" RadioButtonGroup.GroupName="one">
-                    <RadioButton HorizontalOptions="Center" CheckedChanged="RadioChanged"/>
-                </StackLayout>
-                <StackLayout Grid.Column="3" Grid.Row="1"  RadioButtonGroup.GroupName="one">
-                    <RadioButton HorizontalOptions="Center" CheckedChanged="RadioChanged"/>
-                </StackLayout>
-                <StackLayout Grid.Column="4" Grid.Row="1"  RadioButtonGroup.GroupName="one">
-                    <RadioButton HorizontalOptions="Center" CheckedChanged="RadioChanged"/>
-                </StackLayout>
-                <!--Row Template End-->
+                <Label Text="Absent" 
+                   FontSize="18"
+                   HorizontalTextAlignment="Center"
+                   VerticalTextAlignment="Center"
+                   Grid.Column="5"
+                   Grid.Row="0" />
                 
-                <!--<Label Text="Name" FontSize="18" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Grid.Column="1" Grid.Row="2" />
-                <StackLayout Grid.Column="2" Grid.Row="2"  RadioButtonGroup.GroupName="two">
-                    <RadioButton HorizontalOptions="Center" CheckedChanged="RadioChanged"/>
-                </StackLayout>
-                <StackLayout Grid.Column="3" Grid.Row="2"  RadioButtonGroup.GroupName="two">
-                    <RadioButton HorizontalOptions="Center" CheckedChanged="RadioChanged"/>
-                </StackLayout>
-                <StackLayout Grid.Column="4" Grid.Row="2"  RadioButtonGroup.GroupName="two">
-                    <RadioButton HorizontalOptions="Center" CheckedChanged="RadioChanged"/>
-                </StackLayout>
-
-                <Label Text="Name" FontSize="18" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Grid.Column="1" Grid.Row="3" />
-                <StackLayout Grid.Column="2" Grid.Row="3"  RadioButtonGroup.GroupName="three">
-                    <RadioButton HorizontalOptions="Center" CheckedChanged="RadioChanged"/>
-                </StackLayout>
-                <StackLayout Grid.Column="3" Grid.Row="3"  RadioButtonGroup.GroupName="three">
-                    <RadioButton HorizontalOptions="Center" CheckedChanged="RadioChanged"/>
-                </StackLayout>
-                <StackLayout Grid.Column="4" Grid.Row="3"  RadioButtonGroup.GroupName="three">
-                    <RadioButton HorizontalOptions="Center" CheckedChanged="RadioChanged"/>
-                </StackLayout>-->
             </Grid>
+
+            <ScrollView Grid.Row="1" Orientation="Vertical" VerticalOptions="StartAndExpand">
+                <Grid>
+                    <CollectionView x:Name="collectionView">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="2*" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="2*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Label Text="{Binding EmployeeFirstName}" FontSize="18" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Grid.Column="1" Grid.Row="1" />
+                                    <Label Text="{Binding EmployeeLastName}" FontSize="18" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Grid.Column="2" Grid.Row="1" />
+
+                                    <!--stack layout is neccesary due to radio button group bug in maui https://github.com/dotnet/maui/issues/7595-->
+                                    <StackLayout Grid.Column="3" RadioButtonGroup.GroupName="{Binding EmployeeID}">
+                                        <RadioButton IsChecked="{Binding Present}" HorizontalOptions="Center" CheckedChanged="RadioChanged"/>
+                                    </StackLayout>
+                                    <StackLayout Grid.Column="4" RadioButtonGroup.GroupName="{Binding EmployeeID}">
+                                        <RadioButton IsChecked="{Binding Excused}" HorizontalOptions="Center" CheckedChanged="RadioChanged"/>
+                                    </StackLayout>
+                                    <StackLayout Grid.Column="5" RadioButtonGroup.GroupName="{Binding EmployeeID}">
+                                        <RadioButton IsChecked="{Binding Absent}" HorizontalOptions="Center" CheckedChanged="RadioChanged"/>
+                                    </StackLayout>
+                                    
+                                </Grid>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </Grid>
+            </ScrollView>
 
 
         </VerticalStackLayout>
