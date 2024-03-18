@@ -15,7 +15,11 @@
                 SemanticProperties.HeadingLevel="Level1"
                 FontSize="24"
                 HorizontalOptions="Center" />
-
+            <HorizontalStackLayout HorizontalOptions="Center" Spacing="10">
+                <Label Text="Date:" FontSize="18" VerticalOptions="Center"/>
+                <DatePicker x:Name="AttendanceDate" DateSelected="AttendanceDate_DateSelected"/>
+            </HorizontalStackLayout>
+            
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="2*" />
