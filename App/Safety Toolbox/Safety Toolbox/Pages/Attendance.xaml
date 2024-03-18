@@ -83,13 +83,13 @@
 
                                     <!--stack layout is neccesary due to radio button group bug in maui https://github.com/dotnet/maui/issues/7595-->
                                     <StackLayout Grid.Column="3" RadioButtonGroup.GroupName="{Binding EmployeeID}">
-                                        <RadioButton IsChecked="{Binding Present}" HorizontalOptions="Center" CheckedChanged="RadioChanged"/>
+                                        <RadioButton IsChecked="{Binding Present}" BindingContext="Present" HorizontalOptions="Center" CheckedChanged="RadioChanged"/>
                                     </StackLayout>
                                     <StackLayout Grid.Column="4" RadioButtonGroup.GroupName="{Binding EmployeeID}">
-                                        <RadioButton IsChecked="{Binding Excused}" HorizontalOptions="Center" CheckedChanged="RadioChanged"/>
+                                        <RadioButton IsChecked="{Binding Excused}" BindingContext="Excused" HorizontalOptions="Center" CheckedChanged="RadioChanged"/>
                                     </StackLayout>
                                     <StackLayout Grid.Column="5" RadioButtonGroup.GroupName="{Binding EmployeeID}">
-                                        <RadioButton IsChecked="{Binding Absent}" HorizontalOptions="Center" CheckedChanged="RadioChanged"/>
+                                        <RadioButton IsChecked="{Binding Absent}" BindingContext="Absent" HorizontalOptions="Center" CheckedChanged="RadioChanged"/>
                                     </StackLayout>
                                     
                                 </Grid>

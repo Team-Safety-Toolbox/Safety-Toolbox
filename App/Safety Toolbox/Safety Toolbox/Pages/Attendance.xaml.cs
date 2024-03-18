@@ -20,9 +20,47 @@ public partial class Attendance : ContentPage
 		//We will just handle the new one being set to true
         if (e.Value) 
 		{
-			//update this group in SQL (groupname = employeeID)
-			//ex) if this button is present, set excused and absent for today's date to 0 and present to 1
-		}
+            int empID = Int32.Parse(((Microsoft.Maui.Controls.RadioButton)sender).GroupName);
+            DateTime attendanceDate = AttendanceDate.Date.Date;
+            bool present = false;
+            bool excused = false;
+            bool absent = false;
+            if (((Microsoft.Maui.Controls.RadioButton)sender).BindingContext.ToString() == "Present") {
+                present = true;
+            }
+            else if (((Microsoft.Maui.Controls.RadioButton)sender).BindingContext.ToString() == "Excused") {
+                excused = true;
+            }
+            else if (((Microsoft.Maui.Controls.RadioButton)sender).BindingContext.ToString() == "Absent") {
+                absent = true;
+            }
+
+            string connectionString = Constants.connectionString; //TODO: preferences instead of constants
+
+            string queryInsert = "INSERT INTO Attendance (EmployeeID, AttendanceDate, Present, Excused, Absent) VALUES (@EmpId, @AttendanceDate, @Present, @Excused, @Absent);";
+            string queryUpdate = "UPDATE Attendance SET Present = @Present, Excused = @Excused, Absent = @Absent WHERE EmployeeID = @EmpId AND AttendanceDate = @AttendanceDate;";
+
+            using (SqlConnection connection = new SqlConnection(Constants.connectionString))
+            {
+                connection.Open();
+
+                try
+                {
+                    using (SqlCommand command = new SqlCommand(queryInsert, connection))
+                    {
+                        
+                    }
+                }
+                catch
+                {
+                    using (SqlCommand command = new SqlCommand(queryUpdate, connection))
+                    {
+                        
+                    }
+                }
+
+            }
+        }
 
     }
 
