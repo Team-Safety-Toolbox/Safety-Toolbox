@@ -24,7 +24,7 @@
         
         <HorizontalStackLayout HorizontalOptions="Center">
             <Label Text="Date Trained: " HorizontalOptions="Center" VerticalOptions="Center"/>
-            <DatePicker x:Name="trainedDatePicker" HorizontalOptions="Center"/>
+            <DatePicker x:Name="trainedDatePicker" HorizontalOptions="Center" DateSelected="OnTrainedDatePickerDateSelected"/>
             <CheckBox x:Name="NoTrainDateCheckBox" CheckedChanged="OnTrainedCheckBoxCheckedChanged"/>
             <Label Text="There is no trained on date" VerticalOptions="Center"/>
         </HorizontalStackLayout>

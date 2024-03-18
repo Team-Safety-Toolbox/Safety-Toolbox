@@ -15,6 +15,9 @@ public partial class AddEditCert : ContentPage
     {
         InitializeComponent();
 
+        trainedDatePicker.MaximumDate = DateTime.Now.Date;
+        expiryDatePicker.MinimumDate = trainedDatePicker.Date;
+
         EmployeeFullNames = new List<string>();
         EmployeeFirstNames = new List<string>();
         EmployeeLastNames = new List<string>();
@@ -28,10 +31,23 @@ public partial class AddEditCert : ContentPage
         certificationPicker.ItemsSource = CertificationTypes;
     }
 
+    private void OnTrainedDatePickerDateSelected(object sender, DateChangedEventArgs e)
+    {
+        expiryDatePicker.MinimumDate = trainedDatePicker.Date;
+    }
 
     void OnTrainedCheckBoxCheckedChanged(object sender, CheckedChangedEventArgs e)
     {
         trainedDatePicker.IsEnabled = !trainedDatePicker.IsEnabled;
+
+        if(trainedDatePicker.IsEnabled)
+        {
+            expiryDatePicker.MinimumDate = trainedDatePicker.Date;
+        }
+        else
+        {
+            expiryDatePicker.MinimumDate = DateTime.MinValue;
+        }
     }
 
     void OnExpiryCheckBoxCheckedChanged(object sender, CheckedChangedEventArgs e)
