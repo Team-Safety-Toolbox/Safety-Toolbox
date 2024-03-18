@@ -9,6 +9,7 @@ public partial class Attendance : ContentPage
 	{
         InitializeComponent();
         AttendanceDate.Date = DateTime.Now.Date;
+        AttendanceDate.MaximumDate = DateTime.Now.Date;
         List<AttendanceData> attendance = getAttendanceData(DateTime.Now.Date);
         collectionView.ItemsSource = attendance;
 	}
