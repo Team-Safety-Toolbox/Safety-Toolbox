@@ -19,49 +19,6 @@
                 <Label Text="Date:" FontSize="18" VerticalOptions="Center"/>
                 <DatePicker x:Name="AttendanceDate" DateSelected="AttendanceDate_DateSelected"/>
             </HorizontalStackLayout>
-            
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="2*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="2*" />
-                </Grid.ColumnDefinitions>
-                <Label Text="First Name" 
-                   FontSize="18"
-                   HorizontalTextAlignment="Center"
-                   VerticalTextAlignment="Center"
-                   Grid.Column="1"
-                   Grid.Row="0" />
-                <Label Text="Last Name" 
-                   FontSize="18"
-                   HorizontalTextAlignment="Center"
-                   VerticalTextAlignment="Center"
-                   Grid.Column="2"
-                   Grid.Row="0" />
-                <Label Text="Present" 
-                   FontSize="18"
-                   HorizontalTextAlignment="Center"
-                   VerticalTextAlignment="Center"
-                   Grid.Column="3"
-                   Grid.Row="0" />
-                <Label Text="Excused" 
-                   FontSize="18"
-                   HorizontalTextAlignment="Center"
-                   VerticalTextAlignment="Center"
-                   Grid.Column="4"
-                   Grid.Row="0" />
-                <Label Text="Absent" 
-                   FontSize="18"
-                   HorizontalTextAlignment="Center"
-                   VerticalTextAlignment="Center"
-                   Grid.Column="5"
-                   Grid.Row="0" />
-                
-            </Grid>
 
             <ScrollView Grid.Row="1" Orientation="Vertical" VerticalOptions="StartAndExpand">
                 <Grid>
@@ -83,13 +40,13 @@
 
                                     <!--stack layout is neccesary due to radio button group bug in maui https://github.com/dotnet/maui/issues/7595-->
                                     <StackLayout Grid.Column="3" RadioButtonGroup.GroupName="{Binding EmployeeID}">
-                                        <RadioButton IsChecked="{Binding Present}" BindingContext="Present" HorizontalOptions="Center" CheckedChanged="RadioChanged"/>
+                                        <RadioButton IsChecked="{Binding Present}" Content="Present" HorizontalOptions="Center" CheckedChanged="RadioChanged"/>
                                     </StackLayout>
                                     <StackLayout Grid.Column="4" RadioButtonGroup.GroupName="{Binding EmployeeID}">
-                                        <RadioButton IsChecked="{Binding Excused}" BindingContext="Excused" HorizontalOptions="Center" CheckedChanged="RadioChanged"/>
+                                        <RadioButton IsChecked="{Binding Excused}" Content="Excused" HorizontalOptions="Center" CheckedChanged="RadioChanged"/>
                                     </StackLayout>
                                     <StackLayout Grid.Column="5" RadioButtonGroup.GroupName="{Binding EmployeeID}">
-                                        <RadioButton IsChecked="{Binding Absent}" BindingContext="Absent" HorizontalOptions="Center" CheckedChanged="RadioChanged"/>
+                                        <RadioButton IsChecked="{Binding Absent}" Content="Absent" HorizontalOptions="Center" CheckedChanged="RadioChanged"/>
                                     </StackLayout>
                                     
                                 </Grid>

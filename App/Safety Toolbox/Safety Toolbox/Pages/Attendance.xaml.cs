@@ -9,7 +9,7 @@ public partial class Attendance : ContentPage
 	{
         InitializeComponent();
         AttendanceDate.Date = DateTime.Now.Date;
-        List<AttendanceData> attendance = getAttendanceData(DateTime.Now);
+        List<AttendanceData> attendance = getAttendanceData(DateTime.Now.Date);
         collectionView.ItemsSource = attendance;
 	}
 
@@ -25,13 +25,13 @@ public partial class Attendance : ContentPage
             bool present = false;
             bool excused = false;
             bool absent = false;
-            if (((Microsoft.Maui.Controls.RadioButton)sender).BindingContext.ToString() == "Present") {
+            if (((Microsoft.Maui.Controls.RadioButton)sender).Content.ToString() == "Present") {
                 present = true;
             }
-            else if (((Microsoft.Maui.Controls.RadioButton)sender).BindingContext.ToString() == "Excused") {
+            else if (((Microsoft.Maui.Controls.RadioButton)sender).Content.ToString() == "Excused") {
                 excused = true;
             }
-            else if (((Microsoft.Maui.Controls.RadioButton)sender).BindingContext.ToString() == "Absent") {
+            else if (((Microsoft.Maui.Controls.RadioButton)sender).Content.ToString() == "Absent") {
                 absent = true;
             }
 
@@ -40,7 +40,7 @@ public partial class Attendance : ContentPage
             string queryInsert = "INSERT INTO Attendance (EmployeeID, AttendanceDate, Present, Excused, Absent) VALUES (@EmpId, @AttendanceDate, @Present, @Excused, @Absent);";
             string queryUpdate = "UPDATE Attendance SET Present = @Present, Excused = @Excused, Absent = @Absent WHERE EmployeeID = @EmpId AND AttendanceDate = @AttendanceDate;";
 
-            using (SqlConnection connection = new SqlConnection(Constants.connectionString))
+            using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
 
@@ -48,14 +48,38 @@ public partial class Attendance : ContentPage
                 {
                     using (SqlCommand command = new SqlCommand(queryInsert, connection))
                     {
-                        
+                        var empIdParam = new SqlParameter("EmpId", empID);
+                        var attendanceDateParam = new SqlParameter("AttendanceDate", attendanceDate);
+                        var presentParam = new SqlParameter("Present", present);
+                        var excusedParam = new SqlParameter("Excused", excused);
+                        var absentParam = new SqlParameter("Absent", absent);
+
+                        command.Parameters.Add(empIdParam);
+                        command.Parameters.Add(attendanceDateParam);
+                        command.Parameters.Add(presentParam);
+                        command.Parameters.Add(excusedParam);
+                        command.Parameters.Add(absentParam);
+
+                        var results = command.ExecuteReader();
                     }
                 }
                 catch
                 {
                     using (SqlCommand command = new SqlCommand(queryUpdate, connection))
                     {
-                        
+                        var empIdParam = new SqlParameter("EmpId", empID);
+                        var attendanceDateParam = new SqlParameter("AttendanceDate", attendanceDate);
+                        var presentParam = new SqlParameter("Present", present);
+                        var excusedParam = new SqlParameter("Excused", excused);
+                        var absentParam = new SqlParameter("Absent", absent);
+
+                        command.Parameters.Add(empIdParam);
+                        command.Parameters.Add(attendanceDateParam);
+                        command.Parameters.Add(presentParam);
+                        command.Parameters.Add(excusedParam);
+                        command.Parameters.Add(absentParam);
+
+                        var results = command.ExecuteReader();
                     }
                 }
 
@@ -68,6 +92,7 @@ public partial class Attendance : ContentPage
     {
         DateTime datetime = AttendanceDate.Date.Date;
         List<AttendanceData> attendance = getAttendanceData(datetime);
+        BindingContext = this;
         collectionView.ItemsSource = attendance;
     }
 
