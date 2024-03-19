@@ -17,18 +17,41 @@
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <Label Grid.Column="1" Text="{Binding EmployeeFirstName}" HorizontalOptions="Center" VerticalOptions="Center"/>
                 <Label Grid.Column="2" Text="{Binding EmployeeLastName}" HorizontalOptions="Center" VerticalOptions="Center" />
                 <Label Grid.Column="3" Text="{Binding CertType}" HorizontalOptions="Center" VerticalOptions="Center" />
                 <Label Grid.Column="4" Text="{Binding TrainedOnDate, StringFormat='{0:d}'}" HorizontalOptions="Center" VerticalOptions="Center" />
                 <Label Grid.Column="5" Text="{Binding ExpiryDate, StringFormat='{0:d}'}" HorizontalOptions="Center" VerticalOptions="Center" />
-                <Button Grid.Column="6" Text="View" CommandParameter="{Binding FileName}" VerticalOptions="Center" Clicked="OnViewBtnClicked" IsEnabled="{Binding FileFound}"/>
+                <ImageButton Grid.Column="6" Source="appbar_page_search.png" CommandParameter="{Binding FileName}" VerticalOptions="Center" Clicked="OnViewBtnClicked" IsEnabled="{Binding FileFound}"/>
             </Grid>
         </DataTemplate>
         <DataTemplate x:Key="expiringSoonTemplate">
             <Grid>
                 <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="1" Text="{Binding EmployeeFirstName}" TextColor="Orange" HorizontalOptions="Center" VerticalOptions="Center" />
+                <Label Grid.Column="2" Text="{Binding EmployeeLastName}" TextColor="Orange" HorizontalOptions="Center" VerticalOptions="Center" />
+                <Label Grid.Column="3" Text="{Binding CertType}" TextColor="Orange" HorizontalOptions="Center" VerticalOptions="Center" />
+                <Label Grid.Column="4" Text="{Binding TrainedOnDate, StringFormat='{0:d}'}" TextColor="Orange" HorizontalOptions="Center" VerticalOptions="Center" />
+                <Label Grid.Column="5" Text="{Binding ExpiryDate, StringFormat='{0:d}'}" TextColor="Orange" HorizontalOptions="Center" VerticalOptions="Center" />
+                <ImageButton Grid.Column="6" Source="appbar_page_search.png" CommandParameter="{Binding FileName}" VerticalOptions="Center" Clicked="OnViewBtnClicked" IsEnabled="{Binding FileFound}"/>
+            </Grid>
+        </DataTemplate>
+        <DataTemplate x:Key="expiredTemplate">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
@@ -43,12 +66,14 @@
                 <Label Grid.Column="3" Text="{Binding CertType}" TextColor="Red" HorizontalOptions="Center" VerticalOptions="Center" />
                 <Label Grid.Column="4" Text="{Binding TrainedOnDate, StringFormat='{0:d}'}" TextColor="Red" HorizontalOptions="Center" VerticalOptions="Center" />
                 <Label Grid.Column="5" Text="{Binding ExpiryDate, StringFormat='{0:d}'}" TextColor="Red" HorizontalOptions="Center" VerticalOptions="Center" />
-                <Button Grid.Column="6" Text="View" CommandParameter="{Binding FileName}" VerticalOptions="Center" Clicked="OnViewBtnClicked" IsEnabled="{Binding FileFound}"/>
+                <ImageButton Grid.Column="6" Source="appbar_page_search.png" CommandParameter="{Binding FileName}" VerticalOptions="Center" Clicked="OnViewBtnClicked" IsEnabled="{Binding FileFound}"/>
+                <ImageButton Grid.Column="7" Source="appbar_edit.png" VerticalOptions="Center" Clicked="OnEditBtnClicked" /> <!--needs to be set according to read only mode...-->
             </Grid>
         </DataTemplate>
         <local:CertTemplateSelector x:Key="CertTemplateSelector"
                                  NotExpiring="{StaticResource notExpiringTemplate}"
-                                 ExpiringSoon="{StaticResource expiringSoonTemplate}" />
+                                 ExpiringSoon="{StaticResource expiringSoonTemplate}"
+                                 Expired="{StaticResource expiredTemplate}"/>
     </ContentPage.Resources>
 
     <VerticalStackLayout>
@@ -83,6 +108,7 @@
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <Label Grid.Column="1" Text="First Name" HorizontalOptions="Center"/>
                     <Label Grid.Column="2" Text="Last Name" HorizontalOptions="Center"/>
@@ -90,6 +116,7 @@
                     <Label Grid.Column="4" Text="Trained On Date" HorizontalOptions="Center" />
                     <Label Grid.Column="5" Text="Expiry Date" HorizontalOptions="Center" />
                     <Label Grid.Column="6" Text="View PDF" HorizontalOptions="Center" />
+                    <Label Grid.Column="7" Text="Edit Certification" HorizontalOptions="Center"/>
                 </Grid>
             </StackLayout>
             <ScrollView Grid.Row="1" Orientation="Vertical" VerticalOptions="StartAndExpand">
@@ -103,7 +130,7 @@
             </ScrollView>
             <HorizontalStackLayout HorizontalOptions="Center" Grid.Row="2">
                 <Button x:Name="ReportSettingsBtn" Text="Report Settings" SemanticProperties.Hint="Email Report Settings" Clicked="OnReportSettingsBtnClicked" HorizontalOptions="Center"/>
-                <Button x:Name="AddEditCertBtn" Text="Add/Edit Certification" SemanticProperties.Hint="Add/Edit Certifiaction" Clicked="OnAddEditCertBtnClicked" HorizontalOptions="Center"/>
+                <Button x:Name="AddEditCertBtn" Text="Add Certification" SemanticProperties.Hint="Add Certification" Clicked="OnAddEditCertBtnClicked" HorizontalOptions="Center"/>
             </HorizontalStackLayout>
         </Grid>
     </VerticalStackLayout>

@@ -59,6 +59,14 @@
             <Button x:Name="LibPathBtn" Text="Pick Folder" Clicked="OnLibPathBtnClicked"/>
         </HorizontalStackLayout>
 
+        <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
+            <Label
+                Text="Sign Up Page Enabled: "
+                VerticalOptions="Center"
+                HorizontalOptions="Center"/>
+            <Switch x:Name="SignUpToggleSwitch"/>
+        </HorizontalStackLayout>
+
         <Button Text="Save" Clicked="OnSaveBtnClicked"/>
         <Label Text="Saved!" x:Name="Saved" HorizontalOptions="Center" TextColor="Green" IsVisible="False"/>
     </VerticalStackLayout>

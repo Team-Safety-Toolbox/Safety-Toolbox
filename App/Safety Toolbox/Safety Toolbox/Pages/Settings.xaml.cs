@@ -21,7 +21,7 @@ public partial class Settings : ContentPage
         ReportServerURL.Text = Preferences.Default.Get("ReportServerURL", "Not Found");
         CertFilePath.Text = Preferences.Default.Get("CertFilePath", "Not Found");
         LibFilePath.Text = Preferences.Default.Get("LibFilePath", "Not Found");
-
+        SignUpToggleSwitch.IsToggled = Preferences.Default.Get("SignUpEnabled", false);
     }
 
     private void OnSaveBtnClicked(object sender, EventArgs e)
@@ -32,6 +32,8 @@ public partial class Settings : ContentPage
         Preferences.Default.Set("ReportServerURL", ReportServerURL.Text);
         Preferences.Default.Set("CertFilePath", CertFilePath.Text);
         Preferences.Default.Set("LibFilePath", LibFilePath.Text);
+        Preferences.Default.Set("SignUpEnabled", SignUpToggleSwitch.IsToggled);
+        //MainPage.setSignUpEnabled(Preferences.Default.Get("SignUpEnabled", false));
 
         setEntryFields();
         Saved.IsVisible = true;

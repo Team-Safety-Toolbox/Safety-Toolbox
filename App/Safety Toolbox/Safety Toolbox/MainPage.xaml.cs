@@ -11,6 +11,7 @@ namespace Safety_Toolbox
         private String Password;
         private String Role;
         public static Boolean isReadOnly { get; set; }
+        public static Boolean signUpEnabled { get; set; }
 
         public MainPage()
         {
@@ -60,6 +61,18 @@ namespace Safety_Toolbox
         public static void setReadOnlyStatus(Boolean status)
         {
             isReadOnly = status;
+        }
+
+        public static void setSignUpEnabled(Boolean status)
+        {
+            // this is being annoying and not working
+            signUpEnabled = status;
+            //setSignUpVisibility(status);
+        }
+
+        public void setSignUpVisibility(Boolean status)
+        {
+            SignupBtn.IsVisible = status;
         }
 
         private async void OnLoginBtnClicked(object sender, EventArgs e)
