@@ -16,30 +16,43 @@
             VerticalOptions="Start"/>
 
         <Label
-                Text="Safety ToolBox"
-                SemanticProperties.HeadingLevel="Level1"
-                FontSize="32"
-                HorizontalOptions="Center" />
-
-        <Button
+            Text="Safety ToolBox"
+            SemanticProperties.HeadingLevel="Level1"
+            FontSize="32"
+            HorizontalOptions="Center" />
+        <HorizontalStackLayout HorizontalOptions="Center" Spacing="50">
+            <Button
                 x:Name="TBTBtn"
                 Text="ToolBox Talk"
                 SemanticProperties.Hint="Takes you to the ToolBox Talk Page"
                 Clicked="OnTBTBtnClicked"
-                HorizontalOptions="Center" />
+                HorizontalOptions="Center"
+                HeightRequest="225"
+                WidthRequest="200"
+                ContentLayout="Top,10"
+                ImageSource="toolbox.png" />
 
-        <Button
+            <Button
                 x:Name="CertsBtn"
                 Text="Employee Certifications"
                 SemanticProperties.Hint="Takes you to the Employee Certifications Page"
                 Clicked="OnCertBtnClicked"
-                HorizontalOptions="Center" />
+                HorizontalOptions="Center" 
+                HeightRequest="225"
+                WidthRequest="200"
+                ContentLayout="Top,10"
+                ImageSource="certified.png"/>
 
-        <Button
+            <Button
                 x:Name="LibBtn"
                 Text="Library"
                 SemanticProperties.Hint="Takes you to the Library Page"
                 Clicked="OnLibBtnClicked"
-                HorizontalOptions="Center" />
+                HorizontalOptions="Center"
+                HeightRequest="225"
+                WidthRequest="200"
+                ContentLayout="Top,10"
+                ImageSource="library.png"/>
+        </HorizontalStackLayout>
     </VerticalStackLayout>
 </ContentPage>
