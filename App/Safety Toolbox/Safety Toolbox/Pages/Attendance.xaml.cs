@@ -8,11 +8,28 @@ public partial class Attendance : ContentPage
 	public Attendance()
 	{
         InitializeComponent();
+
+        if (MainPage.isReadOnly)
+        {
+            EditorView.IsVisible = false;
+            NonEditorView.IsVisible = true;
+        }
+        else
+        {
+            EditorView.IsVisible = true;
+            NonEditorView.IsVisible = false;
+        }
+
         AttendanceDate.Date = DateTime.Now.Date;
         AttendanceDate.MaximumDate = DateTime.Now.Date;
         List<AttendanceData> attendance = getAttendanceData(DateTime.Now.Date);
         collectionView.ItemsSource = attendance;
 	}
+
+    protected override void OnSizeAllocated(double width, double height)
+    {
+        ScrollAttendance.HeightRequest = 0.7 * height;
+    }
 
     void RadioChanged(object sender, CheckedChangedEventArgs e)
     {

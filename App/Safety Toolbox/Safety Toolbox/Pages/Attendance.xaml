@@ -1,26 +1,30 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:Safety_Toolbox.Templates"
              x:Class="Safety_Toolbox.Attendance"
              Title="Attendance">
-    <ScrollView VerticalOptions="FillAndExpand">
-        <VerticalStackLayout>
-            <Label
+    <VerticalStackLayout>
+        <Label
                 Text="ToolBox Talk"
                 SemanticProperties.HeadingLevel="Level1"
                 FontSize="32"
                 HorizontalOptions="Center" />
-            <Label
+        <Label
                 Text="Attendance"
                 SemanticProperties.HeadingLevel="Level1"
                 FontSize="24"
                 HorizontalOptions="Center" />
+        <StackLayout x:Name="NonEditorView">
+            <Label Text="You don't have permission to view this page" TextColor="Red" HorizontalOptions="Center" />
+        </StackLayout>
+        <StackLayout x:Name="EditorView">
             <HorizontalStackLayout HorizontalOptions="Center" Spacing="10">
                 <Label Text="Date:" FontSize="18" VerticalOptions="Center"/>
                 <DatePicker x:Name="AttendanceDate" DateSelected="AttendanceDate_DateSelected"/>
             </HorizontalStackLayout>
 
-            <ScrollView Grid.Row="1" Orientation="Vertical" VerticalOptions="StartAndExpand">
+            <ScrollView x:Name="ScrollAttendance" Orientation="Vertical" VerticalOptions="FillAndExpand">
                 <Grid>
                     <CollectionView x:Name="collectionView">
                         <CollectionView.ItemTemplate>
@@ -48,15 +52,12 @@
                                     <StackLayout Grid.Column="5" RadioButtonGroup.GroupName="{Binding EmployeeID}">
                                         <RadioButton IsChecked="{Binding Absent}" Content="Absent" HorizontalOptions="Center" CheckedChanged="RadioChanged"/>
                                     </StackLayout>
-                                    
                                 </Grid>
                             </DataTemplate>
                         </CollectionView.ItemTemplate>
                     </CollectionView>
                 </Grid>
             </ScrollView>
-
-
-        </VerticalStackLayout>
-    </ScrollView>
+        </StackLayout>
+    </VerticalStackLayout>
 </ContentPage>
