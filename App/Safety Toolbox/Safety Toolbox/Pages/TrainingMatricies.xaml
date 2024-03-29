@@ -2,17 +2,54 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Safety_Toolbox.TrainingMatricies"
-             Title="Training Matricies">
+             Title="Training Matrices">
+    <ContentPage.Resources>
+        <Style TargetType="ImageButton">
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal">
+                            <VisualState.Setters>
+                                <Setter Property="Scale" Value="0.3" />
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState x:Name="PointerOver">
+                            <VisualState.Setters>
+                                <Setter Property="Scale" Value="0.5" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+    </ContentPage.Resources>
     <VerticalStackLayout>
         <Label
              Text="Library"
              SemanticProperties.HeadingLevel="Level1"
              FontSize="32"
              HorizontalOptions="Center" />
+        
         <Label
-             Text="Training Matricies"
+             Text="Training Matrices"
              SemanticProperties.HeadingLevel="Level1"
              FontSize="24"
              HorizontalOptions="Center" />
+        
+        <HorizontalStackLayout HorizontalOptions="Center" Spacing="10">
+            <Label Text="Employee:" VerticalOptions="Center" HorizontalOptions="Center"/>
+            <Picker x:Name="employeePicker" VerticalOptions="Center"/>
+            <ImageButton x:Name="employeeDeselectBtn" Source="appbar_close.png" Clicked="employeeDeselectBtn_Clicked"/>
+            
+            <Label Text="Job Position:" VerticalOptions="Center" HorizontalOptions="Center"/>
+            <Picker x:Name="positionPicker" VerticalOptions="Center"/>
+            <ImageButton x:Name="positionDeselectBtn" Source="appbar_close.png" Clicked="positionDeselectBtn_Clicked"/>
+            
+            <Button x:Name="generateBtn" Text="Generate" VerticalOptions="Center" Clicked="generateBtn_Clicked"/>
+        </HorizontalStackLayout>
+
+        <Grid>
+            
+        </Grid>
     </VerticalStackLayout>
 </ContentPage>

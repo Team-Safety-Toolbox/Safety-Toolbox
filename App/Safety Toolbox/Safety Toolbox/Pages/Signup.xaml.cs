@@ -38,6 +38,7 @@ public partial class Signup : ContentPage
 
         query = "INSERT INTO Users (Email, Username, Password, RoleID) Values (@Email, @Username, @Password, @ReadOnlyID);";
 
+		// there's an issue here where these aren't saving
         using (SqlConnection connection = new SqlConnection(Constants.connectionString))
 		{
             using (SqlCommand command = new SqlCommand(query, connection))

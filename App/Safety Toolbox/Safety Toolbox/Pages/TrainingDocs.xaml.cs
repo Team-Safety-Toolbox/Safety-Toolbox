@@ -5,6 +5,7 @@ namespace Safety_Toolbox;
 public partial class TrainingDocs : ContentPage
 {
     string folder = "Training Documents";
+    List<string> docs = new List<string>();
     public TrainingDocs()
 	{
 		InitializeComponent();
@@ -56,13 +57,25 @@ public partial class TrainingDocs : ContentPage
                 libFiles.Add(Path.GetFileName(libFilePath));
             }
             collectionView.ItemsSource = libFiles;
+            docs = libFiles;
         }
         else
         {
             List<string> libFiles = new List<string>();
             collectionView.ItemsSource = libFiles;
+            docs = libFiles;
             FilePathWarning.IsVisible = true;
         }
     }
 
+    private void SearchBar_TextChanged(object sender, TextChangedEventArgs e)
+    {
+        SearchBar searchBar = (SearchBar)sender;
+        if (searchBar != null)
+        {
+            var matches = docs.Where(docs => docs.ToLower().Contains(searchBar.Text.ToLower()));
+
+            collectionView.ItemsSource = matches;
+        }
+    }
 }

@@ -6,6 +6,8 @@ drop table Certifications
 drop table Users
 drop table Roles
 drop table CertificationTypes
+drop table Positions
+drop table CertificationPositionMap
 
 Create table Attendance (
 	EmployeeID int not null,
@@ -46,6 +48,17 @@ Create table Roles(
 	RoleName varchar(250)
 )
 
+Create Table Positions(
+	PositionID int not null primary key,
+	PositionName varchar(250)
+)
+
+Create Table CertificationPositionMap(
+	CertificationPositionMapID int not null primary key,
+	CertificationID int, /*needs to be an FK*/
+	PositionID int /*needs to be an FK*/
+)
+
 INSERT INTO Employees Values(1, 'Bob', 'Bobington');
 INSERT INTO Employees Values(2, 'Joe', 'Jones');
 INSERT INTO Employees Values(3, 'Sue', 'Snow');
@@ -62,6 +75,26 @@ INSERT INTO Certifications Values(2, 4, '2021-08-17', '2024-01-20');
 INSERT INTO Certifications Values(3, 5, '2020-06-01', null);
 INSERT INTO Certifications Values(1, 6, '2018-12-20', '2024-08-30');
 
+/* I somehow lost the SQL file with the proper ones... i hate myself*/
+INSERT INTO CertificationTypes Values('Test for Level 1 Operator');
+INSERT INTO CertificationTypes Values('Test1 for Supervisor');
+INSERT INTO CertificationTypes Values('Test3');
+INSERT INTO CertificationTypes Values('Test2 for Level 1 Operator');
+INSERT INTO CertificationTypes Values('Test2 for Supervisor');
+INSERT INTO CertificationTypes Values('Test6');
+
+INSERT INTO Positions Values(1, 'Level 1 Operator');
+INSERT INTO Positions Values(2, 'Supervisor');
+INSERT INTO Positions Values(3, 'Level 2 Operator');
+
+INSERT INTO CertificationPositionMap Values(1, 1, 1);
+INSERT INTO CertificationPositionMap Values(2, 4, 1);
+INSERT INTO CertificationPositionMap Values(3, 2, 2);
+INSERT INTO CertificationPositionMap Values(4, 5, 2);
+INSERT INTO CertificationPositionMap Values(5, 1, 3);
+INSERT INTO CertificationPositionMap Values(6, 4, 3);
+INSERT INTO CertificationPositionMap Values(7, 6, 3);
+
 INSERT INTO Roles Values(1, 'IT');
 INSERT INTO Roles Values(2, 'Management');
 INSERT INTO Roles Values(3, 'readonly');
@@ -76,3 +109,5 @@ SELECT * FROM Certifications
 SELECT * FROM CertificationTypes
 SELECT * FROM Roles
 SELECT * FROM Users
+SELECT * FROM Positions
+SELECT * FROM CertificationPositionMap

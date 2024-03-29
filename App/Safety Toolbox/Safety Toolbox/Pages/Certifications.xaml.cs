@@ -115,7 +115,7 @@ public partial class Certifications : ContentPage
 
     async void OnViewBtnClicked(object sender, EventArgs e)
     {
-        var button = (Button)sender;
+        var button = (ImageButton)sender;
         string filename = button.CommandParameter.ToString();
         var fullFilePath = Path.Combine(Preferences.Default.Get("CertFilePath", "Not Found"), filename);
 
@@ -170,5 +170,10 @@ public partial class Certifications : ContentPage
             }
         }
         return certificationList;
+    }
+
+    private void OnEditBtnClicked(object sender, EventArgs e)
+    {
+        // should preload all the stuff for editing reasons
     }
 }

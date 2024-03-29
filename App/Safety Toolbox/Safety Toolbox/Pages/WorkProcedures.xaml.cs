@@ -5,6 +5,7 @@ namespace Safety_Toolbox;
 public partial class WorkProcedures : ContentPage
 {
     string folder = "Work Procedures";
+    List<string> procedures = new List<string>();
     public WorkProcedures()
 	{
 		InitializeComponent();
@@ -57,13 +58,24 @@ public partial class WorkProcedures : ContentPage
             }
 
             collectionView.ItemsSource = libFiles;
+            procedures = libFiles;
         }
         else {
             List<string> libFiles = new List<string>();
             collectionView.ItemsSource = libFiles;
+            procedures = libFiles;
             FilePathWarning.IsVisible = true;
         }
+    }
 
+    private void SearchBar_TextChanged(object sender, TextChangedEventArgs e)
+    {
+        SearchBar searchBar = (SearchBar)sender;
+        if (searchBar != null)
+        {
+            var matches = procedures.Where(procedures => procedures.ToLower().Contains(searchBar.Text.ToLower()));
 
+            collectionView.ItemsSource = matches;
+        }
     }
 }
