@@ -8,6 +8,7 @@ drop table Roles
 drop table CertificationTypes
 drop table Positions
 drop table CertificationPositionMap
+drop table Topics
 
 Create table Attendance (
 	EmployeeID int not null,
@@ -58,6 +59,8 @@ Create Table CertificationPositionMap(
 	CertificationID int, /*needs to be an FK*/
 	PositionID int /*needs to be an FK*/
 )
+
+Create table Topics(TopicIdea varchar(200))
 
 INSERT INTO Employees Values(1, 'Bob', 'Bobington');
 INSERT INTO Employees Values(2, 'Joe', 'Jones');
@@ -111,3 +114,4 @@ SELECT * FROM Roles
 SELECT * FROM Users
 SELECT * FROM Positions
 SELECT * FROM CertificationPositionMap
+select * from Topics
