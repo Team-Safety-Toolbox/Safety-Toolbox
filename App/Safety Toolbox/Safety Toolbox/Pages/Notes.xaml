@@ -24,8 +24,10 @@
         <HorizontalStackLayout x:Name="NewFileNoteArea" HorizontalOptions="Center" Spacing="20">
             <Label Text="New File:" VerticalOptions="Center"/>
             <Button x:Name="AddFileButton" Text="Select" Clicked="AddFileButtonClicked" WidthRequest="125"/>
-            <Label x:Name="FileNameDisplay" IsVisible="False"/>
-            <Button Text="Add This File" IsVisible="False"/>
+            <Label x:Name="FileNameDisplay" IsVisible="False" VerticalOptions="Center"/>
+            <Button x:Name="ConfirmFileButton" Text="Add This File" Clicked="ConfirmFileButtonClicked" IsVisible="False"/>
+            <Button x:Name="CancelFileButton" Text="Cancel" Clicked="CancelFileButtonClicked" IsVisible="False"/>
+
         </HorizontalStackLayout>
 
         <ScrollView x:Name="ScrollNotes">

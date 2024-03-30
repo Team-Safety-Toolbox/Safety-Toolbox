@@ -2,6 +2,8 @@ namespace Safety_Toolbox;
 using Safety_Toolbox.Types;
 using Microsoft.Data.SqlClient;
 using Safety_Toolbox.Pages;
+using CommunityToolkit.Maui.Core.Primitives;
+using Microsoft.Maui.Storage;
 
 public partial class Notes : ContentPage
 { 
@@ -111,9 +113,58 @@ public partial class Notes : ContentPage
         }
     }
 
-    private void AddFileButtonClicked(object sender, EventArgs e)
+    async private void AddFileButtonClicked(object sender, EventArgs e)
     {
+        var file = await FilePicker.PickAsync(new PickOptions
+        {
+            PickerTitle = "Pick Notes PDF",
+            FileTypes = FilePickerFileType.Pdf
+        });
 
+        if (file != null)
+        {
+            var fullPath = file.FullPath;
+            var fileName = file.FileName;
+            var fileExt = Path.GetExtension(file.FileName);
+
+            //if (!FileNameEntry.Text.IsNullOrEmpty())
+            //{
+            //    if (Path.GetExtension(FileNameEntry.Text) == "")
+            //    {
+            //        fileName = FileNameEntry.Text + fileExt;
+            //    }
+            //    else
+            //    {
+            //        fileName = FileNameEntry.Text;
+            //    }
+            //}
+
+            ConfirmFileButton.CommandParameter = fileName;
+
+
+            FileNameDisplay.Text = fileName;
+            FileNameDisplay.IsVisible = true;
+            ConfirmFileButton.IsVisible = true;
+            CancelFileButton.IsVisible = true;
+            AddFileButton.IsVisible = false;
+        }
+    }
+    private void ConfirmFileButtonClicked(object sender, EventArgs e)
+    {
+        //TODO: what do if file exists? give user a warning and chance to rename?
+        //this is a problem elsewhere too, but not on certs page for sure
+        //File.Copy(fullPath, Path.Combine(Preferences.Default.Get("NotesFilePath", "Not Found"),  FileNameDisplay.Text));
+
+        getFileNotes();
+    }
+
+    private void CancelFileButtonClicked(object sender, EventArgs e)
+    {
+        FileNameDisplay.Text = "";
+        FileNameDisplay.IsVisible = false;
+        ConfirmFileButton.IsVisible = false;
+        CancelFileButton.IsVisible = false;
+        AddFileButton.IsVisible = true;
     }
 
     async private void OnViewButtonClicked (object sender, EventArgs e)
