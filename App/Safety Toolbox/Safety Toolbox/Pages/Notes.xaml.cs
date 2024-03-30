@@ -6,7 +6,8 @@ using CommunityToolkit.Maui.Core.Primitives;
 using Microsoft.Maui.Storage;
 
 public partial class Notes : ContentPage
-{ 
+{
+    private string newFileFullPath;
     public Notes()
 	{
 		InitializeComponent();
@@ -123,47 +124,61 @@ public partial class Notes : ContentPage
 
         if (file != null)
         {
-            var fullPath = file.FullPath;
+            newFileFullPath = file.FullPath;
             var fileName = file.FileName;
-            var fileExt = Path.GetExtension(file.FileName);
-
-            //if (!FileNameEntry.Text.IsNullOrEmpty())
-            //{
-            //    if (Path.GetExtension(FileNameEntry.Text) == "")
-            //    {
-            //        fileName = FileNameEntry.Text + fileExt;
-            //    }
-            //    else
-            //    {
-            //        fileName = FileNameEntry.Text;
-            //    }
-            //}
 
             ConfirmFileButton.CommandParameter = fileName;
 
-
             FileNameDisplay.Text = fileName;
+            SaveFileLabel.IsVisible = true;
             FileNameDisplay.IsVisible = true;
             ConfirmFileButton.IsVisible = true;
             CancelFileButton.IsVisible = true;
+            NewFileLabel.IsVisible = false;
             AddFileButton.IsVisible = false;
         }
     }
     private void ConfirmFileButtonClicked(object sender, EventArgs e)
     {
-        //TODO: what do if file exists? give user a warning and chance to rename?
-        //this is a problem elsewhere too, but not on certs page for sure
-        //File.Copy(fullPath, Path.Combine(Preferences.Default.Get("NotesFilePath", "Not Found"),  FileNameDisplay.Text));
 
-        getFileNotes();
+        if(File.Exists(Path.Combine(Preferences.Default.Get("NotesFilePath", "Not Found"), FileNameDisplay.Text)))
+        {
+            FileFeedback.Text = "File with this name already exists.";
+            FileFeedback.TextColor = Color.Parse("Red");
+            FileFeedback.IsVisible = true;
+        }
+        else
+        {
+            //TODO: what do if file exists? give user a warning and chance to rename?
+            //this is a problem elsewhere too, but not on certs page for sure
+            //**fixed here, check other places with File.Copy
+            File.Copy(newFileFullPath, Path.Combine(Preferences.Default.Get("NotesFilePath", "Not Found"), FileNameDisplay.Text));
+            getFileNotes();
+            FileFeedback.Text = "File has been added!";
+            FileFeedback.TextColor = Color.Parse("Green");
+            FileFeedback.IsVisible = true;
+
+            newFileFullPath = "";
+            FileNameDisplay.Text = "";
+            SaveFileLabel.IsVisible = false;
+            FileNameDisplay.IsVisible = false;
+            ConfirmFileButton.IsVisible = false;
+            CancelFileButton.IsVisible = false;
+            NewFileLabel.IsVisible = true;
+            AddFileButton.IsVisible = true;
+        }
+       
     }
 
     private void CancelFileButtonClicked(object sender, EventArgs e)
     {
+        newFileFullPath = "";
         FileNameDisplay.Text = "";
+        SaveFileLabel.IsVisible = false;
         FileNameDisplay.IsVisible = false;
         ConfirmFileButton.IsVisible = false;
         CancelFileButton.IsVisible = false;
+        NewFileLabel.IsVisible = true;
         AddFileButton.IsVisible = true;
     }
 

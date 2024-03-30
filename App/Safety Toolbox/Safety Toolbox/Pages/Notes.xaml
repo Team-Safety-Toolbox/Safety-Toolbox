@@ -22,18 +22,20 @@
         </HorizontalStackLayout>
         <Label x:Name="CharLimitWarning" Text="Too many characters! Limit: 200" TextColor="Red" HorizontalOptions="Center" IsVisible="False"/>
         <HorizontalStackLayout x:Name="NewFileNoteArea" HorizontalOptions="Center" Spacing="20">
-            <Label Text="New File:" VerticalOptions="Center"/>
+            <Label x:Name="NewFileLabel" Text="New File:" VerticalOptions="Center"/>
             <Button x:Name="AddFileButton" Text="Select" Clicked="AddFileButtonClicked" WidthRequest="125"/>
-            <Label x:Name="FileNameDisplay" IsVisible="False" VerticalOptions="Center"/>
+            <Label x:Name="SaveFileLabel" Text="Save File As:" VerticalOptions="Center" IsVisible="False"/>
+            <Entry x:Name="FileNameDisplay" IsVisible="False" WidthRequest="300" VerticalTextAlignment="Center"/>
             <Button x:Name="ConfirmFileButton" Text="Add This File" Clicked="ConfirmFileButtonClicked" IsVisible="False"/>
             <Button x:Name="CancelFileButton" Text="Cancel" Clicked="CancelFileButtonClicked" IsVisible="False"/>
-
         </HorizontalStackLayout>
+        <Label x:Name="FileFeedback" IsVisible="False" HorizontalOptions="Center"/>
 
+        <Label/>
         <ScrollView x:Name="ScrollNotes">
             <HorizontalStackLayout HorizontalOptions="Center" Spacing="10">
                 <StackLayout Spacing="10" x:Name="TextNotesArea">
-                    <Label Text="Text Notes" HorizontalOptions="Center"/>
+                    <Label Text="Text Notes" HorizontalOptions="Center" FontSize="18"/>
                     <CollectionView x:Name="ViewTextNotes">
                         <CollectionView.ItemTemplate>
                             <DataTemplate>
@@ -47,7 +49,7 @@
                     </CollectionView>
                 </StackLayout>
                 <StackLayout Spacing="10" x:Name="FileNotesArea">
-                    <Label Text="File Notes" HorizontalOptions="Center"/>
+                    <Label Text="File Notes" HorizontalOptions="Center" FontSize="18"/>
                     <Label x:Name="FilePathWarning" Text="The file path for the library must be set under settings." TextColor="Red" IsVisible="False" HorizontalOptions="Center"/>
                     <CollectionView x:Name="ViewFileNotes">
                         <CollectionView.ItemTemplate>
