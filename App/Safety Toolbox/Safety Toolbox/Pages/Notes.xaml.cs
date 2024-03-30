@@ -44,7 +44,8 @@ public partial class Notes : ContentPage
             }
         }
 
-        ViewTextNotes.ItemsSource = textNotes;
+        List<TextNoteData> sortedtextNotes = textNotes.OrderByDescending(o => o.NoteDate).ToList();
+        ViewTextNotes.ItemsSource = sortedtextNotes;
     }
 
     private void getFileNotes()
@@ -72,12 +73,42 @@ public partial class Notes : ContentPage
 
     private void NewNoteTextChanged(object sender, TextChangedEventArgs e)
     {
-
+        if (NewNote.Text.ToCharArray().Count() > 500)
+        {
+            CharLimitWarning.IsVisible = true;
+            AddNoteButton.IsEnabled = false;
+        }
+        else
+        {
+            CharLimitWarning.IsVisible = false;
+            AddNoteButton.IsEnabled = true;
+        }
     }
 
     private void OnAddNoteButtonClicked(object sender, EventArgs e)
-    { 
-    
+    {
+        if (NewNote.Text != "" && NewNote.Text != null)
+        {
+            string query = "Insert into Notes Values (@NoteDate, @NoteContent);";
+
+            using (SqlConnection connection = new SqlConnection(Constants.connectionString))
+            {
+                connection.Open();
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    var noteDateParam = new SqlParameter("NoteDate", DateTime.Now);
+                    var noteContentParam = new SqlParameter("NoteContent", NewNote.Text);
+                    command.Parameters.Add(noteDateParam);
+                    command.Parameters.Add(noteContentParam);
+
+                    var results = command.ExecuteReader();
+
+                }
+            }
+
+            //refresh text list
+            getTextNotes();
+        }
     }
 
     private void AddFileButtonClicked(object sender, EventArgs e)

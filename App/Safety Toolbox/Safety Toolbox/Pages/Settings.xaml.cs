@@ -16,12 +16,11 @@ public partial class Settings : ContentPage
 
     private void setEntryFields()
     {
-        //TODO: error checking for cert and lib when there is not yet a path saved here
         DBConnStr.Text = Preferences.Default.Get("DBConn", "Not Found");
         ReportServerURL.Text = Preferences.Default.Get("ReportServerURL", "Not Found");
         CertFilePath.Text = Preferences.Default.Get("CertFilePath", "Not Found");
         LibFilePath.Text = Preferences.Default.Get("LibFilePath", "Not Found");
-        //NotesFilePath.Text = Preferences.Default.Get("NotesFilePath", "NotFound");
+        NotesFilePath.Text = Preferences.Default.Get("NotesFilePath", "NotFound");
         SignUpToggleSwitch.IsToggled = Preferences.Default.Get("SignUpEnabled", false);
     }
 
@@ -33,7 +32,7 @@ public partial class Settings : ContentPage
         Preferences.Default.Set("ReportServerURL", ReportServerURL.Text);
         Preferences.Default.Set("CertFilePath", CertFilePath.Text);
         Preferences.Default.Set("LibFilePath", LibFilePath.Text);
-        //Preferences.Default.Set("NotesFilePath", NotesFilePath.Text);
+        Preferences.Default.Set("NotesFilePath", NotesFilePath.Text);
         Preferences.Default.Set("SignUpEnabled", SignUpToggleSwitch.IsToggled);
         //MainPage.setSignUpEnabled(Preferences.Default.Get("SignUpEnabled", false));
 
@@ -64,7 +63,6 @@ public partial class Settings : ContentPage
             if (path == "certPath")
             {
                 Preferences.Default.Set("CertFilePath", result.Folder.Path);
-
             }
             else if (path == "libPath")
             {
