@@ -9,11 +9,17 @@
             SemanticProperties.HeadingLevel="Level1"
             FontSize="32"
             HorizontalOptions="Center" />
-        <Label Text="Choose what the file will be named (if left blank, file will keep its current name)" HorizontalOptions="Center" VerticalOptions="Center" LineBreakMode="WordWrap"/>
-        <Entry x:Name="FileNameEntry" Placeholder="FileName" TextChanged="EvaluateFileName"/>
-        <Label x:Name="FileNameErrorText" HorizontalOptions="Center" VerticalOptions="Start" TextColor="Red"/>
-
         <Button x:Name="FilePickerBtn" Text="Pick file" SemanticProperties.Hint="Pick the file" Clicked="OnPickFileBtnClicked" HorizontalOptions="Center"/>
+
+        <HorizontalStackLayout HorizontalOptions="Center" x:Name="FileConfirmArea" IsVisible="False">
+            <Label Text="Save File As:" VerticalOptions="Center"/>
+            <Entry x:Name="FileNameEntry"/>
+            <Button Text="Save" Clicked="SaveButtonClicked"/>
+            <Button Text="Cancel" Clicked="CancelButtonClicked"/>
+        </HorizontalStackLayout>
+
+        <Label x:Name="FileFeedback" HorizontalOptions="Center" VerticalOptions="Start" TextColor="Red"/>
+
         <Label x:Name="FilePathWarning" Text="File path must be set under the settings page first!" TextColor="Red" IsVisible="False" HorizontalOptions="Center"/>
     </VerticalStackLayout>
 </ContentPage>

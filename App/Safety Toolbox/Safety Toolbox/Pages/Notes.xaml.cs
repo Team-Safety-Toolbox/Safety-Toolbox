@@ -4,10 +4,11 @@ using Microsoft.Data.SqlClient;
 using Safety_Toolbox.Pages;
 using CommunityToolkit.Maui.Core.Primitives;
 using Microsoft.Maui.Storage;
+using Microsoft.IdentityModel.Tokens;
 
 public partial class Notes : ContentPage
 {
-    private string newFileFullPath;
+    private string newFileCurrentPath;
     public Notes()
 	{
 		InitializeComponent();
@@ -124,7 +125,7 @@ public partial class Notes : ContentPage
 
         if (file != null)
         {
-            newFileFullPath = file.FullPath;
+            newFileCurrentPath = file.FullPath;
             var fileName = file.FileName;
 
             ConfirmFileButton.CommandParameter = fileName;
@@ -141,9 +142,25 @@ public partial class Notes : ContentPage
     private void ConfirmFileButtonClicked(object sender, EventArgs e)
     {
 
-        if(File.Exists(Path.Combine(Preferences.Default.Get("NotesFilePath", "Not Found"), FileNameDisplay.Text)))
+        string fileName = "";
+        if (Path.GetExtension(FileNameDisplay.Text) == "")
+        {
+            fileName = FileNameDisplay.Text + Path.GetExtension(newFileCurrentPath);
+        }
+        else
+        {
+            fileName = FileNameDisplay.Text;
+        }
+
+        if (File.Exists(Path.Combine(Preferences.Default.Get("NotesFilePath", "Not Found"), fileName)))
         {
             FileFeedback.Text = "File with this name already exists.";
+            FileFeedback.TextColor = Color.Parse("Red");
+            FileFeedback.IsVisible = true;
+        }
+        else if (FileNameDisplay.Text.IsNullOrEmpty())
+        {
+            FileFeedback.Text = "File needs a name.";
             FileFeedback.TextColor = Color.Parse("Red");
             FileFeedback.IsVisible = true;
         }
@@ -152,13 +169,13 @@ public partial class Notes : ContentPage
             //TODO: what do if file exists? give user a warning and chance to rename?
             //this is a problem elsewhere too, but not on certs page for sure
             //**fixed here, check other places with File.Copy
-            File.Copy(newFileFullPath, Path.Combine(Preferences.Default.Get("NotesFilePath", "Not Found"), FileNameDisplay.Text));
+            File.Copy(newFileCurrentPath, Path.Combine(Preferences.Default.Get("NotesFilePath", "Not Found"), fileName));
             getFileNotes();
             FileFeedback.Text = "File has been added!";
             FileFeedback.TextColor = Color.Parse("Green");
             FileFeedback.IsVisible = true;
 
-            newFileFullPath = "";
+            newFileCurrentPath = "";
             FileNameDisplay.Text = "";
             SaveFileLabel.IsVisible = false;
             FileNameDisplay.IsVisible = false;
@@ -172,7 +189,7 @@ public partial class Notes : ContentPage
 
     private void CancelFileButtonClicked(object sender, EventArgs e)
     {
-        newFileFullPath = "";
+        newFileCurrentPath = "";
         FileNameDisplay.Text = "";
         SaveFileLabel.IsVisible = false;
         FileNameDisplay.IsVisible = false;
