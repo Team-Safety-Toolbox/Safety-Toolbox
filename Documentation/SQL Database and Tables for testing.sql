@@ -19,7 +19,7 @@ Create table Attendance (
 	Constraint PersonDate Primary KEY (EmployeeID, AttendanceDate))
 
 Create table Employees (
-	EmployeeID int not null primary key,
+	EmployeeID int not null identity(1,1) primary key,
 	EmployeeFirstName varchar(100),
 	EmployeeLastName varchar(100))
 
@@ -62,10 +62,12 @@ Create Table CertificationPositionMap(
 
 Create table Topics(TopicIdea varchar(200))
 
-INSERT INTO Employees Values(1, 'Bob', 'Bobington');
-INSERT INTO Employees Values(2, 'Joe', 'Jones');
-INSERT INTO Employees Values(3, 'Sue', 'Snow');
-INSERT INTO Employees values(4, 'Bill', 'Nye');
+Create table Notes (NoteDate Date, NoteContent varchar(500))
+
+INSERT INTO Employees Values('Bob', 'Bobington');
+INSERT INTO Employees Values('Joe', 'Jones');
+INSERT INTO Employees Values('Sue', 'Snow');
+INSERT INTO Employees values('Bill', 'Nye');
 
 INSERT INTO Attendance Values(1, '2023-11-04', 1, 0, 0);
 INSERT INTO Attendance Values(2, '2023-11-04', 0, 1, 0);
@@ -114,4 +116,5 @@ SELECT * FROM Roles
 SELECT * FROM Users
 SELECT * FROM Positions
 SELECT * FROM CertificationPositionMap
-select * from Topics
+SELECT * FROM Topics
+SELECT * FROM Notes

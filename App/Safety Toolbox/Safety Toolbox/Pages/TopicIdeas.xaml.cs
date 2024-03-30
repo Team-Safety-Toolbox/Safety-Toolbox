@@ -1,5 +1,5 @@
-using Microsoft.Data.SqlClient;
 namespace Safety_Toolbox;
+using Microsoft.Data.SqlClient;
 
 public partial class TopicIdeas : ContentPage
 {

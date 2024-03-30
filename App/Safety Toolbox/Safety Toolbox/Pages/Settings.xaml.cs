@@ -21,6 +21,7 @@ public partial class Settings : ContentPage
         ReportServerURL.Text = Preferences.Default.Get("ReportServerURL", "Not Found");
         CertFilePath.Text = Preferences.Default.Get("CertFilePath", "Not Found");
         LibFilePath.Text = Preferences.Default.Get("LibFilePath", "Not Found");
+        //NotesFilePath.Text = Preferences.Default.Get("NotesFilePath", "NotFound");
         SignUpToggleSwitch.IsToggled = Preferences.Default.Get("SignUpEnabled", false);
     }
 
@@ -32,6 +33,7 @@ public partial class Settings : ContentPage
         Preferences.Default.Set("ReportServerURL", ReportServerURL.Text);
         Preferences.Default.Set("CertFilePath", CertFilePath.Text);
         Preferences.Default.Set("LibFilePath", LibFilePath.Text);
+        //Preferences.Default.Set("NotesFilePath", NotesFilePath.Text);
         Preferences.Default.Set("SignUpEnabled", SignUpToggleSwitch.IsToggled);
         //MainPage.setSignUpEnabled(Preferences.Default.Get("SignUpEnabled", false));
 
@@ -41,31 +43,41 @@ public partial class Settings : ContentPage
 
     private void OnCertPathBtnClicked(object sender, EventArgs e)
     {
-        launchFolderPicker(true);
+        launchFolderPicker("certPath");
     }
     private void OnLibPathBtnClicked(object sender, EventArgs e)
     {
-        launchFolderPicker(false);
+        launchFolderPicker("libPath");
     }
 
-    private async void launchFolderPicker(bool certPath)
+    private void OnNotesPathBtnClicked(object sender, EventArgs e)
+    {
+        launchFolderPicker("notesPath");
+    }
+
+    private async void launchFolderPicker(string path)
     {
         CancellationToken cancellationToken = new CancellationToken();
         var result = await FolderPicker.Default.PickAsync(cancellationToken);
         if (result.IsSuccessful)
         {
-            if (certPath)
+            if (path == "certPath")
             {
                 Preferences.Default.Set("CertFilePath", result.Folder.Path);
-                
+
             }
-            else //libPath
+            else if (path == "libPath")
             {
                 Preferences.Default.Set("LibFilePath", result.Folder.Path);
+            }
+            else //notesPath
+            {
+                Preferences.Default.Set("NotesFilePath", result.Folder.Path);
             }
 
             CertFilePath.Text = Preferences.Default.Get("CertFilePath", "Not Found");
             LibFilePath.Text = Preferences.Default.Get("LibFilePath", "Not Found");
+            NotesFilePath.Text = Preferences.Default.Get("NotesFilePath", "NotFound");
         }
 
     }

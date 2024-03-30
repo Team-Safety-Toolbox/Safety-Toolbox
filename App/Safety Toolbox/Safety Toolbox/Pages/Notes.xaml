@@ -14,5 +14,63 @@
             SemanticProperties.HeadingLevel="Level1"
             FontSize="24"
             HorizontalOptions="Center" />
+
+        <HorizontalStackLayout x:Name="NewNoteArea" HorizontalOptions="Center" Spacing="20">
+            <Label Text="New Note:" VerticalOptions="Center"/>
+            <Entry x:Name="NewNote" WidthRequest="500" TextChanged="NewNoteTextChanged"/>
+            <Button x:Name="AddNoteButton" Text="Add" Clicked="OnAddNoteButtonClicked" WidthRequest="125"/>
+        </HorizontalStackLayout>
+        <Label x:Name="CharLimitWarning" Text="Too many characters! Limit: 200" TextColor="Red" HorizontalOptions="Center" IsVisible="False"/>
+        <HorizontalStackLayout x:Name="NewFileNoteArea" HorizontalOptions="Center" Spacing="20">
+            <Label Text="New File:" VerticalOptions="Center"/>
+            <Button x:Name="AddFileButton" Text="Select" Clicked="AddFileButtonClicked" WidthRequest="125"/>
+            <Label x:Name="FileNameDisplay" IsVisible="False"/>
+            <Button Text="Add This File" IsVisible="False"/>
+        </HorizontalStackLayout>
+
+        <ScrollView x:Name="ScrollNotes">
+            <HorizontalStackLayout HorizontalOptions="Center" Spacing="10">
+                <StackLayout Spacing="10" x:Name="TextNotesArea">
+                    <Label Text="Text Notes" HorizontalOptions="Center"/>
+                    <CollectionView x:Name="ViewTextNotes">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <VerticalStackLayout>
+                                    <Label Text="{Binding NoteDate, StringFormat='{0:d}'}"  HorizontalOptions="Center"/>
+                                    <Label Text="{Binding NoteContent}" HorizontalOptions="Center"/>
+                                    <Label/>
+                                </VerticalStackLayout>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </StackLayout>
+                <StackLayout Spacing="10" x:Name="FileNotesArea">
+                    <Label Text="File Notes" HorizontalOptions="Center"/>
+                    <Label x:Name="FilePathWarning" Text="The file path for the library must be set under settings." TextColor="Red" IsVisible="False" HorizontalOptions="Center"/>
+                    <CollectionView x:Name="ViewFileNotes">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="3*"/>
+                                        <ColumnDefinition Width="0.5*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <VerticalStackLayout Grid.Column="0" Grid.Row='0'>
+                                        <Label Text="{Binding NoteDate, StringFormat='{0:d}'}" HorizontalOptions="Start"/>
+                                        <Label Text="{Binding NoteFileName}" HorizontalOptions="Start"/>
+                                    </VerticalStackLayout>
+                                    <Button Text="View" Grid.Column="1" Grid.Row='0' CommandParameter="{Binding NoteFileName}" HorizontalOptions="End" Clicked="OnViewButtonClicked"/>
+                                    <Label Grid.Row='2'/>
+                                </Grid>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </StackLayout>
+            </HorizontalStackLayout>
+        </ScrollView>
     </VerticalStackLayout>
 </ContentPage>

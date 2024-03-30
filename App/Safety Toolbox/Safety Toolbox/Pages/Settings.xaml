@@ -60,6 +60,19 @@
         </HorizontalStackLayout>
 
         <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
+            <Label 
+                Text="Notes File Path: "
+                VerticalOptions="Center" 
+                HorizontalOptions="Center" />
+            <Label 
+                Text="Not Found"
+                x:Name="NotesFilePath"
+                VerticalOptions="Center" 
+                HorizontalOptions="Center" />
+            <Button x:Name="NotesPathBtn" Text="Pick Folder" Clicked="OnNotesPathBtnClicked"/>
+        </HorizontalStackLayout>
+
+        <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
             <Label
                 Text="Sign Up Page Enabled: "
                 VerticalOptions="Center"
