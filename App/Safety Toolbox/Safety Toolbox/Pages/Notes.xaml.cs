@@ -158,6 +158,12 @@ public partial class Notes : ContentPage
             FileFeedback.TextColor = Color.Parse("Red");
             FileFeedback.IsVisible = true;
         }
+        else if (FileNameDisplay.Text.IndexOfAny(Path.GetInvalidFileNameChars()) == -1)
+        {
+            FileFeedback.Text = "File name cannot contain invalid chars";
+            FileFeedback.TextColor = Color.Parse("Red");
+            FileFeedback.IsVisible = true;
+        }
         else if (FileNameDisplay.Text.IsNullOrEmpty())
         {
             FileFeedback.Text = "File needs a name.";
@@ -166,9 +172,6 @@ public partial class Notes : ContentPage
         }
         else
         {
-            //TODO: what do if file exists? give user a warning and chance to rename?
-            //this is a problem elsewhere too, but not on certs page for sure
-            //**fixed here, check other places with File.Copy
             File.Copy(newFileCurrentPath, Path.Combine(Preferences.Default.Get("NotesFilePath", "Not Found"), fileName));
             getFileNotes();
             FileFeedback.Text = "File has been added!";

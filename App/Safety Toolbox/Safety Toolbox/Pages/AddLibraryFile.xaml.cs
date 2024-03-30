@@ -92,7 +92,12 @@ public partial class AddLibraryFile : ContentPage
             FileFeedback.TextColor = Color.Parse("Red");
             FileFeedback.IsVisible = true;
         }
-        else if(FileNameEntry.Text.IsNullOrEmpty())
+        else if (FileNameEntry.Text.IndexOfAny(Path.GetInvalidFileNameChars()) == -1) {
+            FileFeedback.Text = "File name cannot contain invalid chars";
+            FileFeedback.TextColor = Color.Parse("Red");
+            FileFeedback.IsVisible = true;
+        }
+        else if (FileNameEntry.Text.IsNullOrEmpty())
         {
             FileFeedback.Text = "File needs a name.";
             FileFeedback.TextColor = Color.Parse("Red");
@@ -100,7 +105,7 @@ public partial class AddLibraryFile : ContentPage
         }
         else
         {
-           
+
             File.Copy(newFileCurrentPath, Path.Combine(Preferences.Default.Get("LibFilePath", "Not Found"), folder, fileName));
 
             FileFeedback.Text = "Success!";
