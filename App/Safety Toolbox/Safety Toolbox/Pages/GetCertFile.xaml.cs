@@ -76,7 +76,7 @@ public partial class GetCertFile : ContentPage
         string query = "SELECT CertificationID FROM CertificationTypes WHERE CertificationName = @CertName";
         int certId = -1;
 
-        using (SqlConnection connection = new SqlConnection(Constants.connectionString))
+        using (SqlConnection connection = new SqlConnection(Preferences.Default.Get("DBConn", "Not Found")))
         {
             using (SqlCommand command = new SqlCommand(query, connection))
             {
@@ -107,7 +107,7 @@ public partial class GetCertFile : ContentPage
         string queryInsert = "INSERT INTO Certifications Values(@EmpId, @CertId, @TrainDate, @ExpireDate);";
         string queryUpdate = "UPDATE Certifications SET TrainedOnDate = @TrainDate, ExpiryDate = @ExpireDate WHERE EmployeeID = @EmpId AND CertificationID = @CertId;";
 
-        using (SqlConnection connection = new SqlConnection(Constants.connectionString))
+        using (SqlConnection connection = new SqlConnection(Preferences.Default.Get("DBConn", "Not Found")))
         {
             try { 
                 connection.Open();

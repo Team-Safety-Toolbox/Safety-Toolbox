@@ -103,8 +103,9 @@ public partial class Certifications : ContentPage
         try
         {
             // might need to adjust what this report is called and/or be able to run a bunch of different reports
-            //Uri uri = new Uri(Constants.reportServerURL + "/ExpiredCertifications&CutoffDate=val&CertificationName=val");
-            Uri uri = new Uri(Constants.reportServerURL + "/ExpiredCertifications");
+            //Uri uri = new Uri(Preferences.Default.Get("ReportServerURL", "Not Found") + "/ExpiredCertifications&CutoffDate=val&CertificationName=val");
+            Uri uri = new Uri(Preferences.Default.Get("ReportServerURL", "Not Found") + "/ExpiredCertifications");
+            //^^now using preferences instead of constants, need some error catching in the case of "Not Found"
             await Browser.Default.OpenAsync(uri, BrowserLaunchMode.SystemPreferred);
         }
         catch
@@ -140,7 +141,7 @@ public partial class Certifications : ContentPage
         string query = "SELECT Certifications.EmployeeID, Employees.EmployeeFirstName, Employees.EmployeeLastName, CertificationTypes.CertificationName, Certifications.TrainedOnDate, Certifications.ExpiryDate FROM Certifications JOIN Employees on Certifications.EmployeeID = Employees.EmployeeID JOIN CertificationTypes on Certifications.CertificationID = CertificationTypes.CertificationID";
         List<CertificationData> certificationList = new List<CertificationData>();
 
-        using (SqlConnection connection = new SqlConnection(Constants.connectionString))
+        using (SqlConnection connection = new SqlConnection(Preferences.Default.Get("DBConn", "Not Found")))
         {
             using (SqlCommand command = new SqlCommand(query, connection))
             {

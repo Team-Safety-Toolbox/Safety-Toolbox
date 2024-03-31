@@ -20,7 +20,7 @@ public partial class Signup : ContentPage
 		int readOnlyID = -1;
 		string query = "SELECT RoleID FROM Roles WHERE RoleName = 'readonly';";
 
-		using (SqlConnection connection = new SqlConnection(Constants.connectionString))
+		using (SqlConnection connection = new SqlConnection(Preferences.Default.Get("DBConn", "Not Found")))
 		{
 			using (SqlCommand command = new SqlCommand(query, connection))
 			{
@@ -46,7 +46,7 @@ public partial class Signup : ContentPage
         query = "INSERT INTO Users (Email, Username, Password, RoleID) Values (@Email, @Username, @Password, @ReadOnlyID);";
 
 		// there's an issue here where these aren't saving
-        using (SqlConnection connection = new SqlConnection(Constants.connectionString))
+        using (SqlConnection connection = new SqlConnection(Preferences.Default.Get("DBConn", "Not Found")))
 		{
             using (SqlCommand command = new SqlCommand(query, connection))
             {

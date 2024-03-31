@@ -21,7 +21,7 @@ public partial class TopicIdeas : ContentPage
 
         string query = "SELECT * FROM Topics";
 
-        using (SqlConnection connection = new SqlConnection(Constants.connectionString))
+        using (SqlConnection connection = new SqlConnection(Preferences.Default.Get("DBConn", "Not Found")))
         {
             using (SqlCommand command = new SqlCommand(query, connection))
             {
@@ -63,7 +63,7 @@ public partial class TopicIdeas : ContentPage
             //add new topic
             string query = "Insert into Topics Values (@TopicIdea);";
 
-            using (SqlConnection connection = new SqlConnection(Constants.connectionString))
+            using (SqlConnection connection = new SqlConnection(Preferences.Default.Get("DBConn", "Not Found")))
             {
                 try {
                     connection.Open();

@@ -92,7 +92,7 @@ public partial class AddEditCert : ContentPage
         List<String> lastNames = new List<String>();
         List<Int32> employeeIds = new List<Int32>();
 
-        using (SqlConnection connection = new SqlConnection(Constants.connectionString))
+        using (SqlConnection connection = new SqlConnection(Preferences.Default.Get("DBConn", "Not Found")))
         {
             using (SqlCommand command = new SqlCommand(query, connection))
             {
@@ -129,7 +129,7 @@ public partial class AddEditCert : ContentPage
         string query = "SELECT CertificationName FROM CertificationTypes ORDER BY CertificationName ASC";
         List<String> certs = new List<String>();
 
-        using (SqlConnection connection = new SqlConnection(Constants.connectionString))
+        using (SqlConnection connection = new SqlConnection(Preferences.Default.Get("DBConn", "Not Found")))
         {
             using (SqlCommand command = new SqlCommand(query, connection))
             {

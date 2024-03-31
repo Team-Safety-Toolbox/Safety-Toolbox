@@ -30,7 +30,7 @@ public partial class Notes : ContentPage
 
         string query = "SELECT * FROM Notes";
 
-        using (SqlConnection connection = new SqlConnection(Constants.connectionString))
+        using (SqlConnection connection = new SqlConnection(Preferences.Default.Get("DBConn", "Not Found")))
         {
             using (SqlCommand command = new SqlCommand(query, connection))
             {
@@ -102,7 +102,7 @@ public partial class Notes : ContentPage
         {
             string query = "Insert into Notes Values (@NoteDate, @NoteContent);";
 
-            using (SqlConnection connection = new SqlConnection(Constants.connectionString))
+            using (SqlConnection connection = new SqlConnection(Preferences.Default.Get("DBConn", "Not Found")))
             {
                 try
                 {

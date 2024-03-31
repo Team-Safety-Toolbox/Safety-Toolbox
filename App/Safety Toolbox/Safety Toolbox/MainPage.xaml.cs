@@ -26,7 +26,7 @@ namespace Safety_Toolbox
                 String passwordDB = "";
                 String query = "SELECT TOP 1 Username, Password, RoleName FROM Users LEFT JOIN Roles ON Users.RoleID = Roles.RoleID WHERE Username = '" + Username + "' AND Password = '" + Password + "'";
 
-                using (SqlConnection connection = new SqlConnection(Constants.connectionString))
+                using (SqlConnection connection = new SqlConnection(Preferences.Default.Get("DBConn", "Not Found")))
                 {
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {

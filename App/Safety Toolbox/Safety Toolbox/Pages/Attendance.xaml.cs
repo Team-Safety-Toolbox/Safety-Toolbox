@@ -52,7 +52,7 @@ public partial class Attendance : ContentPage
                 absent = true;
             }
 
-            string connectionString = Constants.connectionString; //TODO: preferences instead of constants
+            string connectionString = Preferences.Default.Get("DBConn", "Not Found");
 
             string queryInsert = "INSERT INTO Attendance (EmployeeID, AttendanceDate, Present, Excused, Absent) VALUES (@EmpId, @AttendanceDate, @Present, @Excused, @Absent);";
             string queryUpdate = "UPDATE Attendance SET Present = @Present, Excused = @Excused, Absent = @Absent WHERE EmployeeID = @EmpId AND AttendanceDate = @AttendanceDate;";
@@ -120,7 +120,7 @@ public partial class Attendance : ContentPage
 
     private void getAttendanceData(DateTime datetime)
     {
-        string connectionString = Constants.connectionString; //TODO: preferences instead of constants
+        string connectionString = Preferences.Default.Get("DBConn", "Not Found");
         string query = "SELECT Employees.EmployeeID, Employees.EmployeeFirstName, Employees.EmployeeLastName, Attendance.AttendanceDate, Attendance.Present, Attendance.Excused, Attendance.Absent FROM Employees LEFT JOIN Attendance on Employees.EmployeeID = Attendance.EmployeeID AND Attendance.AttendanceDate = @AttendanceDate";
         List<AttendanceData> attendanceItems = new List<AttendanceData>();
 

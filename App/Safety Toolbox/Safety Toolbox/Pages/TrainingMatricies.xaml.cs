@@ -26,7 +26,7 @@ public partial class TrainingMatricies : ContentPage
         string query = "SELECT EmployeeID, EmployeeFirstName, EmployeeLastName FROM Employees ORDER BY EmployeeFirstName ASC";
         List<String> employees = new List<String>();
 
-        using (SqlConnection connection = new SqlConnection(Constants.connectionString))
+        using (SqlConnection connection = new SqlConnection(Preferences.Default.Get("DBConn", "Not Found")))
         {
             using (SqlCommand command = new SqlCommand(query, connection))
             {
@@ -57,7 +57,7 @@ public partial class TrainingMatricies : ContentPage
         string query = "SELECT PositionName FROM Positions ORDER BY PositionName ASC";
         List<string> positions = new List<string>();
 
-        using (SqlConnection connection = new SqlConnection(Constants.connectionString))
+        using (SqlConnection connection = new SqlConnection(Preferences.Default.Get("DBConn", "Not Found")))
         {
             using (SqlCommand command = new SqlCommand(query, connection))
             {
