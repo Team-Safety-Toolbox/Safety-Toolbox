@@ -1,9 +1,11 @@
 namespace Safety_Toolbox;
 using Microsoft.Data.SqlClient;
+using System.Linq;
 
 public partial class TopicIdeas : ContentPage
 {
-	public TopicIdeas()
+    private List<string> AllTopics;
+    public TopicIdeas()
 	{
 		InitializeComponent();
 
@@ -48,12 +50,14 @@ public partial class TopicIdeas : ContentPage
         topicIdeas.Sort(); //sort alphabetically
 
         TopicsView.ItemsSource = topicIdeas;
+        AllTopics = topicIdeas;
     }
 
     protected override void OnSizeAllocated(double width, double height)
     {
         TopicsView.WidthRequest = 0.8 * width;
         ScrollTopics.HeightRequest = 0.7 * height;
+        SearchBar.WidthRequest = 0.5 * width;
     }
 
     async private void OnAddTopicButtonClicked(object sender, EventArgs e)
@@ -101,5 +105,18 @@ public partial class TopicIdeas : ContentPage
             AddTopicButton.IsEnabled = true;
         }
         
+    }
+
+    private void OnTextChanged(object sender, TextChangedEventArgs e)
+    {
+        SearchBar searchBar = (SearchBar)sender;
+        if (searchBar != null)
+        {
+            List<string> topicIdeas = AllTopics;
+
+            var matchingContent = topicIdeas.Where(topicIdea => topicIdea.ToLower().Contains(searchBar.Text.ToLower()));
+
+            TopicsView.ItemsSource = matchingContent;
+        }
     }
 }

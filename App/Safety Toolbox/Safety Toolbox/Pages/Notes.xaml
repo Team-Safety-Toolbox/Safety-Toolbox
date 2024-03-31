@@ -36,6 +36,7 @@
             <HorizontalStackLayout HorizontalOptions="Center" Spacing="10">
                 <StackLayout Spacing="10" x:Name="TextNotesArea">
                     <Label Text="Text Notes" HorizontalOptions="Center" FontSize="18"/>
+                    <SearchBar Placeholder="Search items..." TextChanged="OnTextNotesSearchTextChanged" x:Name="SearchBarTextNotes"/>
                     <Label x:Name="ConnectionFail" Text="Could not connect to the database" TextColor="Red" HorizontalOptions="Center" IsVisible="False"/>
                     <CollectionView x:Name="ViewTextNotes">
                         <CollectionView.ItemTemplate>
@@ -51,6 +52,7 @@
                 </StackLayout>
                 <StackLayout Spacing="10" x:Name="FileNotesArea">
                     <Label Text="File Notes" HorizontalOptions="Center" FontSize="18"/>
+                    <SearchBar Placeholder="Search items..." TextChanged="OnFileNotesSearchTextChanged" x:Name="SearchBarFileNotes"/>
                     <Label x:Name="FilePathWarning" Text="The file path for the library must be set under settings." TextColor="Red" IsVisible="False" HorizontalOptions="Center"/>
                     <CollectionView x:Name="ViewFileNotes">
                         <CollectionView.ItemTemplate>

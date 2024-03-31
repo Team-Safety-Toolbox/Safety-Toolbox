@@ -9,6 +9,8 @@ using Microsoft.IdentityModel.Tokens;
 public partial class Notes : ContentPage
 {
     private string newFileCurrentPath;
+    private List<TextNoteData> allTextNotes;
+    private List<FileNoteData> allFileNotes;
     public Notes()
 	{
 		InitializeComponent();
@@ -55,8 +57,9 @@ public partial class Notes : ContentPage
             }
         }
 
-        List<TextNoteData> sortedtextNotes = textNotes.OrderByDescending(o => o.NoteDate).ToList();
-        ViewTextNotes.ItemsSource = sortedtextNotes;
+        List<TextNoteData> sortedTextNotes = textNotes.OrderByDescending(o => o.NoteDate).ToList();
+        ViewTextNotes.ItemsSource = sortedTextNotes;
+        allTextNotes = sortedTextNotes;
     }
 
     private void getFileNotes()
@@ -73,6 +76,7 @@ public partial class Notes : ContentPage
             }
             List<FileNoteData> sortedFileNotes = fileNotes.OrderByDescending(o => o.NoteDate).ToList();
             ViewFileNotes.ItemsSource = sortedFileNotes;
+            allFileNotes = sortedFileNotes;
         }
         else
         {
@@ -226,5 +230,31 @@ public partial class Notes : ContentPage
         {
             await Navigation.PushAsync(new FileViewer(fullFilePath, filename));
         }
+    }
+
+    private void OnTextNotesSearchTextChanged(object sender, TextChangedEventArgs e) 
+    {
+        SearchBar searchBar = (SearchBar)sender;
+        if (searchBar != null)
+        {
+            List<TextNoteData> notes = allTextNotes;
+
+            var matchingContent = notes.Where(note => note.NoteContent.ToLower().Contains(searchBar.Text.ToLower()));
+
+            ViewTextNotes.ItemsSource = matchingContent;
+        }
+    }
+    private void OnFileNotesSearchTextChanged(object sender, TextChangedEventArgs e) 
+    {
+        SearchBar searchBar = (SearchBar)sender;
+        if (searchBar != null)
+        {
+            List<FileNoteData> notes = allFileNotes;
+
+            var matchingContent = notes.Where(note => note.NoteFileName.ToLower().Contains(searchBar.Text.ToLower()));
+
+            ViewFileNotes.ItemsSource = matchingContent;
+        }
+
     }
 }
