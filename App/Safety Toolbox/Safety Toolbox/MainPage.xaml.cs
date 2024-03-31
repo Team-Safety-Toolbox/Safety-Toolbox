@@ -30,15 +30,21 @@ namespace Safety_Toolbox
                 {
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {
-                        connection.Open();
-                        using (SqlDataReader reader = command.ExecuteReader())
+                        try
                         {
-                            while (reader.Read())
+                            connection.Open();
+                            using (SqlDataReader reader = command.ExecuteReader())
                             {
-                                usernameDB = (String)reader["Username"];
-                                passwordDB = (String)reader["Password"];
-                                Role = (String)reader["RoleName"];
+                                while (reader.Read())
+                                {
+                                    usernameDB = (String)reader["Username"];
+                                    passwordDB = (String)reader["Password"];
+                                    Role = (String)reader["RoleName"];
+                                }
                             }
+                        }
+                        catch{
+                            //alert gets displayed later
                         }
                     }
                 }
@@ -80,14 +86,24 @@ namespace Safety_Toolbox
             Username = UsernameEntry.Text;
             Password = PasswordEntry.Text;
 
-            if (!string.IsNullOrWhiteSpace(Username) && !string.IsNullOrWhiteSpace(Password) && validateUser())
+            //TODO: decide if admin account is always accessible, or only when no database connection
+            if (Username == "admin" && Password == "Adm1nU$er")
             {
                 await Navigation.PushAsync(new Dashboard());
             }
             else
             {
-                await DisplayAlert("Invalid Login", "Please enter valid credentials.", "OK");
+                if (!string.IsNullOrWhiteSpace(Username) && !string.IsNullOrWhiteSpace(Password) && validateUser())
+                {
+                    await Navigation.PushAsync(new Dashboard());
+                }
+                else
+                {
+                    await DisplayAlert("Invalid Login", "Please enter valid credentials.", "OK");
+                }
             }
+
+            
         }
 
         private async void OnSignupBtnClicked(object sender, EventArgs e)

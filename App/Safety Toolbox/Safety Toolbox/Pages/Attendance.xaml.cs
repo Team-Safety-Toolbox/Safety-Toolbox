@@ -22,8 +22,7 @@ public partial class Attendance : ContentPage
 
         AttendanceDate.Date = DateTime.Now.Date;
         AttendanceDate.MaximumDate = DateTime.Now.Date;
-        List<AttendanceData> attendance = getAttendanceData(DateTime.Now.Date);
-        collectionView.ItemsSource = attendance;
+        getAttendanceData(DateTime.Now.Date);
 	}
 
     protected override void OnSizeAllocated(double width, double height)
@@ -31,7 +30,7 @@ public partial class Attendance : ContentPage
         ScrollAttendance.HeightRequest = 0.7 * height;
     }
 
-    void RadioChanged(object sender, CheckedChangedEventArgs e)
+    async void RadioChanged(object sender, CheckedChangedEventArgs e)
     {
         //radio button changed
         //this event will fire twice, once for the new button checked, once for old button unchecked
@@ -60,45 +59,52 @@ public partial class Attendance : ContentPage
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                connection.Open();
-
                 try
                 {
-                    using (SqlCommand command = new SqlCommand(queryInsert, connection))
+                    connection.Open();
+
+                    try
                     {
-                        var empIdParam = new SqlParameter("EmpId", empID);
-                        var attendanceDateParam = new SqlParameter("AttendanceDate", attendanceDate);
-                        var presentParam = new SqlParameter("Present", present);
-                        var excusedParam = new SqlParameter("Excused", excused);
-                        var absentParam = new SqlParameter("Absent", absent);
+                        using (SqlCommand command = new SqlCommand(queryInsert, connection))
+                        {
+                            var empIdParam = new SqlParameter("EmpId", empID);
+                            var attendanceDateParam = new SqlParameter("AttendanceDate", attendanceDate);
+                            var presentParam = new SqlParameter("Present", present);
+                            var excusedParam = new SqlParameter("Excused", excused);
+                            var absentParam = new SqlParameter("Absent", absent);
 
-                        command.Parameters.Add(empIdParam);
-                        command.Parameters.Add(attendanceDateParam);
-                        command.Parameters.Add(presentParam);
-                        command.Parameters.Add(excusedParam);
-                        command.Parameters.Add(absentParam);
+                            command.Parameters.Add(empIdParam);
+                            command.Parameters.Add(attendanceDateParam);
+                            command.Parameters.Add(presentParam);
+                            command.Parameters.Add(excusedParam);
+                            command.Parameters.Add(absentParam);
 
-                        var results = command.ExecuteReader();
+                            var results = command.ExecuteReader();
+                        }
+                    }
+                    catch
+                    {
+                        using (SqlCommand command = new SqlCommand(queryUpdate, connection))
+                        {
+                            var empIdParam = new SqlParameter("EmpId", empID);
+                            var attendanceDateParam = new SqlParameter("AttendanceDate", attendanceDate);
+                            var presentParam = new SqlParameter("Present", present);
+                            var excusedParam = new SqlParameter("Excused", excused);
+                            var absentParam = new SqlParameter("Absent", absent);
+
+                            command.Parameters.Add(empIdParam);
+                            command.Parameters.Add(attendanceDateParam);
+                            command.Parameters.Add(presentParam);
+                            command.Parameters.Add(excusedParam);
+                            command.Parameters.Add(absentParam);
+
+                            var results = command.ExecuteReader();
+                        }
                     }
                 }
                 catch
                 {
-                    using (SqlCommand command = new SqlCommand(queryUpdate, connection))
-                    {
-                        var empIdParam = new SqlParameter("EmpId", empID);
-                        var attendanceDateParam = new SqlParameter("AttendanceDate", attendanceDate);
-                        var presentParam = new SqlParameter("Present", present);
-                        var excusedParam = new SqlParameter("Excused", excused);
-                        var absentParam = new SqlParameter("Absent", absent);
-
-                        command.Parameters.Add(empIdParam);
-                        command.Parameters.Add(attendanceDateParam);
-                        command.Parameters.Add(presentParam);
-                        command.Parameters.Add(excusedParam);
-                        command.Parameters.Add(absentParam);
-
-                        var results = command.ExecuteReader();
-                    }
+                    await DisplayAlert("Database Connection", "There was a problem connecting to the database.", "OK");
                 }
 
             }
@@ -109,12 +115,10 @@ public partial class Attendance : ContentPage
     private void AttendanceDate_DateSelected(object sender, DateChangedEventArgs e)
     {
         DateTime datetime = AttendanceDate.Date.Date;
-        List<AttendanceData> attendance = getAttendanceData(datetime);
-        BindingContext = this;
-        collectionView.ItemsSource = attendance;
+        getAttendanceData(datetime);
     }
 
-    private List<AttendanceData> getAttendanceData(DateTime datetime)
+    private void getAttendanceData(DateTime datetime)
     {
         string connectionString = Constants.connectionString; //TODO: preferences instead of constants
         string query = "SELECT Employees.EmployeeID, Employees.EmployeeFirstName, Employees.EmployeeLastName, Attendance.AttendanceDate, Attendance.Present, Attendance.Excused, Attendance.Absent FROM Employees LEFT JOIN Attendance on Employees.EmployeeID = Attendance.EmployeeID AND Attendance.AttendanceDate = @AttendanceDate";
@@ -124,43 +128,51 @@ public partial class Attendance : ContentPage
         {
             using (SqlCommand command = new SqlCommand(query, connection))
             {
-                connection.Open();
-
-                var attendanceDateParam = new SqlParameter("AttendanceDate", datetime);
-                command.Parameters.Add(attendanceDateParam);
-
-                using (SqlDataReader reader = command.ExecuteReader())
+                try
                 {
-                    while (reader.Read())
+                    connection.Open();
+
+                    var attendanceDateParam = new SqlParameter("AttendanceDate", datetime);
+                    command.Parameters.Add(attendanceDateParam);
+
+                    using (SqlDataReader reader = command.ExecuteReader())
                     {
-                        int empID = reader.GetInt32(0);
-                        string empFirstName = reader.GetString(1);
-                        string empLastName = reader.GetString(2);
-                        DateTime? day = null;
-                        if (!reader.IsDBNull(4))
+                        while (reader.Read())
                         {
-                            day = reader.GetDateTime(3);
+                            int empID = reader.GetInt32(0);
+                            string empFirstName = reader.GetString(1);
+                            string empLastName = reader.GetString(2);
+                            DateTime? day = null;
+                            if (!reader.IsDBNull(4))
+                            {
+                                day = reader.GetDateTime(3);
+                            }
+                            bool present = false;
+                            if (!reader.IsDBNull(4)) 
+                            {
+                                present = reader.GetBoolean(4);
+                            }
+                            bool excused = false;
+                            if (!reader.IsDBNull(5))
+                            {
+                                excused = reader.GetBoolean(5);
+                            }
+                            bool absent = false;
+                            if (!reader.IsDBNull(6))
+                            {
+                                absent = reader.GetBoolean(6);
+                            }
+                            attendanceItems.Add(new AttendanceData() { EmployeeID = empID, EmployeeFirstName = empFirstName, EmployeeLastName = empLastName, AttendanceDate = day, Present = present, Excused = excused, Absent = absent });
                         }
-                        bool present = false;
-                        if (!reader.IsDBNull(4)) 
-                        {
-                            present = reader.GetBoolean(4);
-                        }
-                        bool excused = false;
-                        if (!reader.IsDBNull(5))
-                        {
-                            excused = reader.GetBoolean(5);
-                        }
-                        bool absent = false;
-                        if (!reader.IsDBNull(6))
-                        {
-                            absent = reader.GetBoolean(6);
-                        }
-                        attendanceItems.Add(new AttendanceData() { EmployeeID = empID, EmployeeFirstName = empFirstName, EmployeeLastName = empLastName, AttendanceDate = day, Present = present, Excused = excused, Absent = absent });
                     }
+                }
+                catch
+                {
+                    ConnectionFail.IsVisible = true;
                 }
             }
         }
-        return attendanceItems;
+
+        collectionView.ItemsSource = attendanceItems;
     }
 }

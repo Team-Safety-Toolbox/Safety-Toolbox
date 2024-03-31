@@ -38,6 +38,7 @@ public partial class Settings : ContentPage
 
         setEntryFields();
         Saved.IsVisible = true;
+        dbInfo.IsVisible = true;
     }
 
     private void OnCertPathBtnClicked(object sender, EventArgs e)

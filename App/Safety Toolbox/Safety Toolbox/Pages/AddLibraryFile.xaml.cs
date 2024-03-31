@@ -92,7 +92,7 @@ public partial class AddLibraryFile : ContentPage
             FileFeedback.TextColor = Color.Parse("Red");
             FileFeedback.IsVisible = true;
         }
-        else if (FileNameEntry.Text.IndexOfAny(Path.GetInvalidFileNameChars()) == -1) {
+        else if (fileName.IndexOfAny(Path.GetInvalidFileNameChars()) != -1) { //index of any returns -1 if none are found
             FileFeedback.Text = "File name cannot contain invalid chars";
             FileFeedback.TextColor = Color.Parse("Red");
             FileFeedback.IsVisible = true;

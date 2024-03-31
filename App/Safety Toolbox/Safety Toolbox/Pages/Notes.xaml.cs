@@ -34,16 +34,23 @@ public partial class Notes : ContentPage
         {
             using (SqlCommand command = new SqlCommand(query, connection))
             {
-                connection.Open();
-                using (SqlDataReader reader = command.ExecuteReader())
+                try
                 {
-                    while (reader.Read())
+                    connection.Open();
+                    using (SqlDataReader reader = command.ExecuteReader())
                     {
-                        DateTime noteDate = reader.GetDateTime(0);
-                        string noteContent = reader.GetString(1);
+                        while (reader.Read())
+                        {
+                            DateTime noteDate = reader.GetDateTime(0);
+                            string noteContent = reader.GetString(1);
 
-                        textNotes.Add(new TextNoteData(noteDate, noteContent));
+                            textNotes.Add(new TextNoteData(noteDate, noteContent));
+                        }
                     }
+                }
+                catch
+                {
+                    ConnectionFail.IsVisible = true;
                 }
             }
         }
@@ -89,7 +96,7 @@ public partial class Notes : ContentPage
         }
     }
 
-    private void OnAddNoteButtonClicked(object sender, EventArgs e)
+    async private void OnAddNoteButtonClicked(object sender, EventArgs e)
     {
         if (NewNote.Text != "" && NewNote.Text != null)
         {
@@ -97,16 +104,23 @@ public partial class Notes : ContentPage
 
             using (SqlConnection connection = new SqlConnection(Constants.connectionString))
             {
-                connection.Open();
-                using (SqlCommand command = new SqlCommand(query, connection))
+                try
                 {
-                    var noteDateParam = new SqlParameter("NoteDate", DateTime.Now);
-                    var noteContentParam = new SqlParameter("NoteContent", NewNote.Text);
-                    command.Parameters.Add(noteDateParam);
-                    command.Parameters.Add(noteContentParam);
+                    connection.Open();
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        var noteDateParam = new SqlParameter("NoteDate", DateTime.Now);
+                        var noteContentParam = new SqlParameter("NoteContent", NewNote.Text);
+                        command.Parameters.Add(noteDateParam);
+                        command.Parameters.Add(noteContentParam);
 
-                    var results = command.ExecuteReader();
+                        var results = command.ExecuteReader();
 
+                    }
+                }
+                catch
+                {
+                    await DisplayAlert("Database Connection", "There was a problem connecting to the database.", "OK");
                 }
             }
 

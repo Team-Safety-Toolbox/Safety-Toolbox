@@ -90,6 +90,7 @@
             <Button x:Name="RefreshBtn" Text="Refresh" SemanticProperties.Hint="Export Report" Clicked="OnRefreshBtnClicked"/>
             <Button x:Name="ExportBtn" Text="Export" SemanticProperties.Hint="Export Report" Clicked="OnExportBtnClicked"/>
         </HorizontalStackLayout>
+        <Label x:Name="ConnectionFail" Text="Could not connect to the database" TextColor="Red" HorizontalOptions="Center" IsVisible="False"/>
 
         <Grid>
             <Grid.RowDefinitions>

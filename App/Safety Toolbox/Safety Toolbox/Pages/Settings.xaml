@@ -82,5 +82,6 @@
 
         <Button Text="Save" Clicked="OnSaveBtnClicked"/>
         <Label Text="Saved!" x:Name="Saved" HorizontalOptions="Center" TextColor="Green" IsVisible="False"/>
+        <Label Text="If you have updated the connection string, a restart of the app is required." x:Name="dbInfo" HorizontalOptions="Center" TextColor="Red" IsVisible="False"/>
     </VerticalStackLayout>
 </ContentPage>

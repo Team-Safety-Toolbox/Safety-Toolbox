@@ -36,6 +36,7 @@
             <HorizontalStackLayout HorizontalOptions="Center" Spacing="10">
                 <StackLayout Spacing="10" x:Name="TextNotesArea">
                     <Label Text="Text Notes" HorizontalOptions="Center" FontSize="18"/>
+                    <Label x:Name="ConnectionFail" Text="Could not connect to the database" TextColor="Red" HorizontalOptions="Center" IsVisible="False"/>
                     <CollectionView x:Name="ViewTextNotes">
                         <CollectionView.ItemTemplate>
                             <DataTemplate>

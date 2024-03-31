@@ -13,13 +13,6 @@
                 SemanticProperties.HeadingLevel="Level1"
                 FontSize="32"
                 HorizontalOptions="Center" />
-            
-            <!--Toolbox logo once we have one?-->
-            <!--<Image
-                Source="dotnet_bot.png"
-                SemanticProperties.Description="Cute dot net bot waving hi to you!"
-                HeightRequest="200"
-                HorizontalOptions="Center" />-->
 
             <Entry x:Name="UsernameEntry" Placeholder="Username"/>
             <Entry x:Name="PasswordEntry" Placeholder="Password" IsPassword="True"/>

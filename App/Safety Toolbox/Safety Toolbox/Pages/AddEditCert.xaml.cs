@@ -84,7 +84,7 @@ public partial class AddEditCert : ContentPage
         }
     }
 
-    private void getEmployees()
+    async private void getEmployees()
     {
         string query = "SELECT EmployeeID, EmployeeFirstName, EmployeeLastName FROM Employees ORDER BY EmployeeFirstName ASC";
         List<String> employees = new List<String>();
@@ -96,19 +96,25 @@ public partial class AddEditCert : ContentPage
         {
             using (SqlCommand command = new SqlCommand(query, connection))
             {
-                connection.Open();
-                using (SqlDataReader reader = command.ExecuteReader())
-                {
-                    while (reader.Read())
+                try {
+                    connection.Open();
+                    using (SqlDataReader reader = command.ExecuteReader())
                     {
-                        employeeIds.Add(reader.GetInt32(0));
+                        while (reader.Read())
+                        {
+                            employeeIds.Add(reader.GetInt32(0));
 
-                        string empFirstName = reader.GetString(1);
-                        string empLastName = reader.GetString(2);
-                        employees.Add(empFirstName+" "+empLastName);
-                        firstNames.Add(empFirstName);
-                        lastNames.Add(empLastName);
+                            string empFirstName = reader.GetString(1);
+                            string empLastName = reader.GetString(2);
+                            employees.Add(empFirstName+" "+empLastName);
+                            firstNames.Add(empFirstName);
+                            lastNames.Add(empLastName);
+                        }
                     }
+                }
+                catch
+                {
+                    await DisplayAlert("Database Connection", "There was a problem connecting to the database.", "OK");
                 }
             }
         }
@@ -118,7 +124,7 @@ public partial class AddEditCert : ContentPage
         EmployeeIds = employeeIds;
     }
 
-    private void getCertificationTypes()
+    async private void getCertificationTypes()
     {
         string query = "SELECT CertificationName FROM CertificationTypes ORDER BY CertificationName ASC";
         List<String> certs = new List<String>();
@@ -127,13 +133,19 @@ public partial class AddEditCert : ContentPage
         {
             using (SqlCommand command = new SqlCommand(query, connection))
             {
-                connection.Open();
-                using (SqlDataReader reader = command.ExecuteReader())
-                {
-                    while (reader.Read())
+                try { 
+                    connection.Open();
+                    using (SqlDataReader reader = command.ExecuteReader())
                     {
-                        certs.Add(reader.GetString(0));
+                        while (reader.Read())
+                        {
+                            certs.Add(reader.GetString(0));
+                        }
                     }
+                }
+                catch
+                {
+                    await DisplayAlert("Database Connection", "There was a problem connecting to the database.", "OK");
                 }
             }
         }

@@ -23,6 +23,8 @@
         </HorizontalStackLayout>
         <Label x:Name="CharLimitWarning" Text="Too many characters! Limit: 200" TextColor="Red" HorizontalOptions="Center" IsVisible="False"/>
 
+        <Label x:Name="ConnectionFail" Text="Could not connect to the database" TextColor="Red" HorizontalOptions="Center" IsVisible="False"/>
+        
         <ScrollView x:Name="ScrollTopics">
             <StackLayout>
                 <CollectionView x:Name="TopicsView"  HorizontalOptions="Center">

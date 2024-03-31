@@ -15,7 +15,7 @@ public partial class Signup : ContentPage
 		InitializeComponent();
 	}
 
-	private void saveSignupInformation()
+	async private void saveSignupInformation()
 	{
 		int readOnlyID = -1;
 		string query = "SELECT RoleID FROM Roles WHERE RoleName = 'readonly';";
@@ -24,16 +24,23 @@ public partial class Signup : ContentPage
 		{
 			using (SqlCommand command = new SqlCommand(query, connection))
 			{
-				connection.Open();
-
-				using (SqlDataReader reader = command.ExecuteReader())
+				try
 				{
-					while (reader.Read())
+					connection.Open();
+
+					using (SqlDataReader reader = command.ExecuteReader())
 					{
-						readOnlyID = reader.GetInt32(0);
+						while (reader.Read())
+						{
+							readOnlyID = reader.GetInt32(0);
+						}
 					}
-				}
-			}
+                }
+                catch
+                {
+                    await DisplayAlert("Database Connection", "There was a problem connecting to the database.", "OK");
+                }
+            }
         }
 
         query = "INSERT INTO Users (Email, Username, Password, RoleID) Values (@Email, @Username, @Password, @ReadOnlyID);";
@@ -43,15 +50,21 @@ public partial class Signup : ContentPage
 		{
             using (SqlCommand command = new SqlCommand(query, connection))
             {
-				connection.Open();
+				try {
+					connection.Open();
 
-                command.Parameters.AddWithValue("Email", Email);
-                command.Parameters.AddWithValue("Username", Username);
-                command.Parameters.AddWithValue("Password", Password);
-                command.Parameters.AddWithValue("ConfirmPassword", ConfirmPassword);
-                command.Parameters.AddWithValue("ReadOnlyID", readOnlyID);
+					command.Parameters.AddWithValue("Email", Email);
+					command.Parameters.AddWithValue("Username", Username);
+					command.Parameters.AddWithValue("Password", Password);
+					command.Parameters.AddWithValue("ConfirmPassword", ConfirmPassword);
+					command.Parameters.AddWithValue("ReadOnlyID", readOnlyID);
 
-                var results = command.ExecuteReader();
+					var results = command.ExecuteReader();
+                }
+                catch
+                {
+                    await DisplayAlert("Database Connection", "There was a problem connecting to the database.", "OK");
+                }
             }
         }
     }

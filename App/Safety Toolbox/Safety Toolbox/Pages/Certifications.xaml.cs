@@ -144,28 +144,35 @@ public partial class Certifications : ContentPage
         {
             using (SqlCommand command = new SqlCommand(query, connection))
             {
-                connection.Open();
-                using (SqlDataReader reader = command.ExecuteReader())
+                try
                 {
-                    while (reader.Read())
+                    connection.Open();
+                    using (SqlDataReader reader = command.ExecuteReader())
                     {
-                        int empID = reader.GetInt32(0);
-                        string empFirstName = reader.GetString(1);
-                        string empLastName = reader.GetString(2);
-                        string certType = reader.GetString(3);
-                        DateTime? trainedOnDate = null;
-                        if (!reader.IsDBNull(4))
+                        while (reader.Read())
                         {
-                            trainedOnDate = reader.GetDateTime(4);
-                        }
-                        DateTime? expDate = null;
-                        if (!reader.IsDBNull(5))
-                        { 
-                            expDate = reader.GetDateTime(5);
-                        }
+                            int empID = reader.GetInt32(0);
+                            string empFirstName = reader.GetString(1);
+                            string empLastName = reader.GetString(2);
+                            string certType = reader.GetString(3);
+                            DateTime? trainedOnDate = null;
+                            if (!reader.IsDBNull(4))
+                            {
+                                trainedOnDate = reader.GetDateTime(4);
+                            }
+                            DateTime? expDate = null;
+                            if (!reader.IsDBNull(5))
+                            { 
+                                expDate = reader.GetDateTime(5);
+                            }
                         
-                        certificationList.Add(new CertificationData(empID, empFirstName, empLastName, certType, trainedOnDate, expDate));
+                            certificationList.Add(new CertificationData(empID, empFirstName, empLastName, certType, trainedOnDate, expDate));
+                        }
                     }
+                }
+                catch
+                {
+                    ConnectionFail.IsVisible = true;
                 }
             }
         }

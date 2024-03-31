@@ -71,7 +71,7 @@ public partial class GetCertFile : ContentPage
         await Navigation.PushAsync(new DataSaved(3));
     }
 
-    private void saveCertificationDetails()
+    async private void saveCertificationDetails()
     {
         string query = "SELECT CertificationID FROM CertificationTypes WHERE CertificationName = @CertName";
         int certId = -1;
@@ -80,17 +80,24 @@ public partial class GetCertFile : ContentPage
         {
             using (SqlCommand command = new SqlCommand(query, connection))
             {
-                connection.Open();
-
-                var certNameParam = new SqlParameter("CertName", CertificationData.CertType);
-                command.Parameters.Add(certNameParam);
-
-                using (SqlDataReader reader = command.ExecuteReader())
+                try
                 {
-                    while (reader.Read())
+                    connection.Open();
+
+                    var certNameParam = new SqlParameter("CertName", CertificationData.CertType);
+                    command.Parameters.Add(certNameParam);
+
+                    using (SqlDataReader reader = command.ExecuteReader())
                     {
-                        certId = reader.GetInt32(0);
+                        while (reader.Read())
+                        {
+                            certId = reader.GetInt32(0);
+                        }
                     }
+                }
+                catch
+                {
+                    await DisplayAlert("Database Connection", "There was a problem connecting to the database.", "OK");
                 }
             }
         }
@@ -102,61 +109,67 @@ public partial class GetCertFile : ContentPage
 
         using (SqlConnection connection = new SqlConnection(Constants.connectionString))
         {
-            connection.Open();
+            try { 
+                connection.Open();
 
-            try
-            {
-                using (SqlCommand command = new SqlCommand(queryInsert, connection))
+                try
                 {
-                    //local vars because once they've been added here in the try, they can't be readded in catch
-                    var empIdParam = new SqlParameter("EmpId", CertificationData.EmployeeId);
-                    var certTypeParam = new SqlParameter("CertId", certId);
-                    var trainDateParam = new SqlParameter("TrainDate", CertificationData.TrainedOnDate);
-                    var expireDateParam = new SqlParameter("ExpireDate", CertificationData.ExpiryDate);
-
-                    if (CertificationData.TrainedOnDate == null)
+                    using (SqlCommand command = new SqlCommand(queryInsert, connection))
                     {
-                        trainDateParam.Value = DBNull.Value;
+                        //local vars because once they've been added here in the try, they can't be readded in catch
+                        var empIdParam = new SqlParameter("EmpId", CertificationData.EmployeeId);
+                        var certTypeParam = new SqlParameter("CertId", certId);
+                        var trainDateParam = new SqlParameter("TrainDate", CertificationData.TrainedOnDate);
+                        var expireDateParam = new SqlParameter("ExpireDate", CertificationData.ExpiryDate);
+
+                        if (CertificationData.TrainedOnDate == null)
+                        {
+                            trainDateParam.Value = DBNull.Value;
+                        }
+                        if (CertificationData.ExpiryDate == null)
+                        {
+                            expireDateParam.Value = DBNull.Value;
+                        }
+
+                        command.Parameters.Add(empIdParam);
+                        command.Parameters.Add(certTypeParam);
+                        command.Parameters.Add(trainDateParam);
+                        command.Parameters.Add(expireDateParam);
+
+                        var results = command.ExecuteReader();
                     }
-                    if (CertificationData.ExpiryDate == null)
+                }
+                catch
+                {
+                    using (SqlCommand command = new SqlCommand(queryUpdate, connection))
                     {
-                        expireDateParam.Value = DBNull.Value;
+                        //local vars because once they were added in the try, they can't be readded in catch
+                        var empIdParam = new SqlParameter("EmpId", CertificationData.EmployeeId);
+                        var certTypeParam = new SqlParameter("CertId", certId);
+                        var trainDateParam = new SqlParameter("TrainDate", CertificationData.TrainedOnDate);
+                        var expireDateParam = new SqlParameter("ExpireDate", CertificationData.ExpiryDate);
+
+                        if (CertificationData.TrainedOnDate == null)
+                        {
+                            trainDateParam.Value = DBNull.Value;
+                        }
+                        if (CertificationData.ExpiryDate == null)
+                        {
+                            expireDateParam.Value = DBNull.Value;
+                        }
+
+                        command.Parameters.Add(empIdParam);
+                        command.Parameters.Add(certTypeParam);
+                        command.Parameters.Add(trainDateParam);
+                        command.Parameters.Add(expireDateParam);
+
+                        var results = command.ExecuteReader();
                     }
-
-                    command.Parameters.Add(empIdParam);
-                    command.Parameters.Add(certTypeParam);
-                    command.Parameters.Add(trainDateParam);
-                    command.Parameters.Add(expireDateParam);
-
-                    var results = command.ExecuteReader();
                 }
             }
             catch
             {
-                using (SqlCommand command = new SqlCommand(queryUpdate, connection))
-                {
-                    //local vars because once they were added in the try, they can't be readded in catch
-                    var empIdParam = new SqlParameter("EmpId", CertificationData.EmployeeId);
-                    var certTypeParam = new SqlParameter("CertId", certId);
-                    var trainDateParam = new SqlParameter("TrainDate", CertificationData.TrainedOnDate);
-                    var expireDateParam = new SqlParameter("ExpireDate", CertificationData.ExpiryDate);
-
-                    if (CertificationData.TrainedOnDate == null)
-                    {
-                        trainDateParam.Value = DBNull.Value;
-                    }
-                    if (CertificationData.ExpiryDate == null)
-                    {
-                        expireDateParam.Value = DBNull.Value;
-                    }
-
-                    command.Parameters.Add(empIdParam);
-                    command.Parameters.Add(certTypeParam);
-                    command.Parameters.Add(trainDateParam);
-                    command.Parameters.Add(expireDateParam);
-
-                    var results = command.ExecuteReader();
-                }
+                await DisplayAlert("Database Connection", "There was a problem connecting to the database.", "OK");
             }
 
         }

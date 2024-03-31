@@ -30,15 +30,22 @@ public partial class TrainingMatricies : ContentPage
         {
             using (SqlCommand command = new SqlCommand(query, connection))
             {
-                connection.Open();
-                using (SqlDataReader reader = command.ExecuteReader())
+                try
                 {
-                    while (reader.Read())
+                    connection.Open();
+                    using (SqlDataReader reader = command.ExecuteReader())
                     {
-                        string empFirstName = reader.GetString(1);
-                        string empLastName = reader.GetString(2);
-                        employees.Add(empFirstName + " " + empLastName);
+                        while (reader.Read())
+                        {
+                            string empFirstName = reader.GetString(1);
+                            string empLastName = reader.GetString(2);
+                            employees.Add(empFirstName + " " + empLastName);
+                        }
                     }
+                }
+                catch
+                {
+                    ConnectionFail.IsVisible = true;
                 }
             }
         }
@@ -54,14 +61,20 @@ public partial class TrainingMatricies : ContentPage
         {
             using (SqlCommand command = new SqlCommand(query, connection))
             {
-                connection.Open();
-                using (SqlDataReader reader = command.ExecuteReader())
-                {
-                    while (reader.Read())
+                try { 
+                    connection.Open();
+                    using (SqlDataReader reader = command.ExecuteReader())
                     {
-                        string pos = reader.GetString(0);
-                        positions.Add(pos);
+                        while (reader.Read())
+                        {
+                            string pos = reader.GetString(0);
+                            positions.Add(pos);
+                        }
                     }
+                }
+                catch
+                {
+                    ConnectionFail.IsVisible = true;
                 }
             }
         }

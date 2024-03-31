@@ -18,12 +18,14 @@
         <StackLayout x:Name="NonEditorView">
             <Label Text="You don't have permission to view this page" TextColor="Red" HorizontalOptions="Center" />
         </StackLayout>
+        
         <StackLayout x:Name="EditorView">
             <HorizontalStackLayout HorizontalOptions="Center" Spacing="10">
                 <Label Text="Date:" FontSize="18" VerticalOptions="Center"/>
                 <DatePicker x:Name="AttendanceDate" DateSelected="AttendanceDate_DateSelected"/>
             </HorizontalStackLayout>
-
+            <Label x:Name="ConnectionFail" Text="Could not connect to the database" TextColor="Red" HorizontalOptions="Center" IsVisible="False"/>
+            
             <ScrollView x:Name="ScrollAttendance" Orientation="Vertical" VerticalOptions="FillAndExpand">
                 <Grid>
                     <CollectionView x:Name="collectionView">

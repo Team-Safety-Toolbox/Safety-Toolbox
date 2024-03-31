@@ -25,15 +25,22 @@ public partial class TopicIdeas : ContentPage
         {
             using (SqlCommand command = new SqlCommand(query, connection))
             {
-                connection.Open();
-                using (SqlDataReader reader = command.ExecuteReader())
+                try
                 {
-                    while (reader.Read())
+                    connection.Open();
+                    using (SqlDataReader reader = command.ExecuteReader())
                     {
-                        string topic = reader.GetString(0);
+                        while (reader.Read())
+                        {
+                            string topic = reader.GetString(0);
 
-                        topicIdeas.Add(topic);
+                            topicIdeas.Add(topic);
+                        }
                     }
+                }
+                catch
+                {
+                    ConnectionFail.IsVisible = true;
                 }
             }
         }
@@ -49,7 +56,7 @@ public partial class TopicIdeas : ContentPage
         ScrollTopics.HeightRequest = 0.7 * height;
     }
 
-    private void OnAddTopicButtonClicked(object sender, EventArgs e)
+    async private void OnAddTopicButtonClicked(object sender, EventArgs e)
     {
         if(NewTopic.Text != "" && NewTopic.Text != null)
         {
@@ -58,14 +65,20 @@ public partial class TopicIdeas : ContentPage
 
             using (SqlConnection connection = new SqlConnection(Constants.connectionString))
             {
-                connection.Open();
-                using (SqlCommand command = new SqlCommand(query, connection))
-                {
-                    var topicIdeaParam = new SqlParameter("TopicIdea", NewTopic.Text);
-                    command.Parameters.Add(topicIdeaParam);
+                try {
+                    connection.Open();
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        var topicIdeaParam = new SqlParameter("TopicIdea", NewTopic.Text);
+                        command.Parameters.Add(topicIdeaParam);
 
-                    var results = command.ExecuteReader();
+                        var results = command.ExecuteReader();
                 
+                    }
+                }
+                catch
+                {
+                    await DisplayAlert("Database Connection", "There was a problem connecting to the database.", "OK");
                 }
             }
 
