@@ -125,12 +125,6 @@ public partial class Certifications : ContentPage
         }
     }
 
-    private async void OnReportSettingsBtnClicked(object sender, EventArgs e)
-    {
-        //Report settings
-        await Navigation.PushAsync(new ReportSettings());
-    }
-
     private async void OnAddEditCertBtnClicked(object sender, EventArgs e)
     {
         //Add or edit a certification

@@ -68,10 +68,12 @@
 
 	<ItemGroup>
 	  <Compile Remove="Pages\FileSaved.xaml.cs" />
+	  <Compile Remove="Pages\ReportSettings.xaml.cs" />
 	</ItemGroup>
 
 	<ItemGroup>
 	  <MauiXaml Remove="Pages\FileSaved.xaml" />
+	  <MauiXaml Remove="Pages\ReportSettings.xaml" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -118,9 +120,6 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Pages\GetCertFile.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Pages\ReportSettings.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Pages\Settings.xaml">

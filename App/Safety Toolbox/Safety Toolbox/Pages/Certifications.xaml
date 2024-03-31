@@ -130,7 +130,6 @@
                 </StackLayout>
             </ScrollView>
             <HorizontalStackLayout HorizontalOptions="Center" Grid.Row="2">
-                <Button x:Name="ReportSettingsBtn" Text="Report Settings" SemanticProperties.Hint="Email Report Settings" Clicked="OnReportSettingsBtnClicked" HorizontalOptions="Center"/>
                 <Button x:Name="AddEditCertBtn" Text="Add Certification" SemanticProperties.Hint="Add Certification" Clicked="OnAddEditCertBtnClicked" HorizontalOptions="Center"/>
             </HorizontalStackLayout>
         </Grid>
