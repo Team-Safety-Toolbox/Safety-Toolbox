@@ -1,5 +1,7 @@
 using Microsoft.Data.SqlClient;
 using Microsoft.Data.SqlClient.Server;
+using Safety_Toolbox.Types;
+using System.Security.Cryptography;
 
 namespace Safety_Toolbox;
 
@@ -7,8 +9,8 @@ public partial class Signup : ContentPage
 {
     private String Email;
     private String Username;
-	private String Password;
-	private String ConfirmPassword;
+	private byte[] Salt;
+	private byte[] HashedPassword;
 	
 	public Signup()
 	{
@@ -17,24 +19,27 @@ public partial class Signup : ContentPage
 
 	async private void saveSignupInformation()
 	{
-		int readOnlyID = -1;
-		string query = "SELECT RoleID FROM Roles WHERE RoleName = 'readonly';";
+        int matchCount = -1;
+        string query = "SELECT COUNT(*) FROM Users WHERE Email = @Email OR Username = @Username;";
 
-		using (SqlConnection connection = new SqlConnection(Preferences.Default.Get("DBConn", "Not Found")))
-		{
-			using (SqlCommand command = new SqlCommand(query, connection))
-			{
-				try
-				{
-					connection.Open();
+        using (SqlConnection connection = new SqlConnection(Preferences.Default.Get("DBConn", "Not Found")))
+        {
+            using (SqlCommand command = new SqlCommand(query, connection))
+            {
+                try
+                {
+                    connection.Open();
 
-					using (SqlDataReader reader = command.ExecuteReader())
-					{
-						while (reader.Read())
-						{
-							readOnlyID = reader.GetInt32(0);
-						}
-					}
+                    command.Parameters.AddWithValue("Email", Email);
+                    command.Parameters.AddWithValue("Username", Username);
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            matchCount = reader.GetInt32(0);
+                        }
+                    }
                 }
                 catch
                 {
@@ -43,29 +48,61 @@ public partial class Signup : ContentPage
             }
         }
 
-        query = "INSERT INTO Users (Email, Username, Password, RoleID) Values (@Email, @Username, @Password, @ReadOnlyID);";
+        if(matchCount == 0) //email and username will both be unique
+        {
+            int readOnlyID = -1;
+		    query = "SELECT RoleID FROM Roles WHERE RoleName = 'readonly';";
 
-		// there's an issue here where these aren't saving
-        using (SqlConnection connection = new SqlConnection(Preferences.Default.Get("DBConn", "Not Found")))
-		{
-            using (SqlCommand command = new SqlCommand(query, connection))
-            {
-				try {
-					connection.Open();
+		    using (SqlConnection connection = new SqlConnection(Preferences.Default.Get("DBConn", "Not Found")))
+		    {
+			    using (SqlCommand command = new SqlCommand(query, connection))
+			    {
+				    try
+				    {
+					    connection.Open();
 
-					command.Parameters.AddWithValue("Email", Email);
-					command.Parameters.AddWithValue("Username", Username);
-					command.Parameters.AddWithValue("Password", Password);
-					command.Parameters.AddWithValue("ConfirmPassword", ConfirmPassword);
-					command.Parameters.AddWithValue("ReadOnlyID", readOnlyID);
-
-					var results = command.ExecuteReader();
-                }
-                catch
-                {
-                    await DisplayAlert("Database Connection", "There was a problem connecting to the database.", "OK");
+					    using (SqlDataReader reader = command.ExecuteReader())
+					    {
+						    while (reader.Read())
+						    {
+							    readOnlyID = reader.GetInt32(0);
+						    }
+					    }
+                    }
+                    catch
+                    {
+                        await DisplayAlert("Database Connection", "There was a problem connecting to the database.", "OK");
+                    }
                 }
             }
+
+            query = "INSERT INTO Users (Email, Username, Salt, HashedPassword, RoleID) Values (@Email, @Username, @Salt, @HashedPassword, @ReadOnlyID);";
+
+            using (SqlConnection connection = new SqlConnection(Preferences.Default.Get("DBConn", "Not Found")))
+		    {
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+				    try {
+					    connection.Open();
+
+					    command.Parameters.AddWithValue("Email", Email);
+					    command.Parameters.AddWithValue("Username", Username);
+                        command.Parameters.AddWithValue("Salt", Salt);
+                        command.Parameters.AddWithValue("HashedPassword", HashedPassword);
+					    command.Parameters.AddWithValue("ReadOnlyID", readOnlyID);
+
+					    var results = command.ExecuteReader();
+                    }
+                    catch
+                    {
+                        await DisplayAlert("Database Connection", "There was a problem connecting to the database.", "OK");
+                    }
+                }
+            }
+        }
+        else
+        {
+            await DisplayAlert("Email/Username", "This email or username is already taken.", "OK");
         }
     }
 
@@ -73,13 +110,17 @@ public partial class Signup : ContentPage
     {
 		Email = EmailEntry.Text;
 		Username = UsernameEntry.Text;
-		Password = PasswordEntry.Text;
-		ConfirmPassword = ConfirmPasswordEntry.Text;
+		var password = PasswordEntry.Text;
+		var confirmPassword = ConfirmPasswordEntry.Text;
 
 		if (!string.IsNullOrWhiteSpace(Email) && !string.IsNullOrWhiteSpace(Username)
-			&& !string.IsNullOrWhiteSpace(Password) && !string.IsNullOrWhiteSpace(ConfirmPassword) && Password.Equals(ConfirmPassword))
+			&& !string.IsNullOrWhiteSpace(password) && !string.IsNullOrWhiteSpace(confirmPassword) && password.Equals(confirmPassword))
 		{
-			// should also make sure the email and the username will not be duplicates
+			Password processPassword = new Password(password);
+			HashedPassword = processPassword.Hash();
+			Salt = processPassword.Salt;
+
+			//TODO should also make sure the email and the username will not be duplicates
 			saveSignupInformation();
             await Navigation.PushAsync(new MainPage());
         }

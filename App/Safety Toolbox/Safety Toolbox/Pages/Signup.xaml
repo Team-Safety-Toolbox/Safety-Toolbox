@@ -22,8 +22,8 @@
 
             <Entry x:Name="EmailEntry" Placeholder="Email"/>
             <Entry x:Name="UsernameEntry" Placeholder="Username"/>
-            <Entry x:Name="PasswordEntry" Placeholder="Password"/>
-            <Entry x:Name="ConfirmPasswordEntry" Placeholder="Confirm Password"/>
+            <Entry x:Name="PasswordEntry" Placeholder="Password" IsPassword="True"/>
+            <Entry x:Name="ConfirmPasswordEntry" Placeholder="Confirm Password" IsPassword="True"/>
             <Button Text="Signup" Clicked="OnSignUpBtnClicked"/>
 
         </VerticalStackLayout>

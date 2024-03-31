@@ -1,6 +1,7 @@
 ﻿using Microsoft.Data.Sql;
 using Microsoft.Data.SqlClient;
 using Safety_Toolbox.Types;
+using System.Text;
 
 namespace Safety_Toolbox
 {
@@ -23,8 +24,9 @@ namespace Safety_Toolbox
             try
             {
                 String usernameDB = "";
-                String passwordDB = "";
-                String query = "SELECT TOP 1 Username, Password, RoleName FROM Users LEFT JOIN Roles ON Users.RoleID = Roles.RoleID WHERE Username = '" + Username + "' AND Password = '" + Password + "'";
+                byte[] saltDB = null;
+                byte[] hashedPasswordDB = null;
+                String query = "SELECT TOP 1 Username, Salt, HashedPassword, RoleName FROM Users LEFT JOIN Roles ON Users.RoleID = Roles.RoleID WHERE Username = '" + Username + "'";
 
                 using (SqlConnection connection = new SqlConnection(Preferences.Default.Get("DBConn", "Not Found")))
                 {
@@ -38,7 +40,8 @@ namespace Safety_Toolbox
                                 while (reader.Read())
                                 {
                                     usernameDB = (String)reader["Username"];
-                                    passwordDB = (String)reader["Password"];
+                                    saltDB = (byte[])reader["Salt"];
+                                    hashedPasswordDB = (byte[])reader["HashedPassword"];
                                     Role = (String)reader["RoleName"];
                                 }
                             }
@@ -49,8 +52,10 @@ namespace Safety_Toolbox
                     }
                 }
 
+                Password processPassword = new Password(Password, saltDB);
+                var hashPassword = processPassword.Hash();
 
-                if (usernameDB.Equals(Username) && passwordDB.Equals(Password))
+                if (usernameDB.Equals(Username) && hashedPasswordDB.SequenceEqual(hashPassword))
                 {
                     setReadOnlyStatus(Role.Equals("readonly"));
                     return true;
@@ -95,6 +100,9 @@ namespace Safety_Toolbox
             {
                 if (!string.IsNullOrWhiteSpace(Username) && !string.IsNullOrWhiteSpace(Password) && validateUser())
                 {
+                    //clear these so they'll be empty when user logs out
+                    UsernameEntry.Text = null;
+                    PasswordEntry.Text = null;
                     await Navigation.PushAsync(new Dashboard());
                 }
                 else
@@ -102,8 +110,6 @@ namespace Safety_Toolbox
                     await DisplayAlert("Invalid Login", "Please enter valid credentials.", "OK");
                 }
             }
-
-            
         }
 
         private async void OnSignupBtnClicked(object sender, EventArgs e)
