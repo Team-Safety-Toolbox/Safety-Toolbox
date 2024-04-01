@@ -23,11 +23,11 @@ public partial class TopicIdeas : ContentPage
 
         string query = "SELECT * FROM Topics";
 
-        using (SqlConnection connection = new SqlConnection(Preferences.Default.Get("DBConn", "Not Found")))
+        try
         {
-            using (SqlCommand command = new SqlCommand(query, connection))
+            using (SqlConnection connection = new SqlConnection(Preferences.Default.Get("DBConn", "Not Found")))
             {
-                try
+                using (SqlCommand command = new SqlCommand(query, connection))
                 {
                     connection.Open();
                     using (SqlDataReader reader = command.ExecuteReader())
@@ -40,11 +40,11 @@ public partial class TopicIdeas : ContentPage
                         }
                     }
                 }
-                catch
-                {
-                    ConnectionFail.IsVisible = true;
-                }
             }
+        }
+        catch
+        {
+            ConnectionFail.IsVisible = true;
         }
 
         topicIdeas.Sort(); //sort alphabetically
@@ -66,10 +66,10 @@ public partial class TopicIdeas : ContentPage
         {
             //add new topic
             string query = "Insert into Topics Values (@TopicIdea);";
-
-            using (SqlConnection connection = new SqlConnection(Preferences.Default.Get("DBConn", "Not Found")))
-            {
-                try {
+            
+            try {
+                using (SqlConnection connection = new SqlConnection(Preferences.Default.Get("DBConn", "Not Found")))
+                {
                     connection.Open();
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {
@@ -80,10 +80,10 @@ public partial class TopicIdeas : ContentPage
                 
                     }
                 }
-                catch
-                {
-                    await DisplayAlert("Database Connection", "There was a problem connecting to the database.", "OK");
-                }
+            }
+            catch
+            {
+                await DisplayAlert("Database Connection", "There was a problem connecting to the database.", "OK");
             }
 
             //refresh list

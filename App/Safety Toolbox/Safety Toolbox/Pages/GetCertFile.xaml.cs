@@ -76,11 +76,11 @@ public partial class GetCertFile : ContentPage
         string query = "SELECT CertificationID FROM CertificationTypes WHERE CertificationName = @CertName";
         int certId = -1;
 
-        using (SqlConnection connection = new SqlConnection(Preferences.Default.Get("DBConn", "Not Found")))
+        try
         {
-            using (SqlCommand command = new SqlCommand(query, connection))
+            using (SqlConnection connection = new SqlConnection(Preferences.Default.Get("DBConn", "Not Found")))
             {
-                try
+                using (SqlCommand command = new SqlCommand(query, connection))
                 {
                     connection.Open();
 
@@ -95,21 +95,21 @@ public partial class GetCertFile : ContentPage
                         }
                     }
                 }
-                catch
-                {
-                    await DisplayAlert("Database Connection", "There was a problem connecting to the database.", "OK");
-                }
             }
+        }
+        catch
+        {
+            await DisplayAlert("Database Connection", "There was a problem connecting to the database.", "OK");
         }
 
 
         //update sql table
         string queryInsert = "INSERT INTO Certifications Values(@EmpId, @CertId, @TrainDate, @ExpireDate);";
         string queryUpdate = "UPDATE Certifications SET TrainedOnDate = @TrainDate, ExpiryDate = @ExpireDate WHERE EmployeeID = @EmpId AND CertificationID = @CertId;";
-
-        using (SqlConnection connection = new SqlConnection(Preferences.Default.Get("DBConn", "Not Found")))
-        {
-            try { 
+        
+        try { 
+            using (SqlConnection connection = new SqlConnection(Preferences.Default.Get("DBConn", "Not Found")))
+            {
                 connection.Open();
 
                 try
@@ -167,11 +167,10 @@ public partial class GetCertFile : ContentPage
                     }
                 }
             }
-            catch
-            {
-                await DisplayAlert("Database Connection", "There was a problem connecting to the database.", "OK");
-            }
-
+        }
+        catch
+        {
+            await DisplayAlert("Database Connection", "There was a problem connecting to the database.", "OK");
         }
 
     }

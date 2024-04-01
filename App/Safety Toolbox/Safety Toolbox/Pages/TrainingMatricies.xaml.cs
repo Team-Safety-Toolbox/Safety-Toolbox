@@ -25,12 +25,12 @@ public partial class TrainingMatricies : ContentPage
     {
         string query = "SELECT EmployeeID, EmployeeFirstName, EmployeeLastName FROM Employees ORDER BY EmployeeFirstName ASC";
         List<String> employees = new List<String>();
-
-        using (SqlConnection connection = new SqlConnection(Preferences.Default.Get("DBConn", "Not Found")))
+        
+        try
         {
-            using (SqlCommand command = new SqlCommand(query, connection))
+            using (SqlConnection connection = new SqlConnection(Preferences.Default.Get("DBConn", "Not Found")))
             {
-                try
+                using (SqlCommand command = new SqlCommand(query, connection))
                 {
                     connection.Open();
                     using (SqlDataReader reader = command.ExecuteReader())
@@ -43,11 +43,11 @@ public partial class TrainingMatricies : ContentPage
                         }
                     }
                 }
-                catch
-                {
-                    ConnectionFail.IsVisible = true;
-                }
             }
+        }
+        catch
+        {
+            ConnectionFail.IsVisible = true;
         }
         Employees = employees;
     }
@@ -57,11 +57,11 @@ public partial class TrainingMatricies : ContentPage
         string query = "SELECT PositionName FROM Positions ORDER BY PositionName ASC";
         List<string> positions = new List<string>();
 
-        using (SqlConnection connection = new SqlConnection(Preferences.Default.Get("DBConn", "Not Found")))
-        {
-            using (SqlCommand command = new SqlCommand(query, connection))
+        try { 
+            using (SqlConnection connection = new SqlConnection(Preferences.Default.Get("DBConn", "Not Found")))
             {
-                try { 
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
                     connection.Open();
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
@@ -72,11 +72,11 @@ public partial class TrainingMatricies : ContentPage
                         }
                     }
                 }
-                catch
-                {
-                    ConnectionFail.IsVisible = true;
-                }
             }
+        }
+        catch
+        {
+            ConnectionFail.IsVisible = true;
         }
         Positions = positions;
     }

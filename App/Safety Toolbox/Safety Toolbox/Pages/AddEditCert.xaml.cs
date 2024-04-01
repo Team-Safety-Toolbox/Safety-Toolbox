@@ -92,11 +92,11 @@ public partial class AddEditCert : ContentPage
         List<String> lastNames = new List<String>();
         List<Int32> employeeIds = new List<Int32>();
 
-        using (SqlConnection connection = new SqlConnection(Preferences.Default.Get("DBConn", "Not Found")))
-        {
-            using (SqlCommand command = new SqlCommand(query, connection))
+        try {
+            using (SqlConnection connection = new SqlConnection(Preferences.Default.Get("DBConn", "Not Found")))
             {
-                try {
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
                     connection.Open();
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
@@ -112,11 +112,11 @@ public partial class AddEditCert : ContentPage
                         }
                     }
                 }
-                catch
-                {
-                    await DisplayAlert("Database Connection", "There was a problem connecting to the database.", "OK");
-                }
             }
+        }
+        catch
+        {
+            await DisplayAlert("Database Connection", "There was a problem connecting to the database.", "OK");
         }
         EmployeeFullNames = employees;
         EmployeeFirstNames = firstNames;
@@ -129,11 +129,12 @@ public partial class AddEditCert : ContentPage
         string query = "SELECT CertificationName FROM CertificationTypes ORDER BY CertificationName ASC";
         List<String> certs = new List<String>();
 
-        using (SqlConnection connection = new SqlConnection(Preferences.Default.Get("DBConn", "Not Found")))
-        {
-            using (SqlCommand command = new SqlCommand(query, connection))
+        try { 
+            using (SqlConnection connection = new SqlConnection(Preferences.Default.Get("DBConn", "Not Found")))
             {
-                try { 
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                
                     connection.Open();
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
@@ -143,11 +144,11 @@ public partial class AddEditCert : ContentPage
                         }
                     }
                 }
-                catch
-                {
-                    await DisplayAlert("Database Connection", "There was a problem connecting to the database.", "OK");
-                }
             }
+        }
+        catch
+        {
+            await DisplayAlert("Database Connection", "There was a problem connecting to the database.", "OK");
         }
 
         CertificationTypes = certs;

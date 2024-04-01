@@ -32,11 +32,11 @@ public partial class Notes : ContentPage
 
         string query = "SELECT * FROM Notes";
 
-        using (SqlConnection connection = new SqlConnection(Preferences.Default.Get("DBConn", "Not Found")))
+        try
         {
-            using (SqlCommand command = new SqlCommand(query, connection))
+            using (SqlConnection connection = new SqlConnection(Preferences.Default.Get("DBConn", "Not Found")))
             {
-                try
+                using (SqlCommand command = new SqlCommand(query, connection))
                 {
                     connection.Open();
                     using (SqlDataReader reader = command.ExecuteReader())
@@ -50,11 +50,11 @@ public partial class Notes : ContentPage
                         }
                     }
                 }
-                catch
-                {
-                    ConnectionFail.IsVisible = true;
-                }
             }
+        }
+        catch
+        {
+            ConnectionFail.IsVisible = true;
         }
 
         List<TextNoteData> sortedTextNotes = textNotes.OrderByDescending(o => o.NoteDate).ToList();
@@ -66,17 +66,26 @@ public partial class Notes : ContentPage
     {
         if (Preferences.Default.Get("NotesFilePath", "Not Found") != "Not Found")
         {
-            string[] notesFilePaths = Directory.GetFiles(Path.Combine(Preferences.Default.Get("NotesFilePath", "Not Found")));
-
-            List<FileNoteData> fileNotes = new List<FileNoteData>();
-
-            foreach (string noteFilePath in notesFilePaths)
+            try
             {
-                fileNotes.Add(new FileNoteData(File.GetLastWriteTime(noteFilePath), Path.GetFileName(noteFilePath)));
+                string[] notesFilePaths = Directory.GetFiles(Path.Combine(Preferences.Default.Get("NotesFilePath", "Not Found")));
+
+                List<FileNoteData> fileNotes = new List<FileNoteData>();
+
+                foreach (string noteFilePath in notesFilePaths)
+                {
+                    fileNotes.Add(new FileNoteData(File.GetLastWriteTime(noteFilePath), Path.GetFileName(noteFilePath)));
+                }
+                List<FileNoteData> sortedFileNotes = fileNotes.OrderByDescending(o => o.NoteDate).ToList();
+                ViewFileNotes.ItemsSource = sortedFileNotes;
+                allFileNotes = sortedFileNotes;
             }
-            List<FileNoteData> sortedFileNotes = fileNotes.OrderByDescending(o => o.NoteDate).ToList();
-            ViewFileNotes.ItemsSource = sortedFileNotes;
-            allFileNotes = sortedFileNotes;
+            catch
+            {
+                List<string> notesFiles = new List<string>();
+                ViewFileNotes.ItemsSource = notesFiles;
+                FilePathWarning.IsVisible = true;
+            }
         }
         else
         {
@@ -106,9 +115,9 @@ public partial class Notes : ContentPage
         {
             string query = "Insert into Notes Values (@NoteDate, @NoteContent);";
 
-            using (SqlConnection connection = new SqlConnection(Preferences.Default.Get("DBConn", "Not Found")))
+            try
             {
-                try
+                using (SqlConnection connection = new SqlConnection(Preferences.Default.Get("DBConn", "Not Found")))
                 {
                     connection.Open();
                     using (SqlCommand command = new SqlCommand(query, connection))
@@ -119,13 +128,12 @@ public partial class Notes : ContentPage
                         command.Parameters.Add(noteContentParam);
 
                         var results = command.ExecuteReader();
-
                     }
                 }
-                catch
-                {
-                    await DisplayAlert("Database Connection", "There was a problem connecting to the database.", "OK");
-                }
+            }
+            catch
+            {
+                await DisplayAlert("Database Connection", "There was a problem connecting to the database.", "OK");
             }
 
             //refresh text list

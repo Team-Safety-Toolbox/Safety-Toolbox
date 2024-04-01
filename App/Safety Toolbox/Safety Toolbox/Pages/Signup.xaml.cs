@@ -22,11 +22,11 @@ public partial class Signup : ContentPage
         int matchCount = -1;
         string query = "SELECT COUNT(*) FROM Users WHERE Email = @Email OR Username = @Username;";
 
-        using (SqlConnection connection = new SqlConnection(Preferences.Default.Get("DBConn", "Not Found")))
+        try
         {
-            using (SqlCommand command = new SqlCommand(query, connection))
+            using (SqlConnection connection = new SqlConnection(Preferences.Default.Get("DBConn", "Not Found")))
             {
-                try
+                using (SqlCommand command = new SqlCommand(query, connection))
                 {
                     connection.Open();
 
@@ -41,11 +41,11 @@ public partial class Signup : ContentPage
                         }
                     }
                 }
-                catch
-                {
-                    await DisplayAlert("Database Connection", "There was a problem connecting to the database.", "OK");
-                }
             }
+        }
+        catch
+        {
+            await DisplayAlert("Database Connection", "There was a problem connecting to the database.", "OK");
         }
 
         if(matchCount == 0) //email and username will both be unique
@@ -53,12 +53,12 @@ public partial class Signup : ContentPage
             int readOnlyID = -1;
 		    query = "SELECT RoleID FROM Roles WHERE RoleName = 'readonly';";
 
-		    using (SqlConnection connection = new SqlConnection(Preferences.Default.Get("DBConn", "Not Found")))
-		    {
-			    using (SqlCommand command = new SqlCommand(query, connection))
-			    {
-				    try
-				    {
+            try
+			{
+		        using (SqlConnection connection = new SqlConnection(Preferences.Default.Get("DBConn", "Not Found")))
+		        {
+			        using (SqlCommand command = new SqlCommand(query, connection))
+			        {
 					    connection.Open();
 
 					    using (SqlDataReader reader = command.ExecuteReader())
@@ -69,20 +69,20 @@ public partial class Signup : ContentPage
 						    }
 					    }
                     }
-                    catch
-                    {
-                        await DisplayAlert("Database Connection", "There was a problem connecting to the database.", "OK");
-                    }
                 }
+            }
+            catch
+            {
+                await DisplayAlert("Database Connection", "There was a problem connecting to the database.", "OK");
             }
 
             query = "INSERT INTO Users (Email, Username, Salt, HashedPassword, RoleID) Values (@Email, @Username, @Salt, @HashedPassword, @ReadOnlyID);";
-
-            using (SqlConnection connection = new SqlConnection(Preferences.Default.Get("DBConn", "Not Found")))
-		    {
-                using (SqlCommand command = new SqlCommand(query, connection))
-                {
-				    try {
+            
+            try {
+                using (SqlConnection connection = new SqlConnection(Preferences.Default.Get("DBConn", "Not Found")))
+		        {
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
 					    connection.Open();
 
 					    command.Parameters.AddWithValue("Email", Email);
@@ -93,11 +93,11 @@ public partial class Signup : ContentPage
 
 					    var results = command.ExecuteReader();
                     }
-                    catch
-                    {
-                        await DisplayAlert("Database Connection", "There was a problem connecting to the database.", "OK");
-                    }
                 }
+            }
+            catch
+            {
+                await DisplayAlert("Database Connection", "There was a problem connecting to the database.", "OK");
             }
         }
         else

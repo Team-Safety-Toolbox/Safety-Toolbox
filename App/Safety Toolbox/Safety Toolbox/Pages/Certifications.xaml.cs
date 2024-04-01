@@ -134,12 +134,12 @@ public partial class Certifications : ContentPage
     {
         string query = "SELECT Certifications.EmployeeID, Employees.EmployeeFirstName, Employees.EmployeeLastName, CertificationTypes.CertificationName, Certifications.TrainedOnDate, Certifications.ExpiryDate FROM Certifications JOIN Employees on Certifications.EmployeeID = Employees.EmployeeID JOIN CertificationTypes on Certifications.CertificationID = CertificationTypes.CertificationID";
         List<CertificationData> certificationList = new List<CertificationData>();
-
-        using (SqlConnection connection = new SqlConnection(Preferences.Default.Get("DBConn", "Not Found")))
+        
+        try
         {
-            using (SqlCommand command = new SqlCommand(query, connection))
+            using (SqlConnection connection = new SqlConnection(Preferences.Default.Get("DBConn", "Not Found")))
             {
-                try
+                using (SqlCommand command = new SqlCommand(query, connection))
                 {
                     connection.Open();
                     using (SqlDataReader reader = command.ExecuteReader())
@@ -165,11 +165,11 @@ public partial class Certifications : ContentPage
                         }
                     }
                 }
-                catch
-                {
-                    ConnectionFail.IsVisible = true;
-                }
             }
+        }
+        catch
+        {
+            ConnectionFail.IsVisible = true;
         }
         return certificationList;
     }

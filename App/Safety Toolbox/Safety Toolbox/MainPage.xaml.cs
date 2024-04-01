@@ -27,27 +27,22 @@ namespace Safety_Toolbox
                 byte[] saltDB = null;
                 byte[] hashedPasswordDB = null;
                 String query = "SELECT TOP 1 Username, Salt, HashedPassword, RoleName FROM Users LEFT JOIN Roles ON Users.RoleID = Roles.RoleID WHERE Username = '" + Username + "'";
-
+                
+                
                 using (SqlConnection connection = new SqlConnection(Preferences.Default.Get("DBConn", "Not Found")))
                 {
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {
-                        try
+                        connection.Open();
+                        using (SqlDataReader reader = command.ExecuteReader())
                         {
-                            connection.Open();
-                            using (SqlDataReader reader = command.ExecuteReader())
+                            while (reader.Read())
                             {
-                                while (reader.Read())
-                                {
-                                    usernameDB = (String)reader["Username"];
-                                    saltDB = (byte[])reader["Salt"];
-                                    hashedPasswordDB = (byte[])reader["HashedPassword"];
-                                    Role = (String)reader["RoleName"];
-                                }
+                                usernameDB = (String)reader["Username"];
+                                saltDB = (byte[])reader["Salt"];
+                                hashedPasswordDB = (byte[])reader["HashedPassword"];
+                                Role = (String)reader["RoleName"];
                             }
-                        }
-                        catch{
-                            //alert gets displayed later
                         }
                     }
                 }

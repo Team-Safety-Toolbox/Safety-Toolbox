@@ -56,10 +56,10 @@ public partial class Attendance : ContentPage
 
             string queryInsert = "INSERT INTO Attendance (EmployeeID, AttendanceDate, Present, Excused, Absent) VALUES (@EmpId, @AttendanceDate, @Present, @Excused, @Absent);";
             string queryUpdate = "UPDATE Attendance SET Present = @Present, Excused = @Excused, Absent = @Absent WHERE EmployeeID = @EmpId AND AttendanceDate = @AttendanceDate;";
-
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            
+            try
             {
-                try
+                using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
 
@@ -102,11 +102,10 @@ public partial class Attendance : ContentPage
                         }
                     }
                 }
-                catch
-                {
-                    await DisplayAlert("Database Connection", "There was a problem connecting to the database.", "OK");
-                }
-
+            }
+            catch
+            {
+                await DisplayAlert("Database Connection", "There was a problem connecting to the database.", "OK");
             }
         }
 
@@ -120,15 +119,16 @@ public partial class Attendance : ContentPage
 
     private void getAttendanceData(DateTime datetime)
     {
-        string connectionString = Preferences.Default.Get("DBConn", "Not Found");
-        string query = "SELECT Employees.EmployeeID, Employees.EmployeeFirstName, Employees.EmployeeLastName, Attendance.AttendanceDate, Attendance.Present, Attendance.Excused, Attendance.Absent FROM Employees LEFT JOIN Attendance on Employees.EmployeeID = Attendance.EmployeeID AND Attendance.AttendanceDate = @AttendanceDate";
         List<AttendanceData> attendanceItems = new List<AttendanceData>();
 
-        using (SqlConnection connection = new SqlConnection(connectionString))
+        try
         {
-            using (SqlCommand command = new SqlCommand(query, connection))
+            string connectionString = Preferences.Default.Get("DBConn", "Not Found");
+            string query = "SELECT Employees.EmployeeID, Employees.EmployeeFirstName, Employees.EmployeeLastName, Attendance.AttendanceDate, Attendance.Present, Attendance.Excused, Attendance.Absent FROM Employees LEFT JOIN Attendance on Employees.EmployeeID = Attendance.EmployeeID AND Attendance.AttendanceDate = @AttendanceDate";
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                try
+                using (SqlCommand command = new SqlCommand(query, connection))
                 {
                     connection.Open();
 
@@ -165,12 +165,13 @@ public partial class Attendance : ContentPage
                             attendanceItems.Add(new AttendanceData() { EmployeeID = empID, EmployeeFirstName = empFirstName, EmployeeLastName = empLastName, AttendanceDate = day, Present = present, Excused = excused, Absent = absent });
                         }
                     }
-                }
-                catch
-                {
-                    ConnectionFail.IsVisible = true;
+                    
                 }
             }
+        }
+        catch
+        {
+            ConnectionFail.IsVisible = true;
         }
 
         collectionView.ItemsSource = attendanceItems;
