@@ -34,7 +34,6 @@ public partial class Settings : ContentPage
         Preferences.Default.Set("LibFilePath", LibFilePath.Text);
         Preferences.Default.Set("NotesFilePath", NotesFilePath.Text);
         Preferences.Default.Set("SignUpEnabled", SignUpToggleSwitch.IsToggled);
-        //MainPage.setSignUpEnabled(Preferences.Default.Get("SignUpEnabled", false));
 
         setEntryFields();
         Saved.IsVisible = true;
