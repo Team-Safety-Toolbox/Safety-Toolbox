@@ -5,6 +5,7 @@
              xmlns:local="clr-namespace:Safety_Toolbox.Templates"
              x:Class="Safety_Toolbox.Certifications"
              Title=" "><!--Keeping the bar here by setting the title makes this page match the tabbedpages-->
+    
     <ContentPage.Resources>
         <DataTemplate x:Key="notExpiringTemplate">
             <Grid>
@@ -24,7 +25,8 @@
                 <Label Grid.Column="3" Text="{Binding CertType}" HorizontalOptions="Center" VerticalOptions="Center" />
                 <Label Grid.Column="4" Text="{Binding TrainedOnDate, StringFormat='{0:d}'}" HorizontalOptions="Center" VerticalOptions="Center" />
                 <Label Grid.Column="5" Text="{Binding ExpiryDate, StringFormat='{0:d}'}" HorizontalOptions="Center" VerticalOptions="Center" />
-                <ImageButton Grid.Column="6" Source="appbar_page_search.png" CommandParameter="{Binding FileName}" VerticalOptions="Center" Clicked="OnViewBtnClicked" IsEnabled="{Binding FileFound}"/>
+                <ImageButton Grid.Column="6" Source="appbar_page_search.png" MaximumHeightRequest="1" CommandParameter="{Binding FileName}" VerticalOptions="Center" Clicked="OnViewBtnClicked" IsEnabled="{Binding FileFound}"/>
+                <ImageButton Grid.Column="7" Source="appbar_edit.png" CommandParameter="{Binding}" MaximumHeightRequest="1" VerticalOptions="Center" Clicked="OnEditBtnClicked" IsEnabled="{Binding EditingEnabled}"/>
             </Grid>
         </DataTemplate>
         <DataTemplate x:Key="expiringSoonTemplate">
@@ -45,7 +47,8 @@
                 <Label Grid.Column="3" Text="{Binding CertType}" TextColor="Orange" HorizontalOptions="Center" VerticalOptions="Center" />
                 <Label Grid.Column="4" Text="{Binding TrainedOnDate, StringFormat='{0:d}'}" TextColor="Orange" HorizontalOptions="Center" VerticalOptions="Center" />
                 <Label Grid.Column="5" Text="{Binding ExpiryDate, StringFormat='{0:d}'}" TextColor="Orange" HorizontalOptions="Center" VerticalOptions="Center" />
-                <ImageButton Grid.Column="6" Source="appbar_page_search.png" CommandParameter="{Binding FileName}" VerticalOptions="Center" Clicked="OnViewBtnClicked" IsEnabled="{Binding FileFound}"/>
+                <ImageButton Grid.Column="6" Source="appbar_page_search.png" MaximumHeightRequest="1" CommandParameter="{Binding FileName}" VerticalOptions="Center" Clicked="OnViewBtnClicked" IsEnabled="{Binding FileFound}"/>
+                <ImageButton Grid.Column="7" Source="appbar_edit.png" MaximumHeightRequest="1" CommandParameter="{Binding}" VerticalOptions="Center" Clicked="OnEditBtnClicked" IsEnabled="{Binding EditingEnabled}"/>
             </Grid>
         </DataTemplate>
         <DataTemplate x:Key="expiredTemplate">
@@ -66,8 +69,8 @@
                 <Label Grid.Column="3" Text="{Binding CertType}" TextColor="Red" HorizontalOptions="Center" VerticalOptions="Center" />
                 <Label Grid.Column="4" Text="{Binding TrainedOnDate, StringFormat='{0:d}'}" TextColor="Red" HorizontalOptions="Center" VerticalOptions="Center" />
                 <Label Grid.Column="5" Text="{Binding ExpiryDate, StringFormat='{0:d}'}" TextColor="Red" HorizontalOptions="Center" VerticalOptions="Center" />
-                <ImageButton Grid.Column="6" Source="appbar_page_search.png" CommandParameter="{Binding FileName}" VerticalOptions="Center" Clicked="OnViewBtnClicked" IsEnabled="{Binding FileFound}"/>
-                <ImageButton Grid.Column="7" Source="appbar_edit.png" VerticalOptions="Center" Clicked="OnEditBtnClicked" /> <!--needs to be set according to read only mode...-->
+                <ImageButton Grid.Column="6" Source="appbar_page_search.png" MaximumHeightRequest="1" CommandParameter="{Binding FileName}" VerticalOptions="Center" Clicked="OnViewBtnClicked" IsEnabled="{Binding FileFound}"/>
+                <ImageButton Grid.Column="7" Source="appbar_edit.png" MaximumHeightRequest="1" CommandParameter="{Binding}" VerticalOptions="Center" Clicked="OnEditBtnClicked" IsEnabled="{Binding EditingEnabled}"/>
             </Grid>
         </DataTemplate>
         <local:CertTemplateSelector x:Key="CertTemplateSelector"

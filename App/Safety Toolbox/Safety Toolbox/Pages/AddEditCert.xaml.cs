@@ -1,4 +1,6 @@
 namespace Safety_Toolbox.Pages;
+
+using CommunityToolkit.Maui.Converters;
 using Microsoft.Data.Sql;
 using Microsoft.Data.SqlClient;
 using Safety_Toolbox.Types;
@@ -11,7 +13,7 @@ public partial class AddEditCert : ContentPage
     List<int> EmployeeIds { get; set; }
     List<string> CertificationTypes { get; set; }
 
-    public AddEditCert()
+    public AddEditCert(CertificationData optionalDataToEdit = null)
     {
         InitializeComponent();
 
@@ -29,6 +31,22 @@ public partial class AddEditCert : ContentPage
         BindingContext = this;
         employeePicker.ItemsSource = EmployeeFullNames;
         certificationPicker.ItemsSource = CertificationTypes;
+
+        if (optionalDataToEdit != null)
+        {
+            employeePicker.SelectedIndex = EmployeeFullNames.IndexOf(optionalDataToEdit.EmployeeFirstName + " " + optionalDataToEdit.EmployeeLastName);
+            certificationPicker.SelectedIndex = CertificationTypes.IndexOf(optionalDataToEdit.CertType);
+
+            if (optionalDataToEdit.TrainedOnDate != null)
+                trainedDatePicker.Date = (DateTime)optionalDataToEdit.TrainedOnDate;
+            else
+                NoTrainDateCheckBox.IsChecked = true;
+
+            if (optionalDataToEdit.ExpiryDate != null)
+                expiryDatePicker.Date = (DateTime)optionalDataToEdit.ExpiryDate;
+            else
+                NoExpiryDateCheckBox.IsChecked = true;
+        }
     }
 
     private void OnTrainedDatePickerDateSelected(object sender, DateChangedEventArgs e)

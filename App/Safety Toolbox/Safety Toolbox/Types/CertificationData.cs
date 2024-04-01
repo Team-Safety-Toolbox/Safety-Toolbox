@@ -18,6 +18,7 @@ namespace Safety_Toolbox.Types
         public string FileName { get; set; }
 
         public bool FileFound { get; set; }
+        public bool EditingEnabled { get; set; }
 
         public CertificationData(){}
 
@@ -32,6 +33,7 @@ namespace Safety_Toolbox.Types
 
             FileName = buildFileName();
             FileFound = findFile();
+            EditingEnabled = setEnabledStatus();
         }
 
         private string buildFileName()
@@ -55,6 +57,11 @@ namespace Safety_Toolbox.Types
 
         public string getFullFilePath() { 
             return Path.Combine(Preferences.Default.Get("CertFilePath", "Not Found"), FileName);
+        }
+
+        private bool setEnabledStatus()
+        {
+            return !MainPage.isReadOnly;
         }
     }
 }

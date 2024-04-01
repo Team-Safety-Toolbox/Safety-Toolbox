@@ -174,8 +174,11 @@ public partial class Certifications : ContentPage
         return certificationList;
     }
 
-    private void OnEditBtnClicked(object sender, EventArgs e)
+    private async void OnEditBtnClicked(object sender, EventArgs e)
     {
-        // should preload all the stuff for editing reasons
+        var button = (ImageButton)sender;
+        var selectedItem = (CertificationData)button.CommandParameter;
+
+        await Navigation.PushAsync(new AddEditCert(selectedItem));
     }
 }
