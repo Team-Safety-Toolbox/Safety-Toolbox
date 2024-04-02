@@ -1,4 +1,5 @@
 using Microsoft.Data.SqlClient;
+using Microsoft.Maui.Controls;
 using System.Xml;
 
 namespace Safety_Toolbox;
@@ -8,6 +9,7 @@ public partial class TrainingMatricies : ContentPage
 	List <string> Employees { get; set; }
 	List <string> Positions { get; set; }
     List<string> EmployeeTraining { get; set; }
+    List<DateTime?> EmployeeTrainingDates { get; set; }
     List<string> PositionTraining { get; set; }
     public TrainingMatricies()
 	{
@@ -85,13 +87,15 @@ public partial class TrainingMatricies : ContentPage
         Positions = positions;
     }
 
-    private void getEmployeeTraining(string employeeName)
+    private void getEmployeeTraining(string employeeName, string positionName)
     {
-        string query = "SELECT CertificationName FROM Certifications " +
+        string query = "SELECT CertificationName, TrainedOnDate FROM Certifications " +
             "LEFT JOIN CertificationTypes ON Certifications.CertificationID = CertificationTypes.CertificationId " +
-            "LEFT JOIN Employees on Certifications.EmployeeID = Employees.EmployeeID " +
-            "WHERE (Employees.EmployeeFirstName + ' ' + Employees.EmployeeLastName) = '" + employeeName + "';";
+            "LEFT JOIN Employees ON Certifications.EmployeeID = Employees.EmployeeID " +
+            "WHERE (Employees.EmployeeFirstName + ' ' + Employees.EmployeeLastName) = '" + employeeName + "' " +
+            "ORDER BY CertificationName ASC;";
         List<string> employeeTraining = new List<string>();
+        List<DateTime?> trainDates = new List<DateTime?>();
 
         try
         {
@@ -105,7 +109,9 @@ public partial class TrainingMatricies : ContentPage
                         while (reader.Read())
                         {
                             string certName = reader.GetString(0);
+                            DateTime? trainDate = !reader.IsDBNull(1) ? reader.GetDateTime(1) : null;
                             employeeTraining.Add(certName);
+                            trainDates.Add(trainDate);
                         }
                     }
                 }
@@ -117,6 +123,7 @@ public partial class TrainingMatricies : ContentPage
         }
 
         EmployeeTraining = employeeTraining;
+        EmployeeTrainingDates = trainDates;
     }
 
     private void getPositionTraining(string positionName)
@@ -124,7 +131,7 @@ public partial class TrainingMatricies : ContentPage
         string query = "SELECT CertificationName FROM CertificationPositionMap " +
             "LEFT JOIN CertificationTypes ON CertificationPositionMap.CertificationID = CertificationTypes.CertificationID " +
             "LEFT JOIN Positions ON CertificationPositionMap.PositionID = Positions.PositionID " +
-            "WHERE Positions.PositionName = '" + positionName + "';";
+            "WHERE Positions.PositionName = '" + positionName + "' ORDER BY CertificationName ASC;";
         List<string> positionTraining = new List<string>();
 
         try
@@ -153,6 +160,38 @@ public partial class TrainingMatricies : ContentPage
         PositionTraining = positionTraining;
     }
 
+    private String getEmployeePositionTitle(string employeeName)
+    {
+        string query = "SELECT TOP 1 PositionName FROM Employees " +
+            "LEFT JOIN Positions ON Employees.PositionID = Positions.PositionID " +
+            "WHERE (EmployeeFirstName + ' ' + EmployeeLastName) = '" + employeeName + "';";
+        string selectedEmployeePosition = "";
+
+        try
+        {
+            using (SqlConnection connection = new SqlConnection(Preferences.Default.Get("DBConn", "Not Found")))
+            {
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    connection.Open();
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            selectedEmployeePosition = reader.GetString(0);
+                        }
+                    }
+                }
+            }
+        }
+        catch
+        {
+            ConnectionFail.IsVisible = true;
+        }
+
+        return selectedEmployeePosition;
+    }
+
     private void employeeDeselectBtn_Clicked(object sender, EventArgs e)
     {
         employeePicker.SelectedItem = null;
@@ -165,20 +204,22 @@ public partial class TrainingMatricies : ContentPage
 
     private void generateBtn_Clicked(object sender, EventArgs e)
     {
-        // generate the training matrix
-        // position training across the top
-        // empl training across the side
+        headerStackLayout.Children.Clear();
+        employeeStackLayout.Children.Clear();
+        EmployeeTraining = null;
+        PositionTraining = null;
 
         if (employeePicker.SelectedItem != null && positionPicker.SelectedItem != null)
         {
-            // show what training the employee has compared to the position
-            getEmployeeTraining(employeePicker.SelectedItem.ToString());
+            // show what training the employee has compared to the position that was manually selected
+            getEmployeeTraining(employeePicker.SelectedItem.ToString(), positionPicker.SelectedItem.ToString());
             getPositionTraining(positionPicker.SelectedItem.ToString());
         }
         else if (employeePicker.SelectedItem != null)
         {
-            // show vs the position they have
-            // this means position needs to be added to the employee table
+            // show the training they have vs the training they need for the position they have
+            getEmployeeTraining(employeePicker.SelectedItem.ToString(), getEmployeePositionTitle(employeePicker.SelectedItem.ToString()));
+            getPositionTraining(getEmployeePositionTitle(employeePicker.SelectedItem.ToString()));
         }
         else if (positionPicker.SelectedItem != null)
         {
@@ -186,21 +227,51 @@ public partial class TrainingMatricies : ContentPage
             getPositionTraining(positionPicker.SelectedItem.ToString());
         }
         
-
-        addCertLabels(PositionTraining.Count());
+        if (PositionTraining != null)
+            addCertLabels(PositionTraining.Count());
+        if (EmployeeTraining != null)
+            addCompletedTrainingLabels();
     }
 
     private void addCertLabels(int totalCerts)
     {
-        headerStackLayout.Children.Clear();
-
         for (int i = 0; i < totalCerts; i++)
         {
             headerStackLayout.Children.Add(new Label
             {
                 Text = PositionTraining[i].ToString(),
-                HorizontalOptions = LayoutOptions.StartAndExpand
+                FontAttributes = FontAttributes.Bold,
+                HorizontalOptions = LayoutOptions.StartAndExpand,
+                VerticalOptions = LayoutOptions.CenterAndExpand
             });
+        }
+    }
+
+    private void addCompletedTrainingLabels()
+    {
+        foreach (String trainingName in PositionTraining)
+        {
+            int trainIndex = EmployeeTraining.IndexOf(trainingName);
+            if (trainIndex != -1)
+            {
+                string dateTrained = EmployeeTrainingDates[trainIndex] != null ? EmployeeTrainingDates[trainIndex].Value.ToShortDateString() : "No date available";
+                employeeStackLayout.Children.Add(new Label
+                {
+                    Text = "Trained On: " + dateTrained,
+                    HorizontalOptions = LayoutOptions.StartAndExpand,
+                    VerticalOptions = LayoutOptions.CenterAndExpand
+                });
+            }
+            else
+            {
+                employeeStackLayout.Children.Add(new Label
+                {
+                    Text = "Training Record Not Found",
+                    TextColor = Color.FromArgb("FF0000"),
+                    HorizontalOptions = LayoutOptions.StartAndExpand,
+                    VerticalOptions = LayoutOptions.CenterAndExpand
+                });
+            }
         }
     }
 }

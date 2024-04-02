@@ -51,13 +51,13 @@
         </HorizontalStackLayout>
 
         <Grid>
-            <StackLayout x:Name="headerStackLayout" Orientation="Horizontal">
+            <StackLayout x:Name="headerStackLayout" Orientation="Horizontal" Padding="50,0,50,70">
                 <!--generate cert names dynamically-->
             </StackLayout>
             
             <ScrollView>
                 <!--employees will also be generated automatically-->
-                <StackLayout x:Name="employeeStackLayout"/>
+                <StackLayout x:Name="employeeStackLayout" Orientation="Horizontal" Padding="50,0,50,0"/>
             </ScrollView>
         </Grid>
     </VerticalStackLayout>
