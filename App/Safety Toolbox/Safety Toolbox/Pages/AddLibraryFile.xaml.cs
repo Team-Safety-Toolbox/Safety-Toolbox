@@ -4,17 +4,13 @@ namespace Safety_Toolbox.Pages;
 
 public partial class AddLibraryFile : ContentPage
 {
-    private bool validEntryFileName {  get; set; }
-    private bool takenEntryFileName { get; set; }
-    private string newFileCurrentPath { get; set; }
-    private string folder {  get; set; }
+    private string NewFileCurrentPath { get; set; }
+    private string Folder {  get; set; }
 
 	public AddLibraryFile(string saveToFolder)
 	{
 		InitializeComponent();
-        folder = saveToFolder;
-        validEntryFileName = true;
-        takenEntryFileName = false;
+        Folder = saveToFolder;
 
         FileFeedback.IsVisible = false;
 
@@ -30,32 +26,6 @@ public partial class AddLibraryFile : ContentPage
         FileNameEntry.WidthRequest = 0.7 * width;
     }
 
-    //private void EvaluateFileName()
-    //{
-    //    validEntryFileName = true;
-    //    takenEntryFileName = false;
-    //    FileFeedback.IsVisible = false;
-
-    //    if(Preferences.Default.Get("LibFilePath", "Not Found") == "Not Found"){
-    //        FilePathWarning.IsVisible = true;
-    //    }
-
-    //    if (FileNameEntry.Text.IndexOfAny(Path.GetInvalidFileNameChars()) == -1) { //index of any returns -1 if none are found
-    //        validEntryFileName = true;
-    //        if (File.Exists(Path.Combine(Preferences.Default.Get("LibFilePath", "Not Found"), folder, FileNameEntry.Text))) { 
-    //            takenEntryFileName = true;
-    //            FileFeedback.Text = "This filename is taken.";
-    //            FileFeedback.IsVisible = true;
-    //        }
-    //    }
-    //    else
-    //    {
-    //        validEntryFileName = false;
-    //        FileFeedback.Text = "This filename is invalid.";
-    //        FileFeedback.IsVisible = true;
-    //    }
-    //}
-
     private async void OnPickFileBtnClicked(object sender, EventArgs e)
     {
         var file = await FilePicker.PickAsync(new PickOptions
@@ -66,7 +36,7 @@ public partial class AddLibraryFile : ContentPage
 
         if (file != null)
         {
-            newFileCurrentPath = file.FullPath;
+            NewFileCurrentPath = file.FullPath;
             var fileName = file.FileName;
 
             FileNameEntry.Text = fileName;
@@ -80,13 +50,13 @@ public partial class AddLibraryFile : ContentPage
         string fileName = "";
         if (Path.GetExtension(FileNameEntry.Text) == "")
         {
-            fileName = FileNameEntry.Text + Path.GetExtension(newFileCurrentPath);
+            fileName = FileNameEntry.Text + Path.GetExtension(NewFileCurrentPath);
         }
         else
         {
             fileName = FileNameEntry.Text;
         }
-        if (File.Exists(Path.Combine(Preferences.Default.Get("LibFilePath", "Not Found"), folder, fileName)))
+        if (File.Exists(Path.Combine(Preferences.Default.Get("LibFilePath", "Not Found"), Folder, fileName)))
         {
             FileFeedback.Text = "File with this name already exists.";
             FileFeedback.TextColor = Color.Parse("Red");
@@ -106,7 +76,7 @@ public partial class AddLibraryFile : ContentPage
         else
         {
 
-            File.Copy(newFileCurrentPath, Path.Combine(Preferences.Default.Get("LibFilePath", "Not Found"), folder, fileName));
+            File.Copy(NewFileCurrentPath, Path.Combine(Preferences.Default.Get("LibFilePath", "Not Found"), Folder, fileName));
 
             FileFeedback.Text = "Success!";
             FileFeedback.TextColor = Color.Parse("Green");
@@ -114,7 +84,7 @@ public partial class AddLibraryFile : ContentPage
 
             FileConfirmArea.IsVisible = false;
             FileNameEntry.Text = "";
-            newFileCurrentPath = "";
+            NewFileCurrentPath = "";
         }
     }
 
@@ -122,6 +92,6 @@ public partial class AddLibraryFile : ContentPage
     {
         FileConfirmArea.IsVisible = false;
         FileNameEntry.Text = "";
-        newFileCurrentPath = "";
+        NewFileCurrentPath = "";
     }
 }

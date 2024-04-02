@@ -4,8 +4,8 @@ namespace Safety_Toolbox;
 
 public partial class TrainingDocs : ContentPage
 {
-    string folder = "Training Documents";
-    List<string> docs = new List<string>();
+    string Folder = "Training Documents";
+    List<string> Docs = new List<string>();
     public TrainingDocs()
 	{
 		InitializeComponent();
@@ -27,7 +27,7 @@ public partial class TrainingDocs : ContentPage
 
     private async void OnAddFileBtnClicked(object sender, EventArgs e)
     {
-        await Navigation.PushAsync(new AddLibraryFile(folder));
+        await Navigation.PushAsync(new AddLibraryFile(Folder));
     }
     void OnRefreshBtnClicked(object sender, EventArgs e)
     {
@@ -38,7 +38,7 @@ public partial class TrainingDocs : ContentPage
     {
         var button = (Button)sender;
         string filename = button.CommandParameter.ToString();
-        var fullFilePath = Path.Combine(Preferences.Default.Get("LibFilePath", "Not Found"), folder, filename);
+        var fullFilePath = Path.Combine(Preferences.Default.Get("LibFilePath", "Not Found"), Folder, filename);
 
         if (File.Exists(fullFilePath))
         {
@@ -50,20 +50,20 @@ public partial class TrainingDocs : ContentPage
     {
         if(Preferences.Default.Get("LibFilePath", "Not Found") != "Not Found")
         {
-            string[] libFilePaths = Directory.GetFiles(Path.Combine(Preferences.Default.Get("LibFilePath", "Not Found"), folder));
+            string[] libFilePaths = Directory.GetFiles(Path.Combine(Preferences.Default.Get("LibFilePath", "Not Found"), Folder));
             List<string> libFiles = new List<string>();
             foreach (string libFilePath in libFilePaths)
             {
                 libFiles.Add(Path.GetFileName(libFilePath));
             }
             collectionView.ItemsSource = libFiles;
-            docs = libFiles;
+            Docs = libFiles;
         }
         else
         {
             List<string> libFiles = new List<string>();
             collectionView.ItemsSource = libFiles;
-            docs = libFiles;
+            Docs = libFiles;
             FilePathWarning.IsVisible = true;
         }
     }
@@ -73,7 +73,7 @@ public partial class TrainingDocs : ContentPage
         SearchBar searchBar = (SearchBar)sender;
         if (searchBar != null)
         {
-            var matches = docs.Where(docs => docs.ToLower().Contains(searchBar.Text.ToLower()));
+            var matches = Docs.Where(docs => docs.ToLower().Contains(searchBar.Text.ToLower()));
 
             collectionView.ItemsSource = matches;
         }

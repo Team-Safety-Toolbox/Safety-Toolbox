@@ -8,9 +8,9 @@ using Microsoft.IdentityModel.Tokens;
 
 public partial class Notes : ContentPage
 {
-    private string newFileCurrentPath;
-    private List<TextNoteData> allTextNotes;
-    private List<FileNoteData> allFileNotes;
+    private string NewFileCurrentPath;
+    private List<TextNoteData> AllTextNotes;
+    private List<FileNoteData> AllFileNotes;
     public Notes()
 	{
 		InitializeComponent();
@@ -59,7 +59,7 @@ public partial class Notes : ContentPage
 
         List<TextNoteData> sortedTextNotes = textNotes.OrderByDescending(o => o.NoteDate).ToList();
         ViewTextNotes.ItemsSource = sortedTextNotes;
-        allTextNotes = sortedTextNotes;
+        AllTextNotes = sortedTextNotes;
     }
 
     private void getFileNotes()
@@ -78,7 +78,7 @@ public partial class Notes : ContentPage
                 }
                 List<FileNoteData> sortedFileNotes = fileNotes.OrderByDescending(o => o.NoteDate).ToList();
                 ViewFileNotes.ItemsSource = sortedFileNotes;
-                allFileNotes = sortedFileNotes;
+                AllFileNotes = sortedFileNotes;
             }
             catch
             {
@@ -151,7 +151,7 @@ public partial class Notes : ContentPage
 
         if (file != null)
         {
-            newFileCurrentPath = file.FullPath;
+            NewFileCurrentPath = file.FullPath;
             var fileName = file.FileName;
 
             ConfirmFileButton.CommandParameter = fileName;
@@ -171,7 +171,7 @@ public partial class Notes : ContentPage
         string fileName = "";
         if (Path.GetExtension(FileNameDisplay.Text) == "")
         {
-            fileName = FileNameDisplay.Text + Path.GetExtension(newFileCurrentPath);
+            fileName = FileNameDisplay.Text + Path.GetExtension(NewFileCurrentPath);
         }
         else
         {
@@ -198,13 +198,13 @@ public partial class Notes : ContentPage
         }
         else
         {
-            File.Copy(newFileCurrentPath, Path.Combine(Preferences.Default.Get("NotesFilePath", "Not Found"), fileName));
+            File.Copy(NewFileCurrentPath, Path.Combine(Preferences.Default.Get("NotesFilePath", "Not Found"), fileName));
             getFileNotes();
             FileFeedback.Text = "File has been added!";
             FileFeedback.TextColor = Color.Parse("Green");
             FileFeedback.IsVisible = true;
 
-            newFileCurrentPath = "";
+            NewFileCurrentPath = "";
             FileNameDisplay.Text = "";
             SaveFileLabel.IsVisible = false;
             FileNameDisplay.IsVisible = false;
@@ -218,7 +218,7 @@ public partial class Notes : ContentPage
 
     private void CancelFileButtonClicked(object sender, EventArgs e)
     {
-        newFileCurrentPath = "";
+        NewFileCurrentPath = "";
         FileNameDisplay.Text = "";
         SaveFileLabel.IsVisible = false;
         FileNameDisplay.IsVisible = false;
@@ -245,7 +245,7 @@ public partial class Notes : ContentPage
         SearchBar searchBar = (SearchBar)sender;
         if (searchBar != null)
         {
-            List<TextNoteData> notes = allTextNotes;
+            List<TextNoteData> notes = AllTextNotes;
 
             var matchingContent = notes.Where(note => note.NoteContent.ToLower().Contains(searchBar.Text.ToLower()));
 
@@ -257,7 +257,7 @@ public partial class Notes : ContentPage
         SearchBar searchBar = (SearchBar)sender;
         if (searchBar != null)
         {
-            List<FileNoteData> notes = allFileNotes;
+            List<FileNoteData> notes = AllFileNotes;
 
             var matchingContent = notes.Where(note => note.NoteFileName.ToLower().Contains(searchBar.Text.ToLower()));
 

@@ -4,8 +4,8 @@ namespace Safety_Toolbox;
 
 public partial class WorkProcedures : ContentPage
 {
-    string folder = "Work Procedures";
-    List<string> procedures = new List<string>();
+    string Folder = "Work Procedures";
+    List<string> Procedures = new List<string>();
     public WorkProcedures()
 	{
 		InitializeComponent();
@@ -27,7 +27,7 @@ public partial class WorkProcedures : ContentPage
 
     private async void OnAddFileBtnClicked(object sender, EventArgs e)
     {
-        await Navigation.PushAsync(new AddLibraryFile(folder));
+        await Navigation.PushAsync(new AddLibraryFile(Folder));
     }
     void OnRefreshBtnClicked(object sender, EventArgs e)
     {
@@ -38,7 +38,7 @@ public partial class WorkProcedures : ContentPage
     {
         var button = (Button)sender;
         string filename = button.CommandParameter.ToString();
-        var fullFilePath = Path.Combine(Preferences.Default.Get("LibFilePath", "Not Found"), folder, filename);
+        var fullFilePath = Path.Combine(Preferences.Default.Get("LibFilePath", "Not Found"), Folder, filename);
 
         if (File.Exists(fullFilePath))
         {
@@ -50,7 +50,7 @@ public partial class WorkProcedures : ContentPage
     {
         if (Preferences.Default.Get("LibFilePath", "Not Found") != "Not Found")
         {
-            string[] libFilePaths = Directory.GetFiles(Path.Combine(Preferences.Default.Get("LibFilePath", "Not Found"), folder));
+            string[] libFilePaths = Directory.GetFiles(Path.Combine(Preferences.Default.Get("LibFilePath", "Not Found"), Folder));
             List<string> libFiles = new List<string>();
             foreach (string libFilePath in libFilePaths)
             {
@@ -58,12 +58,12 @@ public partial class WorkProcedures : ContentPage
             }
 
             collectionView.ItemsSource = libFiles;
-            procedures = libFiles;
+            Procedures = libFiles;
         }
         else {
             List<string> libFiles = new List<string>();
             collectionView.ItemsSource = libFiles;
-            procedures = libFiles;
+            Procedures = libFiles;
             FilePathWarning.IsVisible = true;
         }
     }
@@ -73,7 +73,7 @@ public partial class WorkProcedures : ContentPage
         SearchBar searchBar = (SearchBar)sender;
         if (searchBar != null)
         {
-            var matches = procedures.Where(procedures => procedures.ToLower().Contains(searchBar.Text.ToLower()));
+            var matches = Procedures.Where(procedures => procedures.ToLower().Contains(searchBar.Text.ToLower()));
 
             collectionView.ItemsSource = matches;
         }
