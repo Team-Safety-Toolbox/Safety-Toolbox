@@ -9,7 +9,7 @@ public partial class Attendance : ContentPage
 	{
         InitializeComponent();
 
-        if (MainPage.isReadOnly)
+        if (MainPage.IsReadOnly)
         {
             EditorView.IsVisible = false;
             NonEditorView.IsVisible = true;

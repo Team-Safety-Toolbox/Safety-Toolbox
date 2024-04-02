@@ -5,13 +5,13 @@ using System.Text;
 
 namespace Safety_Toolbox
 {
-
     public partial class MainPage : ContentPage
     {
         private String Username;
         private String Password;
         private String Role;
-        public static Boolean isReadOnly { get; set; }
+        public static Boolean IsReadOnly { get; set; }
+        public static Boolean IsSetupAccount { get; set; }
 
         public MainPage()
         {
@@ -66,7 +66,7 @@ namespace Safety_Toolbox
 
         public static void setReadOnlyStatus(Boolean status)
         {
-            isReadOnly = status;
+            IsReadOnly = status;
         }
 
         private async void OnLoginBtnClicked(object sender, EventArgs e)
@@ -77,6 +77,7 @@ namespace Safety_Toolbox
             //TODO: decide if admin account is always accessible, or only when no database connection
             if (Username == "admin" && Password == "Adm1nU$er")
             {
+                IsSetupAccount = true;
                 await Navigation.PushAsync(new Dashboard());
             }
             else

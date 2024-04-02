@@ -61,7 +61,7 @@ namespace Safety_Toolbox.Types
 
         private bool setEnabledStatus()
         {
-            return !MainPage.isReadOnly;
+            return !MainPage.IsReadOnly;
         }
     }
 }

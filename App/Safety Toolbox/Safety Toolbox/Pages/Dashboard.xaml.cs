@@ -5,10 +5,19 @@ public partial class Dashboard : ContentPage
 	public Dashboard()
 	{
 		InitializeComponent();
-        if (MainPage.isReadOnly)
+        if (MainPage.IsReadOnly)
         {
             SettingsBtn.IsEnabled = false;
         }
+
+        if (MainPage.IsSetupAccount)
+        {
+            TBTBtn.IsEnabled = false;
+            CertsBtn.IsEnabled = false;
+            LibBtn.IsEnabled = false;
+            SetupAccountWarning.IsVisible = true;
+        }
+
         checkConnection();
     }
 

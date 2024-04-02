@@ -9,7 +9,7 @@ public partial class TopicIdeas : ContentPage
 	{
 		InitializeComponent();
 
-        if (MainPage.isReadOnly)
+        if (MainPage.IsReadOnly)
         {
             NewTopicArea.IsVisible = false;
         }

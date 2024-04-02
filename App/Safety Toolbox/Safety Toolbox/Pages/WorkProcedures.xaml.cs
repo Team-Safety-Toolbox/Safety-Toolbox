@@ -12,7 +12,7 @@ public partial class WorkProcedures : ContentPage
 
 
         // configure the readonly controls
-        if (MainPage.isReadOnly)
+        if (MainPage.IsReadOnly)
         {
             AddFileBtn.IsEnabled = false;
         }

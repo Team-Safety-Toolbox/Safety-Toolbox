@@ -20,6 +20,7 @@
             SemanticProperties.HeadingLevel="Level1"
             FontSize="32"
             HorizontalOptions="Center" />
+        <Label x:Name="SetupAccountWarning" Text="You are logged into the Setup account, which can only be used to change the settings." TextColor="Red" HorizontalOptions="Center" IsVisible="False"/>
         <HorizontalStackLayout HorizontalOptions="Center" Spacing="50">
             <Button
                 x:Name="TBTBtn"

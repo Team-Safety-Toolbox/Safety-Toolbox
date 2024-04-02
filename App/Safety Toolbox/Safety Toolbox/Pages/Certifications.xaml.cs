@@ -28,7 +28,7 @@ public partial class Certifications : ContentPage
         updateData();
 
         // configure the readonly controls
-        if (MainPage.isReadOnly)
+        if (MainPage.IsReadOnly)
         {
             AddEditCertBtn.IsEnabled = false;
         }
