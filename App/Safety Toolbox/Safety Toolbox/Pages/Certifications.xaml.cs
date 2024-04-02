@@ -16,6 +16,7 @@ public partial class Certifications : ContentPage
         
         var sortByList = new List<string>();
         sortByList.Add("Expiry Date");
+        sortByList.Add("Train Date");
         sortByList.Add("Employee First Name");
         sortByList.Add("Employee Last Name");
         sortByList.Add("Certification");
@@ -62,15 +63,20 @@ public partial class Certifications : ContentPage
         }
         else if (selectedIndex == 1)
         {
+            List<CertificationData> sortedByTrainDate = certs.OrderBy(o => o.TrainedOnDate.HasValue ? o.TrainedOnDate : DateTime.MaxValue).ToList();
+            collectionView.ItemsSource = sortedByTrainDate;
+        }
+        else if (selectedIndex == 2)
+        {
             List<CertificationData> sortedByEmpFirstName = certs.OrderBy(o => o.EmployeeFirstName).ToList();
             collectionView.ItemsSource = sortedByEmpFirstName;
         }
-        else if (selectedIndex == 2)
+        else if (selectedIndex == 3)
         {
             List<CertificationData> sortedByEmpLastName = certs.OrderBy(o => o.EmployeeLastName).ToList();
             collectionView.ItemsSource = sortedByEmpLastName;
         }
-        else if (selectedIndex == 3)
+        else if (selectedIndex == 4)
         {
             List<CertificationData> sortedByCertType = certs.OrderBy(o => o.CertType).ToList();
             collectionView.ItemsSource = sortedByCertType;

@@ -67,6 +67,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Remove="Constants.cs" />
 	  <Compile Remove="Pages\FileSaved.xaml.cs" />
 	  <Compile Remove="Pages\ReportSettings.xaml.cs" />
 	</ItemGroup>
