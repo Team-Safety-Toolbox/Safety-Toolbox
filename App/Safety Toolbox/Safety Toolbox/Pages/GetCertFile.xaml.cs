@@ -57,11 +57,18 @@ public partial class GetCertFile : ContentPage
         {
             var fullPath = file.FullPath;
 
-            File.Copy(fullPath, Path.Combine(Preferences.Default.Get("CertFilePath", "Not Found"), CertificationData.FileName), true); //overwrites file if it exists
+            try
+            {
+                File.Copy(fullPath, Path.Combine(Preferences.Default.Get("CertFilePath", "Not Found"), CertificationData.FileName), true); //overwrites file if it exists
             
-            saveCertificationDetails();
+                saveCertificationDetails();
             
-            await Navigation.PushAsync(new DataSaved(3));
+                await Navigation.PushAsync(new DataSaved(3));
+            }
+            catch
+            {
+                await DisplayAlert("File Error", "An error occurred while saving the file.", "OK");
+            }
         }
     }
 

@@ -5,17 +5,19 @@ public partial class Dashboard : ContentPage
 	public Dashboard()
 	{
 		InitializeComponent();
-        if (MainPage.IsReadOnly)
+
+        if (!MainPage.IsITAccount) //if it isn't an IT account, no access to settings
         {
             SettingsBtn.IsEnabled = false;
         }
 
-        if (MainPage.IsSetupAccount)
+        if (MainPage.IsSetupAccount) //setup account ONLY has access to settings
         {
             TBTBtn.IsEnabled = false;
             CertsBtn.IsEnabled = false;
             LibBtn.IsEnabled = false;
             SetupAccountWarning.IsVisible = true;
+            SettingsBtn.IsEnabled = true;
         }
 
         checkConnection();

@@ -165,7 +165,7 @@ public partial class Notes : ContentPage
             AddFileButton.IsVisible = false;
         }
     }
-    private void ConfirmFileButtonClicked(object sender, EventArgs e)
+    async private void ConfirmFileButtonClicked(object sender, EventArgs e)
     {
 
         string fileName = "";
@@ -178,13 +178,14 @@ public partial class Notes : ContentPage
             fileName = FileNameDisplay.Text;
         }
 
+        FileFeedback.IsVisible = false;
         if (File.Exists(Path.Combine(Preferences.Default.Get("NotesFilePath", "Not Found"), fileName)))
         {
             FileFeedback.Text = "File with this name already exists.";
             FileFeedback.TextColor = Color.Parse("Red");
             FileFeedback.IsVisible = true;
         }
-        else if (FileNameDisplay.Text.IndexOfAny(Path.GetInvalidFileNameChars()) == -1)
+        else if (FileNameDisplay.Text.IndexOfAny(Path.GetInvalidFileNameChars()) != -1)//index of any returns -1 if none are found
         {
             FileFeedback.Text = "File name cannot contain invalid chars";
             FileFeedback.TextColor = Color.Parse("Red");
@@ -198,20 +199,27 @@ public partial class Notes : ContentPage
         }
         else
         {
-            File.Copy(NewFileCurrentPath, Path.Combine(Preferences.Default.Get("NotesFilePath", "Not Found"), fileName));
-            getFileNotes();
-            FileFeedback.Text = "File has been added!";
-            FileFeedback.TextColor = Color.Parse("Green");
-            FileFeedback.IsVisible = true;
+            try
+            {
+                File.Copy(NewFileCurrentPath, Path.Combine(Preferences.Default.Get("NotesFilePath", "Not Found"), fileName));
+                getFileNotes();
+                FileFeedback.Text = "File has been added!";
+                FileFeedback.TextColor = Color.Parse("Green");
+                FileFeedback.IsVisible = true;
 
-            NewFileCurrentPath = "";
-            FileNameDisplay.Text = "";
-            SaveFileLabel.IsVisible = false;
-            FileNameDisplay.IsVisible = false;
-            ConfirmFileButton.IsVisible = false;
-            CancelFileButton.IsVisible = false;
-            NewFileLabel.IsVisible = true;
-            AddFileButton.IsVisible = true;
+                NewFileCurrentPath = "";
+                FileNameDisplay.Text = "";
+                SaveFileLabel.IsVisible = false;
+                FileNameDisplay.IsVisible = false;
+                ConfirmFileButton.IsVisible = false;
+                CancelFileButton.IsVisible = false;
+                NewFileLabel.IsVisible = true;
+                AddFileButton.IsVisible = true;
+            }
+            catch
+            {
+                await DisplayAlert("File Error", "An error occurred while saving the file.", "OK");
+            }
         }
        
     }

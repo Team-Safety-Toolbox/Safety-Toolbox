@@ -11,6 +11,7 @@ namespace Safety_Toolbox
         private String Password;
         private String Role;
         public static Boolean IsReadOnly { get; set; }
+        public static Boolean IsITAccount { get; set; }
         public static Boolean IsSetupAccount { get; set; }
 
         public MainPage()
@@ -52,7 +53,8 @@ namespace Safety_Toolbox
 
                 if (usernameDB.Equals(Username) && hashedPasswordDB.SequenceEqual(hashPassword))
                 {
-                    setReadOnlyStatus(Role.Equals("readonly"));
+                    IsReadOnly = Role.Equals("readonly");
+                    IsITAccount = Role.Equals("IT");
                     return true;
                 }
                 else
@@ -62,11 +64,6 @@ namespace Safety_Toolbox
             {
                 return false;
             }
-        }
-
-        public static void setReadOnlyStatus(Boolean status)
-        {
-            IsReadOnly = status;
         }
 
         private async void OnLoginBtnClicked(object sender, EventArgs e)
@@ -82,6 +79,7 @@ namespace Safety_Toolbox
             }
             else
             {
+                IsSetupAccount = false;
                 if (!string.IsNullOrWhiteSpace(Username) && !string.IsNullOrWhiteSpace(Password) && validateUser())
                 {
                     //clear these so they'll be empty when user logs out

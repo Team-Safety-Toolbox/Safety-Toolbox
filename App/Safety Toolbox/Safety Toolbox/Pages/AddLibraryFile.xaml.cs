@@ -45,7 +45,7 @@ public partial class AddLibraryFile : ContentPage
         
     }
 
-    private void SaveButtonClicked(object sender, EventArgs e)
+    async private void SaveButtonClicked(object sender, EventArgs e)
     {
         string fileName = "";
         if (Path.GetExtension(FileNameEntry.Text) == "")
@@ -75,16 +75,23 @@ public partial class AddLibraryFile : ContentPage
         }
         else
         {
+            try
+            {
+                File.Copy(NewFileCurrentPath, Path.Combine(Preferences.Default.Get("LibFilePath", "Not Found"), Folder, fileName));
 
-            File.Copy(NewFileCurrentPath, Path.Combine(Preferences.Default.Get("LibFilePath", "Not Found"), Folder, fileName));
+                FileFeedback.Text = "Success!";
+                FileFeedback.TextColor = Color.Parse("Green");
+                FileFeedback.IsVisible = true;
 
-            FileFeedback.Text = "Success!";
-            FileFeedback.TextColor = Color.Parse("Green");
-            FileFeedback.IsVisible = true;
+                FileConfirmArea.IsVisible = false;
+                FileNameEntry.Text = "";
+                NewFileCurrentPath = "";
+            }
+            catch
+            {
+                await DisplayAlert("File Error", "An error occurred while saving the file.", "OK");
 
-            FileConfirmArea.IsVisible = false;
-            FileNameEntry.Text = "";
-            NewFileCurrentPath = "";
+            }
         }
     }
 
