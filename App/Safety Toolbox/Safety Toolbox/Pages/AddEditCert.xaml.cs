@@ -34,6 +34,9 @@ public partial class AddEditCert : ContentPage
 
         if (optionalDataToEdit != null)
         {
+            employeePicker.IsEnabled = false;
+            certificationPicker.IsEnabled = false;
+
             employeePicker.SelectedIndex = EmployeeFullNames.IndexOf(optionalDataToEdit.EmployeeFirstName + " " + optionalDataToEdit.EmployeeLastName);
             certificationPicker.SelectedIndex = CertificationTypes.IndexOf(optionalDataToEdit.CertType);
 
