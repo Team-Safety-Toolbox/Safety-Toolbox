@@ -15,6 +15,12 @@ public partial class Notes : ContentPage
 	{
 		InitializeComponent();
 
+        if (MainPage.IsReadOnly)
+        {
+            NewNoteArea.IsVisible = false;
+            NewFileNoteArea.IsVisible = false;
+        }
+
         getTextNotes();
         getFileNotes();
     }

@@ -21,7 +21,8 @@
                 HorizontalOptions="Center" />
         </HorizontalStackLayout>
 
-        <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
+        <!--Future scope work-->
+        <!--<HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
             <Label 
                 Text="Report Server URL: "
                 VerticalOptions="Center" 
@@ -31,7 +32,7 @@
                 x:Name="ReportServerURL"
                 VerticalOptions="Center" 
                 HorizontalOptions="Center" />
-        </HorizontalStackLayout>
+        </HorizontalStackLayout>-->
 
         <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
             <Label 
