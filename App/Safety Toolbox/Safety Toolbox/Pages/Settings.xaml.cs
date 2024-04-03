@@ -17,7 +17,7 @@ public partial class Settings : ContentPage
     private void setEntryFields()
     {
         DBConnStr.Text = Preferences.Default.Get("DBConn", "Not Found");
-        ReportServerURL.Text = Preferences.Default.Get("ReportServerURL", "Not Found");
+        //ReportServerURL.Text = Preferences.Default.Get("ReportServerURL", "Not Found"); //future scope
         CertFilePath.Text = Preferences.Default.Get("CertFilePath", "Not Found");
         LibFilePath.Text = Preferences.Default.Get("LibFilePath", "Not Found");
         NotesFilePath.Text = Preferences.Default.Get("NotesFilePath", "NotFound");
@@ -29,7 +29,7 @@ public partial class Settings : ContentPage
         Saved.IsVisible = false;
 
         Preferences.Default.Set("DBConn", DBConnStr.Text);
-        Preferences.Default.Set("ReportServerURL", ReportServerURL.Text);
+        //Preferences.Default.Set("ReportServerURL", ReportServerURL.Text); //future scope
         Preferences.Default.Set("CertFilePath", CertFilePath.Text);
         Preferences.Default.Set("LibFilePath", LibFilePath.Text);
         Preferences.Default.Set("NotesFilePath", NotesFilePath.Text);
