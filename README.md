@@ -19,3 +19,6 @@ Vlog 3 - [Link here!](https://youtu.be/tpB5mSMG9_Y)
 
 ## Mentor
 Craig Gelowitz Ph.D., P.Eng.
+
+## Additional Credits
+Icons used in the project come from Austin Andrews, [![License: CC0-1.0](https://licensebuttons.net/l/zero/1.0/80x15.png)](http://creativecommons.org/publicdomain/zero/1.0/) https://github.com/Templarian/WindowsIcons

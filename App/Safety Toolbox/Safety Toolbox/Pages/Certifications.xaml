@@ -86,7 +86,7 @@
             FontSize="32"
             HorizontalOptions="Center" />
 
-        <HorizontalStackLayout HorizontalOptions="Center" Spacing="10">
+        <HorizontalStackLayout HorizontalOptions="Center" Spacing="10" Padding="0,0,0,10">
             <Label Text="Sort By:" HorizontalOptions="Center" VerticalOptions="Center"/>
             <Picker x:Name="sortPicker" SelectedIndexChanged="OnPickerSelectedIndexChanged" ItemsSource="{Binding sortedByExpDate}" />
             <SearchBar Placeholder="Search items..." TextChanged="OnTextChanged" />
@@ -114,13 +114,13 @@
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
-                    <Label Grid.Column="1" Text="First Name" HorizontalOptions="Center"/>
-                    <Label Grid.Column="2" Text="Last Name" HorizontalOptions="Center"/>
-                    <Label Grid.Column="3" Text="Certification" HorizontalOptions="Center" />
-                    <Label Grid.Column="4" Text="Trained On Date" HorizontalOptions="Center" />
-                    <Label Grid.Column="5" Text="Expiry Date" HorizontalOptions="Center" />
-                    <Label Grid.Column="6" Text="View PDF" HorizontalOptions="Center" />
-                    <Label Grid.Column="7" Text="Edit Certification" HorizontalOptions="Center"/>
+                    <Label Grid.Column="1" Text="First Name" HorizontalOptions="Center" FontAttributes="Bold"/>
+                    <Label Grid.Column="2" Text="Last Name" HorizontalOptions="Center" FontAttributes="Bold"/>
+                    <Label Grid.Column="3" Text="Certification" HorizontalOptions="Center" FontAttributes="Bold"/>
+                    <Label Grid.Column="4" Text="Trained On Date" HorizontalOptions="Center" FontAttributes="Bold"/>
+                    <Label Grid.Column="5" Text="Expiry Date" HorizontalOptions="Center" FontAttributes="Bold"/>
+                    <Label Grid.Column="6" Text="View PDF" HorizontalOptions="Center" FontAttributes="Bold"/>
+                    <Label Grid.Column="7" Text="Edit Certification" HorizontalOptions="Center" FontAttributes="Bold"/>
                 </Grid>
             </StackLayout>
             <ScrollView Grid.Row="1" Orientation="Vertical" VerticalOptions="StartAndExpand">
