@@ -120,7 +120,6 @@ public partial class Signup : ContentPage
 			HashedPassword = processPassword.Hash();
 			Salt = processPassword.Salt;
 
-			//TODO should also make sure the email and the username will not be duplicates
 			saveSignupInformation();
             await Navigation.PushAsync(new MainPage());
         }

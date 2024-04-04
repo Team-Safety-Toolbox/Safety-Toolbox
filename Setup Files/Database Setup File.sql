@@ -13,7 +13,7 @@ CREATE TABLE Attendance (
 )
 
 CREATE TABLE Positions(
-	PositionID INT NOT NULL PRIMARY KEY IDENTITY(1,1),
+	PositionID INT IDENTITY(1,1) PRIMARY KEY,
 	PositionName VARCHAR(250)
 )
 

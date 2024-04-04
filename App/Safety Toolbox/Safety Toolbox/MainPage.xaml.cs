@@ -71,7 +71,6 @@ namespace Safety_Toolbox
             Username = UsernameEntry.Text;
             Password = PasswordEntry.Text;
 
-            //TODO: decide if admin account is always accessible, or only when no database connection
             if (Username == "admin" && Password == "Adm1nU$er")
             {
                 IsSetupAccount = true;
