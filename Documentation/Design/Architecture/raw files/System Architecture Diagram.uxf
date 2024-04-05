@@ -1,0 +1,10 @@
+<diagram program="umletino" version="15.1"><zoom_level>10</zoom_level><element><id>UMLDeployment</id><coordinates><x>0</x><y>210</y><w>250</w><h>50</h></coordinates><panel_attributes>&lt;&lt;Network Storage Server&gt;&gt;
+Shared Persistent File Storage Location</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLDeployment</id><coordinates><x>320</x><y>210</y><w>110</w><h>50</h></coordinates><panel_attributes>&lt;&lt;Application&gt;&gt;
+Safety ToolBox</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLDeployment</id><coordinates><x>490</x><y>210</y><w>150</w><h>50</h></coordinates><panel_attributes>&lt;&lt;Server&gt;&gt;
+Microsoft SQL Server</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLDeployment</id><coordinates><x>470</x><y>310</y><w>170</w><h>70</h></coordinates><panel_attributes>&lt;&lt;Server&gt;&gt;
+SQL Server Reporting
+Services Server</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>540</x><y>250</y><w>70</w><h>90</h></coordinates><panel_attributes>lt=&lt;-
+talks to</panel_attributes><additional_attributes>10;70;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>230</x><y>220</y><w>110</w><h>40</h></coordinates><panel_attributes>lt=&lt;-&gt;
+talks to</panel_attributes><additional_attributes>90;20;10;20</additional_attributes></element><element><id>Relation</id><coordinates><x>410</x><y>220</y><w>100</w><h>40</h></coordinates><panel_attributes>lt=&lt;-&gt;
+talks to</panel_attributes><additional_attributes>80;20;10;20</additional_attributes></element><element><id>Relation</id><coordinates><x>360</x><y>250</y><w>130</w><h>120</h></coordinates><panel_attributes>lt=-&gt;</panel_attributes><additional_attributes>10;10;10;100;110;100</additional_attributes></element><element><id>Text</id><coordinates><x>380</x><y>330</y><w>100</w><h>70</h></coordinates><panel_attributes>talks to
+style=wordwrap</panel_attributes><additional_attributes></additional_attributes></element></diagram>

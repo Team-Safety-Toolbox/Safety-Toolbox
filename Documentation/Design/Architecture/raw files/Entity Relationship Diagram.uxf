@@ -1,0 +1,65 @@
+<diagram program="umletino" version="15.1"><zoom_level>10</zoom_level><element><id>UMLClass</id><coordinates><x>480</x><y>310</y><w>260</w><h>120</h></coordinates><panel_attributes>Attendance
+--
+EmployeeID INT NOT NULL
+AttendanceDate Date NOT NULL
+Present BIT
+Excused BIT
+Absent BIT
+--
+PRIMARY KEY (EmployeeID, AttendanceDate)</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>250</x><y>310</y><w>170</w><h>80</h></coordinates><panel_attributes>Positions
+--
+PositionID INT
+PositionName VARCHAR(250)
+--
+PRIMARY KEY PositionID</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>770</x><y>310</y><w>210</w><h>120</h></coordinates><panel_attributes>Employees
+--
+EmployeeID INT NOT NULL
+EmployeeFirstName VARCHAR(100)
+EmployeeLastName VARCHAR(100)
+PositionID INT
+--
+PRIMARY KEY EmployeeID
+FOREIGN KEY PositionID</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>740</x><y>100</y><w>250</w><h>110</h></coordinates><panel_attributes>Certifications
+--
+EmployeeID INT NOT NULL
+CertificationID INT NOT NULL
+TrainedOnDate DATE
+ExpiryDate DATE
+--
+PRIMARY KEY (EmployeeID, CertificationID)</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>510</x><y>100</y><w>200</w><h>80</h></coordinates><panel_attributes>CertificationTypes
+--
+CertificationID INT NOT NULL
+CertificationName VARCHAR(70)
+--
+PRIMARY KEY CertificationID</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>30</x><y>310</y><w>130</w><h>60</h></coordinates><panel_attributes>Roles
+--
+RoleID INT NOT NULL 
+--
+PRIMARY KEY RoleID</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>0</x><y>100</y><w>210</w><h>150</h></coordinates><panel_attributes>Users
+--
+UserID INT NOT NULL
+Email VARCHAR(250)
+Username VARCHAR(100)
+Salt VARBINARY(200)
+HashedPassword VARBINARY(200)
+RoleID INT
+--
+PRIMARY KEY UserID
+FOREIGN KEY RoleID</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>240</x><y>100</y><w>240</w><h>120</h></coordinates><panel_attributes>CertificationPositionMap
+--
+CertificationPositionMapID INT NOT NULL
+CertificationID INT
+PositionID INT
+--
+PRIMARY KEY CertificationPositionMapID
+FOREIGN KEY CertificationID
+FOREIGN KEY PositionID</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>240</x><y>10</y><w>210</w><h>40</h></coordinates><panel_attributes>Topics
+--
+	TopicIdea VARCHAR(200)</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>0</x><y>10</y><w>210</w><h>60</h></coordinates><panel_attributes>Notes
+--
+NoteDate DATE
+NoteContent VARCHAR(500)</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>80</x><y>240</y><w>30</w><h>90</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>10;70;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>320</x><y>210</y><w>30</w><h>120</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>10;100;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>470</x><y>130</y><w>60</w><h>30</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>40;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>700</x><y>130</y><w>60</w><h>30</h></coordinates><panel_attributes>lt=-&gt;</panel_attributes><additional_attributes>40;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>730</x><y>370</y><w>60</w><h>30</h></coordinates><panel_attributes>lt=-&gt;</panel_attributes><additional_attributes>10;10;40;10</additional_attributes></element><element><id>Relation</id><coordinates><x>860</x><y>200</y><w>30</w><h>130</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>10;110;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>320</x><y>380</y><w>570</w><h>110</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>10;10;10;90;550;90;550;50</additional_attributes></element><element><id>UMLNote</id><coordinates><x>650</x><y>0</y><w>200</w><h>70</h></coordinates><panel_attributes>Not pictured are the associated
+audit log tables for each table.
+These are auto updated by MS
+SQL Server.
+bg=blue</panel_attributes><additional_attributes></additional_attributes></element></diagram>
