@@ -1,4 +1,4 @@
-# Safety Toolbox
+![Safety Toolbox Banner](https://github.com/Team-Safety-Toolbox/Safety-Toolbox/assets/98986881/f5048389-96a5-4bb9-86df-d1badfae8eed)
 
 # Members
 * Mackenzie Kot - Full Stack Developer
