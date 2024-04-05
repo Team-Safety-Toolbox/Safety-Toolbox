@@ -19,6 +19,8 @@ Vlog 3 - [Link here!](https://youtu.be/tpB5mSMG9_Y)
 
 Demo Video - [Link here!](https://www.youtube.com/watch?v=rz2jSGdBQGE)
 
+Commercial - [Link here!](https://youtu.be/zNVPYRBaVKM)
+
 ## Project Board
 Can be found under the [Projects tab!](
 https://github.com/orgs/Team-Safety-Toolbox/projects/1)
