@@ -67,4 +67,4 @@ Icons used in the project come from Austin Andrews, [![License: CC0-1.0](https:/
         - The IT account is able to access the Settings page at any time and has editing access throughout the app.
         - The Management account also has editing access throughout the app, but cannot access the settings page.
     - All future accounts that need edit access must be handled in the backend like this
-7. You're all set up! Head over to our [Demo Video](https://www.youtube.com/watch?v=rz2jSGdBQGE) to learn more about how to use this app!
+7. You're all set up! Head over to our [Demo Video](https://www.youtube.com/watch?v=rz2jSGdBQGE) or [Our User Guide](https://github.com/Team-Safety-Toolbox/Safety-Toolbox/blob/main/Documentation/Safety%20Toolbox%20User%20Guide.pdf) to learn more about how to use this app!
