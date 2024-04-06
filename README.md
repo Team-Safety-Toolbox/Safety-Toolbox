@@ -1,11 +1,11 @@
 ![Safety Toolbox Banner](https://github.com/Team-Safety-Toolbox/Safety-Toolbox/assets/98986881/f5048389-96a5-4bb9-86df-d1badfae8eed)
 
 # Members
-* Mackenzie Kot - Full Stack Developer
-* Mikayla Peterson - Full Stack Developer/Project Manager
+![Colorful Team Introduction Instagram Post](https://github.com/Team-Safety-Toolbox/Safety-Toolbox/assets/98986881/4144d86b-840d-40aa-8f43-6cd694f771aa)
+
 
 ## Project Idea
-Our project is a safety system tracking app. It will keep track of employee training and certifications, items for Toolbox Talks such as prompts, attendance sheets, and notes, and it will act as a central library of requirements and documents that can be revised and updated as needed.
+Our project is an open-source safety system tracking app. It will keep track of employee training and certifications, items for Toolbox Talks such as prompts, attendance sheets, and notes, and it will act as a central library of requirements and documents that can be revised and updated as needed.
 
 ## Project background/Business Opportunity
 Our customer is Ralph McKay Industries. They are in need of a tool that can keep track of their training requirements. Their current process is to keep track using a combination of spreadsheets and written documents. They have looked at using other HR tools before, but they haven’t found one that would suit their needs. Their main concerns are the fact that OH+S requirements are different province by province, so they can’t just use any tool, and they want their data to remain in-house instead of on some company’s server. Our solution would solve these problems for them.
