@@ -55,8 +55,8 @@ Icons used in the project come from Austin Andrews, [![License: CC0-1.0](https:/
 
 
 ## Database Setup
-1. In SQL Server, run the setup code provided [here](https://github.com/Team-Safety-Toolbox/Safety-Toolbox/blob/main/Setup%20Files/Database%20Setup%20File.sql). This will set up the tables needed for the app to operate. 
-2. Optionally, you can also run [this](https://github.com/Team-Safety-Toolbox/Safety-Toolbox/blob/main/Setup%20Files/Test%20Data.sql) demo setup file if you would like some demo values
+1. In SQL Server, run the setup code provided [here](https://github.com/Team-Safety-Toolbox/Safety-Toolbox/blob/main/SQL%20Setup%20Files/Database%20Setup%20File.sql). This will set up the tables needed for the app to operate. 
+2. Optionally, you can also run [this](https://github.com/Team-Safety-Toolbox/Safety-Toolbox/blob/main/SQL%20Setup%20Files/Test%20Data.sql) demo setup file if you would like some demo values
 ## Running the app for the first time
 1. The first time you launch the app it won't be connected to your database. Login with the username `admin` and the password `Adm1nU$er`. (This account can only be used to change the settings, it cannot access anything else.) 
 2. Once logged in, go to the settings page and fill in the fields required, such as the database string and the folder paths.

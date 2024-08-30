@@ -62,6 +62,7 @@ namespace Safety_Toolbox
             }
             catch
             {
+                DisplayAlert("Database Connection", "There was a problem connecting to the database.", "OK");
                 return false;
             }
         }

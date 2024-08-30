@@ -4,6 +4,8 @@ using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Maui.Storage;
 using System.Threading;
+using Microsoft.Data.Sql;
+using Microsoft.Data.SqlClient;
 
 public partial class Settings : ContentPage
 {
@@ -38,6 +40,43 @@ public partial class Settings : ContentPage
         setEntryFields();
         Saved.IsVisible = true;
         dbInfo.IsVisible = true;
+        TestConnection();
+    }
+
+    private void TestConnection() {
+        string query = "SELECT TOP (1000) RoleID, RoleName FROM Roles";
+        string Role = "";
+        int RoleID = -1;
+
+        try
+        {
+            using (SqlConnection connection = new SqlConnection(Preferences.Default.Get("DBConn", "Not Found")))
+            {
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    connection.Open();
+                    try
+                    {
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                Role = (String)reader["RoleName"];
+                                RoleID = (int)reader["RoleID"];
+                            }
+                        }
+                    }
+                    catch
+                    {
+                        DisplayAlert("Database Connection", "Database connection was successful but there was an error accessing the Roles table", "OK");
+                    }
+                }
+            }
+        }
+        catch
+        {
+            DisplayAlert("Database Connection", "There was a problem connecting to the database.", "OK");
+        }
     }
 
     private void OnCertPathBtnClicked(object sender, EventArgs e)
